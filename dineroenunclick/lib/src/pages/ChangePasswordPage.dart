@@ -109,7 +109,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               if(obj.error == 0){
                 (contextScaffold).showSnackBar(
                   SnackBar(
-                    backgroundColor: pfVerde,
+                    backgroundColor: pfAzul,
                     content: Text(obj.mensaje),
                 ));
                 
@@ -143,7 +143,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        color: pfVerde,
+        color: pfAzul,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -192,7 +192,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         backgroundColor: Colors.white,
         //automaticallyImplyLeading: false,
         leading: GestureDetector(
-          child: Icon(Icons.arrow_back_ios, color: pfVerde,),
+          child: Icon(Icons.arrow_back_ios, color: pfAzul,),
           onTap: (){
             Navigator.pop(context);
           },
@@ -204,8 +204,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         ],
         title: Center(
           child: Text('Cambio de Contraseña', style: TextStyle(
-          color: pfGris,
-          fontSize: 15.0,
+          color: pfAzul,
+          fontSize: 19.0,
           fontWeight: FontWeight.w900,
           fontFamily: 'Montserrat',
           ),

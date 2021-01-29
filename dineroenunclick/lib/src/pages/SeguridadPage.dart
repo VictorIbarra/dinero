@@ -75,7 +75,7 @@ _itemSwitchOption(BuildContext context, String title, String goTo){
           Expanded(child: SizedBox(),),
           Switch(
             value: _huella, 
-            activeColor: pfVerde,
+            activeColor: pfAzul,
             onChanged: (newVal){
               
               _setAccesoBiometrico(newVal);
@@ -94,7 +94,7 @@ _itemSwitchOption(BuildContext context, String title, String goTo){
         backgroundColor: Colors.white,
         //automaticallyImplyLeading: false,
         leading: GestureDetector(
-          child: Icon(Icons.arrow_back_ios, color: pfVerde,),
+          child: Icon(Icons.arrow_back_ios, color: pfAzul,),
           onTap: (){
             Navigator.pop(context);
           },
@@ -106,8 +106,8 @@ _itemSwitchOption(BuildContext context, String title, String goTo){
         ],
         title: Center(
           child: Text('Seguridad', style: TextStyle(
-          color: pfGris,
-          fontSize: 15.0,
+          color: pfAzul,
+          fontSize: 19.0,
           fontWeight: FontWeight.w900,
           fontFamily: 'Montserrat',
           ),
@@ -117,7 +117,7 @@ _itemSwitchOption(BuildContext context, String title, String goTo){
       body: Column(
         children: <Widget>[
           _itemOption(context, 'Cambio de Contraseña', '/changePassword'),
-          _itemOption(context, 'Cambio de NIP', '/changeNIP'),
+          // _itemOption(context, 'Cambio de NIP', '/changeNIP'),
           _itemSwitchOption(context, 'Acceso biometrico', '/ayuda'),
 
 

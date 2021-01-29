@@ -211,7 +211,7 @@ class _InformacionPageState extends State<InformacionPage> {
         backgroundColor: Colors.white,
         //automaticallyImplyLeading: false,
         leading: GestureDetector(
-          child: Icon(Icons.arrow_back_ios, color: pfVerde,),
+          child: Icon(Icons.arrow_back_ios, color: pfAzul,),
           onTap: (){
             FocusScope.of(context).requestFocus(new FocusNode());
             Navigator.pop(context);
@@ -224,8 +224,8 @@ class _InformacionPageState extends State<InformacionPage> {
         ],
         title: Center(
           child: Text('Mi cuenta', style: TextStyle(
-          color: pfGris,
-          fontSize: 15.0,
+          color: pfAzul,
+          fontSize: 19.0,
           fontWeight: FontWeight.w900,
           fontFamily: 'Montserrat',
           ),

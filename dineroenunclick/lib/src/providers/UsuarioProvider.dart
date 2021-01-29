@@ -166,9 +166,9 @@ class UsuarioProvider{
 
   }
 
-  static Future<String> pinUrl(String tarjeta, String latitud, String longitud) async{
+  static Future<String> pinUrl(int idCliente, String latitud, String longitud) async{
 
-    final url = '$api_url/PiN_URL?tarjeta=$tarjeta&latitud=$latitud&longitud=$longitud';
+    final url = '$api_url/PiN_URL?idCliente=$idCliente&latitud=$latitud&longitud=$longitud';
     final resp = await http.get(url);
     final decodedData = json.decode(resp.body);
     final result = decodedData['Data'];
@@ -178,6 +178,5 @@ class UsuarioProvider{
     return result;
 
   }
-
 
 }

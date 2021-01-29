@@ -13,14 +13,12 @@ class _AyudaPageState extends State<AyudaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        //automaticallyImplyLeading: false,
         leading: GestureDetector(
           child: Icon(
             Icons.arrow_back_ios,
-            color: pfVerde,
+            color: pfAzul,
           ),
           onTap: () {
             Navigator.pop(context);
@@ -39,8 +37,8 @@ class _AyudaPageState extends State<AyudaPage> {
           child: Text(
             'Centro de Ayuda',
             style: TextStyle(
-              color: pfGris,
-              fontSize: 15.0,
+              color: pfAzul,
+              fontSize: 19.0,
               fontWeight: FontWeight.w900,
               fontFamily: 'Montserrat',
             ),
@@ -48,18 +46,15 @@ class _AyudaPageState extends State<AyudaPage> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 15.0),
+        padding: EdgeInsets.only(left: 15.0, top: 40.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(
-                  Icons.email,
-                  color: Colors.blue,
-                  size: 30.0,
+                Text(
+                  'Correo',
+                  style: TextStyle(color: Colors.blue[900], fontSize: 30.0),
                 ),
                 _email(),
               ],
@@ -67,13 +62,12 @@ class _AyudaPageState extends State<AyudaPage> {
             SizedBox(
               height: 25.0,
             ),
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(
-                  Icons.call,
-                  color: Colors.blue,
-                  size: 30.0,
+                Text(
+                  'Telefono',
+                  style: TextStyle(color: Colors.blue[900], fontSize: 30.0),
                 ),
                 _phone(),
               ],
@@ -99,7 +93,7 @@ class _AyudaPageState extends State<AyudaPage> {
           },
           padding: EdgeInsets.only(right: 0.0),
           child: Text(
-            'atencionusuarios@prestamofeliz.com.mx',
+            '    atencionusuarios@prestamofeliz.com.mx',
             style: TextStyle(fontSize: 15.0, color: Colors.black),
           ),
         ),
@@ -127,7 +121,7 @@ class _AyudaPageState extends State<AyudaPage> {
           },
           padding: EdgeInsets.only(right: 0.0),
           child: Text(
-            '               83904379',
+            '                       83904379',
             style: TextStyle(fontSize: 20.0, color: Colors.black),
           ),
         ),

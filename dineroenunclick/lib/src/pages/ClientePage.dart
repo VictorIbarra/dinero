@@ -1,6 +1,7 @@
+import 'package:dineroenunclick/src/pages/CreditosPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dineroenunclick/src/pages/SolicitaPage.dart';
+// import 'package:dineroenunclick/src/pages/SolicitaPage.dart';
 import 'package:dineroenunclick/src/pages/PinPage.dart';
 import 'package:dineroenunclick/src/pages/NotificacionesPage.dart';
 import 'package:dineroenunclick/src/pages/PerfilPage.dart';
@@ -50,12 +51,12 @@ class _ClientePageState extends State<ClientePage> {
   Widget _loadPage(int page){
 
     switch(page){
-      case 0: return SolicitaPage();
+      case 0: return CreditosPage();
       case 1: return PinPage();
       //case 1: return PageStorage(child: PinPage(key: PageStorageKey('PagePiN')), bucket: PageStorageBucket(),);
       case 2: return NotificacionesPage();
       case 3: return PerfilPage();//MovimientosPage();
-      default: return SolicitaPage();
+      default: return CreditosPage();
     }
   }
 

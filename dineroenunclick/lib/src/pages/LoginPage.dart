@@ -26,10 +26,6 @@ class _LoginPageState extends State<LoginPage> {
   final codigoKey = GlobalKey<FormState>();
   final formKey = GlobalKey<FormState>();
 
-  
-
-
-
   /* BIOMETRIC.AUTH */
   final LocalAuthentication auth = LocalAuthentication();
   bool _canCheckBiometrics;
@@ -41,31 +37,28 @@ class _LoginPageState extends State<LoginPage> {
   int _loginType = 1;
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
 
-    try{
-
+    try {
       _correo.text = Usuario.usr.rfc;
 
-      if(prefs.huella){
+      if (prefs.huella) {
         _loginType = 2;
-      }
-      else{ //CONTRASEÑA
+      } else {
+        //CONTRASEÑA
         _loginType = 1;
       }
-    }
-    catch(Exception){//SI NO PUEDE OBTENER EL NOMBRE DEL USUARIO
+    } catch (Exception) {
+      //SI NO PUEDE OBTENER EL NOMBRE DEL USUARIO
       _loginType = 1;
-    }    
+    }
   }
-
 
   Future<void> _checkBiometrics() async {
     bool canCheckBiometrics;
     try {
       canCheckBiometrics = await auth.canCheckBiometrics;
-
     } on PlatformException catch (e) {
       print(e.toString());
     }
@@ -90,8 +83,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-
-  Future<void> _authenticate(BuildContext context ) async {
+  Future<void> _authenticate(BuildContext context) async {
     bool authenticated = false;
     try {
       setState(() {
@@ -116,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
       _authorized = message;
       print(_authorized);
 
-      if(_authorized == 'Authorized'){
+      if (_authorized == 'Authorized') {
         Navigator.pop(context);
         Navigator.pushReplacementNamed(context, '/cliente');
       }
@@ -127,11 +119,9 @@ class _LoginPageState extends State<LoginPage> {
     auth.stopAuthentication();
   }
 
-
   UsuarioProvider wsUsuario = new UsuarioProvider();
 
   _modalCodigoUsuario(BuildContext context) async {
-    
     return showDialog(
         context: context,
         builder: (context) {
@@ -142,14 +132,14 @@ class _LoginPageState extends State<LoginPage> {
               child: TextFormField(
                 textCapitalization: TextCapitalization.characters,
                 autofocus: true,
-                validator: (value){
+                validator: (value) {
                   return 'Codigo Invalido';
                 },
                 controller: _codigoController,
                 decoration: InputDecoration(hintText: "Codigo de 6 caracteres"),
-                onChanged: (valor){
-                    _codigo = valor;
-                    //_codigo = 'UY25P3';
+                onChanged: (valor) {
+                  _codigo = valor;
+                  //_codigo = 'UY25P3';
                 },
               ),
             ),
@@ -157,33 +147,22 @@ class _LoginPageState extends State<LoginPage> {
               new FlatButton(
                 child: new Text('GUARDAR'),
                 onPressed: () {
-
                   /*setState(() {
                     _codigo = 'UY25P3';                    
                   });*/
 
-                  
-
-                  if(_codigo.length != 6){
+                  if (_codigo.length != 6) {
                     codigoKey.currentState.validate();
-                  }
-                  else{
-                    wsUsuario.validaCodigoUsuario(_codigo).then((obj){
-                    
-                      if(obj.idCliente != null){
+                  } else {
+                    wsUsuario.validaCodigoUsuario(_codigo).then((obj) {
+                      if (obj.idCliente != null) {
                         Navigator.pop(context);
                         Navigator.pushNamed(context, '/registro');
-                      }
-                      else{
+                      } else {
                         codigoKey.currentState.validate();
                       }
-
                     });
-
                   }
-
-                  
-                  
                 },
               )
             ],
@@ -191,8 +170,8 @@ class _LoginPageState extends State<LoginPage> {
         });
   }
 
-  _modalResetUsuario(BuildContext context, ScaffoldState contextScaffold) async {
-    
+  _modalResetUsuario(
+      BuildContext context, ScaffoldState contextScaffold) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -202,45 +181,39 @@ class _LoginPageState extends State<LoginPage> {
               key: codigoKey,
               child: TextFormField(
                 autofocus: true,
-                validator: (value){
+                validator: (value) {
                   return 'Codigo Invalido';
                 },
                 controller: _correoController,
                 decoration: InputDecoration(hintText: "Ingresa tu correo"),
-                onChanged: (valor){
-                    _correoStr = valor;
-                    //_codigo = 'UY25P3';
+                onChanged: (valor) {
+                  _correoStr = valor;
+                  //_codigo = 'UY25P3';
                 },
               ),
             ),
             actions: <Widget>[
               new FlatButton(
                 child: new Text('Restablecer'),
-                onPressed: () async{
-
-                  UsuarioProvider.resetPassword(new Usuario(correo: _correoStr)).then((obj){
+                onPressed: () async {
+                  UsuarioProvider.resetPassword(new Usuario(correo: _correoStr))
+                      .then((obj) {
                     print(obj.mensaje);
                     //_modalResetUsuarioResponse(context, obj);
 
-                    (contextScaffold).showSnackBar(
-                      SnackBar(
-                        backgroundColor: pfNaranja,
-                        content: Text(obj.mensaje),
+                    (contextScaffold).showSnackBar(SnackBar(
+                      backgroundColor: pfNaranja,
+                      content: Text(obj.mensaje),
                     ));
-                    
                   });
 
                   Navigator.pop(context);
-                  
                 },
               )
             ],
           );
         });
   }
-
-  
-  
 
   Widget _buildEmailTF() {
     return Column(
@@ -258,11 +231,10 @@ class _LoginPageState extends State<LoginPage> {
           child: TextFormField(
             keyboardType: TextInputType.emailAddress,
             controller: _correo,
-            validator: (value){
-              if(!validaVacio(value)){
+            validator: (value) {
+              if (!validaVacio(value)) {
                 return 'Ingresa un usuario valido';
-              }
-              else{
+              } else {
                 return null;
               }
             },
@@ -300,11 +272,10 @@ class _LoginPageState extends State<LoginPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextFormField(
-            validator: (value){
-              if(!validaVacio(value)){
+            validator: (value) {
+              if (!validaVacio(value)) {
                 return 'Ingresa tu contraseña';
-              }
-              else{
+              } else {
                 return null;
               }
             },
@@ -330,7 +301,7 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
-  
+
   Widget _buildLoginBtn(ScaffoldState contextScaffold) {
     final _screenSize = MediaQuery.of(context).size;
 
@@ -338,92 +309,84 @@ class _LoginPageState extends State<LoginPage> {
       padding: EdgeInsets.symmetric(vertical: 15.0),
       width: _screenSize.width * .6,
       child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () async{
+          elevation: 5.0,
+          onPressed: () async {
+            FocusScope.of(context).requestFocus(new FocusNode());
 
-          FocusScope.of(context).requestFocus(new FocusNode());
+            if (formKey.currentState.validate()) {
+              Future a = modalLoading(context, 'Validando ...', true);
 
-          if(formKey.currentState.validate()){
+              Usuario usr = new Usuario();
+              usr = await UsuarioProvider.login(
+                  new Usuario(correo: _correo.text, pass: _pass.text));
 
-            Future a = modalLoading(context, 'Validando ...', true);
-            
-            Usuario usr = new Usuario();
-            usr = await UsuarioProvider.login(new Usuario(correo: _correo.text, pass: _pass.text));
-
-            if(usr.clienteId != null){
-              //a.whenComplete(action)
-              PromocionProvider.cotizacionCliente(usr.clienteId).then((value) => {
-                print(value),
-                Navigator.pushReplacementNamed(context, '/cliente')
-              });
-              
-            }
-            else{
-              Navigator.pop(context);
-              (contextScaffold).showSnackBar(
-                SnackBar(
+              if (usr.clienteId != null) {
+                //a.whenComplete(action)
+                PromocionProvider.cotizacionCliente(usr.clienteId).then(
+                    (value) => {
+                          print(value),
+                          Navigator.pushReplacementNamed(context, '/cliente')
+                        });
+              } else {
+                Navigator.pop(context);
+                (contextScaffold).showSnackBar(SnackBar(
                   backgroundColor: pfNaranja,
                   content: Text('Datos incorrectos'),
-              ));
+                ));
+              }
             }
-
-          }
-          
-        },
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: pfVerde,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Continuar',
-              style: TextStyle(
-                //color: Color(0xFFFF960A),
-                color: Colors.white,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Montserrat',
+          },
+          padding: EdgeInsets.all(15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          color: Colors.blue[900],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'CONTINUAR',
+                style: TextStyle(
+                  //color: Color(0xFFFF960A),
+                  color: Colors.white,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat',
+                ),
               ),
-            ),
-
-            Icon(Icons.keyboard_arrow_right, color: Colors.white)
-
-          ],
-        )
-        
-      ),
+            ],
+          )),
     );
   }
 
-  Widget _buildLoginHuellaBtn(BuildContext bContext, ScaffoldState contextScaffold) {
+  Widget _buildLoginHuellaBtn(
+      BuildContext bContext, ScaffoldState contextScaffold) {
     final _screenSize = MediaQuery.of(context).size;
 
     return GestureDetector(
       child: Container(
         child: Column(
           children: <Widget>[
-            Icon(Icons.fingerprint, color: pfAzul, size: _screenSize.width/3,),
+            Icon(
+              Icons.fingerprint,
+              color: pfAzul,
+              size: _screenSize.width / 3,
+            ),
             SizedBox(height: 10.0),
             Text('Toca para ingresar con tu huella', style: kHintTextStyle),
           ],
         ),
-
       ),
-      onTap:(){
-        if(_isAuthenticating){
+      onTap: () {
+        if (_isAuthenticating) {
           _cancelAuthentication();
-        }
-        else{
+        } else {
           _authenticate(bContext);
         }
       },
     );
-
   }
-  
+
   Widget _buildRecuperarBtn(ScaffoldState contextScaffold) {
     final _screenSize = MediaQuery.of(context).size;
 
@@ -433,33 +396,30 @@ class _LoginPageState extends State<LoginPage> {
       width: _screenSize.width * .3,
       height: _screenSize.height * .07,
       child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () async{
-          _modalResetUsuario(context, contextScaffold);
-        },
-        padding: EdgeInsets.all(5.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: pfVerde,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Recuperar',
-              style: TextStyle(
-                //color: Color(0xFFFF960A),
-                color: Colors.white,
-                fontSize: 14.0,
-                fontWeight: FontWeight.w700,
-                fontFamily: 'Montserrat',
-              ),
-            )
-
-          ],
-        )
-        
-      ),
+          elevation: 5.0,
+          onPressed: () async {
+            _modalResetUsuario(context, contextScaffold);
+          },
+          padding: EdgeInsets.all(5.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          color: Colors.blue[900],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Recuperar',
+                style: TextStyle(
+                  //color: Color(0xFFFF960A),
+                  color: Colors.white,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'Montserrat',
+                ),
+              )
+            ],
+          )),
     );
   }
 
@@ -472,132 +432,112 @@ class _LoginPageState extends State<LoginPage> {
       width: _screenSize.width * .3,
       height: _screenSize.height * .07,
       child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () async{
-          _modalCodigoUsuario(context);
-        },
-        padding: EdgeInsets.all(5.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: pfVerde,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Aquí',
-              style: TextStyle(
-                //color: Color(0xFFFF960A),
-                color: Colors.white,
-                fontSize: 14.0,
-                fontWeight: FontWeight.w700,
-                fontFamily: 'Montserrat',
-              ),
-            )
-
-          ],
-        )
-        
-      ),
+          elevation: 5.0,
+          onPressed: () async {
+            _modalCodigoUsuario(context);
+          },
+          padding: EdgeInsets.all(5.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          color: Colors.blue[900],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Aquí',
+                style: TextStyle(
+                  //color: Color(0xFFFF960A),
+                  color: Colors.white,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'Montserrat',
+                ),
+              )
+            ],
+          )),
     );
   }
 
-  
-  Widget _fragmentLogin(BuildContext context){
-
-    switch(_loginType){
+  Widget _fragmentLogin(BuildContext context) {
+    switch (_loginType) {
       case 1: //TRADICIONAL
         return _fragLoginTradicional(context);
-      break;
+        break;
       case 2: //BIOMETRICO
         return _fragLoginBiometrico(context);
-      break;
+        break;
       default:
         return _fragLoginTradicional(context);
-      break;
+        break;
     }
-
   }
 
-  Widget _fragLoginTradicional(BuildContext context){
-
+  Widget _fragLoginTradicional(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[
           SizedBox(height: 30.0),
-                  
           _buildEmailTF(),
-          
           SizedBox(height: 10.0),
-          
           _buildPasswordTF(),
-          
           _buildLoginBtn(Scaffold.of(context)),
         ],
       ),
     );
-
-
-     
-
   }
 
-  Widget _fragLoginBiometrico(BuildContext context){
-
+  Widget _fragLoginBiometrico(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[
           SizedBox(height: 50.0),
-
-          Text('Hola, ${Usuario.usr.nombreCompleto.split(' ')[0]} !', style: TextStyle(
-             color: pfVerde,
-             fontSize: 25.0,
-             fontWeight: FontWeight.w900,
-             fontFamily: 'Montserrat',
-             ),),
-
-          SizedBox(height: 15.0),
-
-          GestureDetector(
-            child: Text('Ingresar con contraseña', style: TextStyle(
-              color: pfGris,
-              decoration: TextDecoration.underline,
-              fontSize: 12,
-              fontWeight: FontWeight.normal,
+          Text(
+            'Hola, ${Usuario.usr.nombreCompleto.split(' ')[0]} !',
+            style: TextStyle(
+              color: pfVerde,
+              fontSize: 25.0,
+              fontWeight: FontWeight.w900,
               fontFamily: 'Montserrat',
-              )),
-            onTap: (){
+            ),
+          ),
+          SizedBox(height: 15.0),
+          GestureDetector(
+            child: Text('Ingresar con contraseña',
+                style: TextStyle(
+                  color: pfGris,
+                  decoration: TextDecoration.underline,
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'Montserrat',
+                )),
+            onTap: () {
               prefs.huella = false;
 
               Navigator.pop(context);
               Navigator.pushReplacementNamed(context, '/login');
-              
             },
           ),
-
-          
-
           SizedBox(height: 30.0),
-          
           _buildLoginHuellaBtn(context, Scaffold.of(context)),
-
         ],
       ),
     );
-
   }
 
-  Widget _footer(BuildContext context, ScaffoldState contextScaffold){
+  Widget _footer(BuildContext context, ScaffoldState contextScaffold) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-       
         Expanded(
           flex: 5,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Text('Olvidaste tu contraseña?', style: kLabelTinyHeader,),
+              Text(
+                'Olvidaste tu contraseña?',
+                style: kLabelTinyHeader,
+              ),
               _buildRecuperarBtn(contextScaffold)
             ],
           ),
@@ -606,7 +546,10 @@ class _LoginPageState extends State<LoginPage> {
           flex: 5,
           child: Column(
             children: <Widget>[
-              Text('Crear una cuenta?', style: kLabelTinyHeader,),
+              Text(
+                'Crear una cuenta?',
+                style: kLabelTinyHeader,
+              ),
               _buildRegistroBtn(context)
             ],
           ),
@@ -615,68 +558,68 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Builder(
         builder: (context) => Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 40.0,),
-                Text('\$', style: TextStyle(
-                    color: Color(0xFF21D702),
-                    fontSize: 100.0,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: 'Montserrat',
-                  )
-                ),
-
-                GestureDetector(
-                  onLongPress: (){
-
-                    if(developMode){
-                      modalInput(context, null, TextInputType.text, false, prefs.ip, prefs.ip, 'CANCELAR', 'GUARDAR', null, (texto){
-                        prefs.ip = texto;
-                        print(prefs.ip);
-                        setApi();
-                        Navigator.pop(context);
-                      });
-                    }
-                    
-                  },
-                  child:  Text('en 1 click ', style: TextStyle(
-                    color: pfAzul,
-                    fontSize: 35.0,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: 'Montserrat',
-                    )
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: 40.0,
                   ),
-                ),
-                  
-               _fragmentLogin(context),
-                
-                Expanded(child: SizedBox(),),
-                
-                _footer(context, Scaffold.of(context)),
-                
-                SizedBox(height: 25.0,),
-
-              ],
-            ),
-
-          )
-          
-        ),
+                  Text('\$',
+                      style: TextStyle(
+                        color: Color(0xFF21D702),
+                        fontSize: 100.0,
+                        fontWeight: FontWeight.w900,
+                        fontFamily: 'Montserrat',
+                      )),
+                  GestureDetector(
+                    onLongPress: () {
+                      if (developMode) {
+                        modalInput(
+                            context,
+                            null,
+                            TextInputType.text,
+                            false,
+                            prefs.ip,
+                            prefs.ip,
+                            'CANCELAR',
+                            'GUARDAR',
+                            null, (texto) {
+                          prefs.ip = texto;
+                          print(prefs.ip);
+                          setApi();
+                          Navigator.pop(context);
+                        });
+                      }
+                    },
+                    child: Text('en 1 click ',
+                        style: TextStyle(
+                          color: pfAzul,
+                          fontSize: 35.0,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: 'Montserrat',
+                        )),
+                  ),
+                  _fragmentLogin(context),
+                  Expanded(
+                    child: SizedBox(),
+                  ),
+                  _footer(context, Scaffold.of(context)),
+                  SizedBox(
+                    height: 25.0,
+                  ),
+                ],
+              ),
+            )),
       ),
-      
     );
-      
   }
 }

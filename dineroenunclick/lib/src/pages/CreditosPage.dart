@@ -195,10 +195,10 @@ class _CreditosPageState extends State<CreditosPage> {
     return Scaffold(
        appBar: AppBar(
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: pfAzul,
-        ),
-        title: Text('Créditos', style: TextStyle(
+        // iconTheme: IconThemeData(
+        //   color: pfAzul,
+        // ),
+        title: Text('Solicita', style: TextStyle(
           color: pfAzul,
           fontSize: 30.0,
           fontWeight: FontWeight.w900,

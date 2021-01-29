@@ -12,18 +12,12 @@ class PerfilPage extends StatefulWidget {
 }
 
 _itemOption(BuildContext context, String title, String goTo) {
-  final _screenSize = MediaQuery.of(context).size;
-
   return GestureDetector(
     onTap: () {
       Navigator.pushNamed(context, goTo);
     },
     child: Container(
-      width: _screenSize.width,
-      margin: EdgeInsets.only(
-        left: 10,
-        top: 30.0,
-      ),
+      padding: EdgeInsets.all(30.0),
       child: Text(title, style: kLabelPerfilOpcion),
     ),
   );
@@ -63,7 +57,7 @@ class _PerfilPageState extends State<PerfilPage> {
         title: Text(
           'Perfil',
           style: TextStyle(
-            color: pfVerde,
+            color: pfAzul,
             fontSize: 30.0,
             fontWeight: FontWeight.w900,
             fontFamily: 'Montserrat',
@@ -72,10 +66,39 @@ class _PerfilPageState extends State<PerfilPage> {
       ),
       body: Column(
         children: <Widget>[
-          _itemOption(context, 'Información de mi cuenta', '/informacion'),
-          _itemOption(context, 'Seguridad', '/seguridad'),
-          _itemOption(context, 'Centro de ayuda', '/ayuda'),
-          _itemOption(context, 'Mis créditos', '/misCreditos'),
+          Row(
+            children: [
+              Icon(
+                Icons.account_box,
+                color: Colors.grey,
+                size: 30.0,
+              ),
+              _itemOption(context, 'Información de mi cuenta', '/informacion'),
+            ],
+          ),
+          Row(
+            children: [
+              Icon(
+                Icons.security,
+                color: Colors.grey,
+                size: 30.0,
+              ),
+              _itemOption(context, 'Seguridad', '/seguridad'),
+            ],
+          ),
+
+          Row(
+            children: [
+              Icon(
+                Icons.phone_android,
+                color: Colors.grey,
+                size: 30.0,
+              ),
+              _itemOption(context, 'Centro de ayuda', '/ayuda'),
+            ],
+          ),
+
+          // _itemOption(context, 'Mis créditos', '/misCreditos'),
 
           Expanded(
             child: SizedBox(),
@@ -98,21 +121,21 @@ class _PerfilPageState extends State<PerfilPage> {
             height: 01.0,
           ),
           Text(
-            'Préstamo Feliz 2020',
+            'Préstamo Feliz 2021',
             style: kLabelTerminosCondiciones,
           ),
           SizedBox(
             height: 15.0,
           ),
-          Text(
-            'f',
-            style: TextStyle(
-              color: Color(0xFF1747AC),
-              fontSize: 25.0,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Montserrat',
-            ),
-          ),
+          // Text(
+          //   'f',
+          //   style: TextStyle(
+          //     color: Color(0xFF1747AC),
+          //     fontSize: 25.0,
+          //     fontWeight: FontWeight.w900,
+          //     fontFamily: 'Montserrat',
+          //   ),
+          // ),
           SizedBox(
             height: 15.0,
           ),
@@ -147,5 +170,3 @@ class _PerfilPageState extends State<PerfilPage> {
     );
   }
 }
-
-

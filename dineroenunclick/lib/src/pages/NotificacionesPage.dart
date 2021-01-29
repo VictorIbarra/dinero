@@ -13,36 +13,32 @@ class NotificacionesPage extends StatefulWidget {
 
 BoxDecoration myBoxDecoration(Color color) {
   return BoxDecoration(
-    border: Border.all(
-      width: 1.0,
-      color: color
-    ),
-    borderRadius: BorderRadius.all(
-        Radius.circular(5.0) //         <--- border radius here
-    ),
+    border: Border.all(width: 1.0, color: color),
+    borderRadius:
+        BorderRadius.all(Radius.circular(5.0) //         <--- border radius here
+            ),
   );
 }
 
-TextStyle _textStyle(String tipo, Color color){
-
+TextStyle _textStyle(String tipo, Color color) {
   TextStyle ts = TextStyle();
 
-  switch(tipo){
+  switch (tipo) {
     case 'hBold':
       ts = TextStyle(
         color: color,
         fontSize: 20.0,
         fontWeight: FontWeight.w900,
         fontFamily: 'Montserrat',
-      );    
-    break;
+      );
+      break;
     case 'hLight':
       ts = TextStyle(
-      color: color,
-      fontSize: 18.0,
-      fontFamily: 'Montserrat',
-    );
-    break;
+        color: color,
+        fontSize: 18.0,
+        fontFamily: 'Montserrat',
+      );
+      break;
     case 'sBold':
       ts = TextStyle(
         color: color,
@@ -50,130 +46,133 @@ TextStyle _textStyle(String tipo, Color color){
         fontWeight: FontWeight.w900,
         fontFamily: 'Montserrat',
       );
-    break;
+      break;
   }
 
   return ts;
-
 }
 
-Widget _itemNotificacion(BuildContext context, Promocion prom, Color color){
+Widget _itemNotificacion(BuildContext context, Promocion prom, Color color) {
   final _screenSize = MediaQuery.of(context).size;
   final marginTop = 5.0;
   final marginLeft = 10.0;
 
   List<Widget> textos = new List<Widget>();
 
-  if(prom.subTitulo == null || prom.subTitulo == ''){
-    textos.add(Container(
-                  margin: EdgeInsets.only(left: marginLeft),
-                  child: Text(prom.titulo, style: _textStyle('hBold', color)),
-                ));
-  }
-  else{
-    textos.add(Container(
-                  margin: EdgeInsets.only(left: marginLeft),
-                  child: Text(prom.titulo, style: _textStyle('hLight', color)),
-                ));
-    textos.add(SizedBox(height: 5.0,));
-    textos.add(Container(
-                  margin: EdgeInsets.only(left: marginLeft),
-                  child: Text(prom.subTitulo, style: _textStyle('sBold', Colors.black54)),
-                ));
+  textos.add(Container(
+    margin: EdgeInsets.only(left: marginLeft),
+    child: Text.rich(
+      TextSpan(
+        text: 'Tu cuenta de ',
+        children: <TextSpan>[
+          TextSpan(
+              text: prom.titulo,
+              style: TextStyle(
+                  fontStyle: FontStyle.italic, color: Colors.blue[900])),
+          TextSpan(
+              text: '   se encuentra',
+              style:
+                  TextStyle(fontStyle: FontStyle.italic, color: Colors.black)),
+        ],
+      ),
+    ),
+  ));
+  textos.add(SizedBox(
+    height: 5.0,
+  ));
+  textos.add(Container(
+    margin: EdgeInsets.only(left: marginLeft),
+    child: Text(prom.subTitulo, style: _textStyle('sBold', Colors.black54)),
+  ));
 
-  }
-
+  //borrar gesture cuando se regrese servicio original
   return GestureDetector(
-    onTap: (){
-      print('Seleccionaste ${prom.promocionId}');
-      Promocion.selPROM = prom;
-      Navigator.pushNamed(context, '/promocionDetalle', arguments: prom);
-      //Navigator.pushNamed(context, '/promocionDetalle');
-    },
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(top: marginTop),
-          width: _screenSize.width * .95,
-          height: _screenSize.height * .1,
-          decoration: myBoxDecoration(color),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 9,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: textos,
+      onTap: () {
+        print('Seleccionaste ${prom.promocionId}');
+        Promocion.selPROM = prom;
+        Navigator.pushNamed(context, '/promocionDetalle', arguments: prom);
+        //Navigator.pushNamed(context, '/promocionDetalle');
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: marginTop),
+            width: _screenSize.width * .95,
+            height: _screenSize.height * .1,
+            decoration: myBoxDecoration(color),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 9,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: textos,
+                  ),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(Icons.keyboard_arrow_right, color: color,),
-                  ],
-                ),
-              ),
-            ],
+                // Expanded(
+                //   flex: 1,
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: <Widget>[
+                //       Icon(Icons.keyboard_arrow_right, color: color,),
+                //     ],
+                //   ),
+                // ),
+              ],
+            ),
           ),
-        ),
-      ],
-    )
-  );
-
+        ],
+      ));
 }
 
-Widget _loadCreditos(BuildContext context){
+Widget _loadCreditos(BuildContext context) {
   return FutureBuilder(
     future: PromocionProvider.creditosCliente(Usuario.usr.clienteId),
     builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-        if(snapshot.hasData){
-          return _drawVisitanteItems(snapshot.data, context);
-        }
-        else{
-          return Container(
-            height: 400.0,
-            child: Center( child: CircularProgressIndicator())
-          );
-        }
-      },
+      if (snapshot.hasData) {
+        return _drawVisitanteItems(snapshot.data, context);
+      } else {
+        return Container(
+            height: 400.0, child: Center(child: CircularProgressIndicator()));
+      }
+    },
   );
 }
 
-Widget _drawVisitanteItems(List<Promocion> creditos, BuildContext context){
-
-    return ListView.separated(
-      itemCount: creditos.length,
-      itemBuilder: (BuildContext context, int index) {
-        return _itemNotificacion(context, creditos[index], pfAzul);//_drawVisitante(creditos[index], context);
-      },
-      separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10,),
-    );
-
-  }
-
-
-
+Widget _drawVisitanteItems(List<Promocion> creditos, BuildContext context) {
+  return ListView.separated(
+    itemCount: creditos.length,
+    itemBuilder: (BuildContext context, int index) {
+      return _itemNotificacion(context, creditos[index],
+          pfAzul); //_drawVisitante(creditos[index], context);
+    },
+    separatorBuilder: (BuildContext context, int index) => SizedBox(
+      height: 10,
+    ),
+  );
+}
 
 class _NotificacionesPageState extends State<NotificacionesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        title: Text('Notificaciones', style: TextStyle(
-             color: pfVerde,
-             fontSize: 30.0,
-             fontWeight: FontWeight.w900,
-             fontFamily: 'Montserrat',
-             ),),
-      ),
-      body: _loadCreditos(context)
-      /*body: SingleChildScrollView(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Notificaciones',
+            style: TextStyle(
+              color: pfAzul,
+              fontSize: 30.0,
+              fontWeight: FontWeight.w900,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+        ),
+        body: _loadCreditos(context)
+        /*body: SingleChildScrollView(
         child: Column(
           
           mainAxisAlignment: MainAxisAlignment.start,
@@ -210,7 +209,7 @@ class _NotificacionesPageState extends State<NotificacionesPage> {
           ],
         ),
       ),*/
-      
-    );
+
+        );
   }
 }
