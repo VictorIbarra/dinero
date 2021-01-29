@@ -159,6 +159,7 @@ class _NotificacionesPageState extends State<NotificacionesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
           title: Text(

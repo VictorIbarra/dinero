@@ -191,6 +191,7 @@ class _CreditosPageState extends State<CreditosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         // iconTheme: IconThemeData(
         //   color: pfAzul,

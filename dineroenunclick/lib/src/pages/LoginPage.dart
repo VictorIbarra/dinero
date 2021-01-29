@@ -573,41 +573,48 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 40.0,
                   ),
-                  Text('\$',
-                      style: TextStyle(
-                        color: Color(0xFF21D702),
-                        fontSize: 100.0,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: 'Montserrat',
-                      )),
-                  GestureDetector(
-                    onLongPress: () {
-                      if (developMode) {
-                        modalInput(
-                            context,
-                            null,
-                            TextInputType.text,
-                            false,
-                            prefs.ip,
-                            prefs.ip,
-                            'CANCELAR',
-                            'GUARDAR',
-                            null, (texto) {
-                          prefs.ip = texto;
-                          print(prefs.ip);
-                          setApi();
-                          Navigator.pop(context);
-                        });
-                      }
-                    },
-                    child: Text('en 1 click ',
-                        style: TextStyle(
-                          color: pfAzul,
-                          fontSize: 35.0,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: 'Montserrat',
-                        )),
+                  // Text('\$',
+                  //     style: TextStyle(
+                  //       color: Color(0xFF21D702),
+                  //       fontSize: 100.0,
+                  //       fontWeight: FontWeight.w900,
+                  //       fontFamily: 'Montserrat',
+                  //     )),
+                  // GestureDetector(
+                  //   onLongPress: () {
+                  //     if (developMode) {
+                  //       modalInput(
+                  //           context,
+                  //           null,
+                  //           TextInputType.text,
+                  //           false,
+                  //           prefs.ip,
+                  //           prefs.ip,
+                  //           'CANCELAR',
+                  //           'GUARDAR',
+                  //           null, (texto) {
+                  //         prefs.ip = texto;
+                  //         print(prefs.ip);
+                  //         setApi();
+                  //         Navigator.pop(context);
+                  //       });
+                  //     }
+                  //   },
+                  //   child: Text('en 1 click ',
+                  //       style: TextStyle(
+                  //         color: pfAzul,
+                  //         fontSize: 35.0,
+                  //         fontWeight: FontWeight.w900,
+                  //         fontFamily: 'Montserrat',
+                  //       )),
+                  // ),
+
+                  Image.asset(
+                    'assets/dinero1click.png',
+                    height: 250,
+                    width: 250,
                   ),
+
                   _fragmentLogin(context),
                   Expanded(
                     child: SizedBox(),
@@ -622,4 +629,13 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  //  Widget _logoImage() {
+  //   return CircleAvatar(
+  //     radius: 120.0,
+  //     backgroundColor: Colors.white,
+  //     backgroundImage: AssetImage('assets/dinero1click.png'),
+  //   );
+  // }
+
 }
