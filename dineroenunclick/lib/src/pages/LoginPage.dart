@@ -445,7 +445,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Aquí',
+                'Crear Cuenta',
                 style: TextStyle(
                   //color: Color(0xFFFF960A),
                   color: Colors.white,
@@ -547,7 +547,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: <Widget>[
               Text(
-                'Crear una cuenta?',
+                'No tienes cuenta?',
                 style: kLabelTinyHeader,
               ),
               _buildRegistroBtn(context)
