@@ -18,6 +18,7 @@ class PromocionPage extends StatefulWidget {
 
 class _PromocionPageState extends State<PromocionPage>
     with AutomaticKeepAliveClientMixin<PromocionPage> {
+  final codigoKey = GlobalKey<FormState>();
   double mensual = 3000 / 24;
   double monto = 3000;
   double erogacionFinal = 0;
@@ -37,43 +38,72 @@ class _PromocionPageState extends State<PromocionPage>
 
   Promocion prom = new Promocion();
 
-  _modalInfoAmpliacion(BuildContext context) async {
-    modalConfirmacion(
-        context, 'Confirmación !', 'Esta seguro de generar este crédito?', () {
-      productoId = _getProductoIdByPlazo(
-          plazosVal.round(), prom.productos, prom.frecuencia);
+  // _modalInfoAmpliacion(BuildContext context) async {
+  //   modalConfirmacion(
+  //       context, 'Confirmación !', 'Esta seguro de generar este crédito?', () {
+  //     productoId = _getProductoIdByPlazo(
+  //         plazosVal.round(), prom.productos, prom.frecuencia);
 
-      //Navigator.pop(context);
-      Future a = modalLoading(context, 'Generando credito ...', true);
+  //     //Navigator.pop(context);
+  //     Future a = modalLoading(context, 'Generando credito ...', true);
 
-      CreditoProvider.altaCreditoPromocion(Usuario.usr.clienteId,
-              prom.promocionId, productoId, monto, erogacionFinal)
-          .then((obj) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pushReplacementNamed(context, '/misCreditos');
-      });
-    });
+  //     CreditoProvider.altaCreditoPromocion(Usuario.usr.clienteId,
+  //             prom.promocionId, productoId, monto, erogacionFinal)
+  //         .then((obj) {
+  //       Navigator.pop(context);
+  //       Navigator.pop(context);
+  //       Navigator.pushReplacementNamed(context, '/misCreditos');
+  //     });
+  //   });
+  // }
 
-    /*modalInput(context, null, TextInputType.number, true, 'Confirmación !', 'Ingresa tu NIP', 'Terminos y Condiciones', 'Confirmar', 
-      (){ 
-        Navigator.pushNamed(context, '/terminos');
-      }, 
-      (texto){
-        
-        productoId = _getProductoIdByPlazo(plazosVal.round(), prom.productos, prom.frecuencia);
+  _modalAceptarCreditoUsuario(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Introduce tu teléfono'),
+            content: Form(
+              // key: codigoKey,
+              child: TextFormField(
+                textCapitalization: TextCapitalization.characters,
+                autofocus: true,
+                validator: (value) {
+                  return '10 digitos';
+                },
+                // controller: _codigoController,
+                decoration: InputDecoration(hintText: "10 digitos"),
+                onChanged: (valor) {
+                  // _codigo = valor;
+                  //_codigo = 'UY25P3';
+                },
+              ),
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('ACEPTAR'),
+                onPressed: () {
+                  /*setState(() {
+                    _codigo = 'UY25P3';                    
+                  });*/
 
-        //Navigator.pop(context);
-        Future a = modalLoading(context, 'Generando credito ...', true);
-
-        CreditoProvider.altaCreditoPromocion(Usuario.usr.clienteId, prom.promocionId, productoId, monto, erogacionFinal).then((obj){
-          Navigator.pop(context);
-          Navigator.pop(context);
-          Navigator.pushReplacementNamed(context, '/misCreditos');
+                  // if (_codigo.length != 6) {
+                  //   codigoKey.currentState.validate();
+                  // } else {
+                  //   wsUsuario.validaCodigoUsuario(_codigo).then((obj) {
+                  //     if (obj.idCliente != null) {
+                  //       Navigator.pop(context);
+                  //       Navigator.pushNamed(context, '/registro');
+                  //     } else {
+                  //       codigoKey.currentState.validate();
+                  //     }
+                  //   });
+                  // }
+                },
+              )
+            ],
+          );
         });
-
-      }
-    );*/
   }
 
   Widget _buildContinuarBtn(BuildContext context) {
@@ -85,7 +115,8 @@ class _PromocionPageState extends State<PromocionPage>
       child: RaisedButton(
           elevation: 5.0,
           onPressed: () async {
-            _modalInfoAmpliacion(context);
+            // _modalInfoAmpliacion(context);
+            _modalAceptarCreditoUsuario(context);
           },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(

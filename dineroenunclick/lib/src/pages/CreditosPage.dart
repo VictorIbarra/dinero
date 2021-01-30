@@ -132,32 +132,41 @@ Widget _itemCredito(BuildContext context, Credito item) {
   //       ],
   //     )));
 
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[
-      Container(
-        margin: EdgeInsets.only(top: marginTop),
-        width: _screenSize.width * .95,
-        height: _screenSize.height * .15,
-        decoration: myBoxDecoration(Colors.green),
-        child: Row(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: textosL,
-            ),
-            Expanded(
-              child: SizedBox(),
-            ),
-            Column(
+  return GestureDetector(
+    onTap: () {
+      // print('Seleccionaste ${prom.promocionId}');
+      // Promocion.selPROM = prom;
+      // Navigator.pushNamed(context, '/promocionDetalle', arguments: prom);
+      //Navigator.pushNamed(context, '/promocionDetalle');
+      print('enviar id ');
+    },
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(top: marginTop),
+          width: _screenSize.width * .95,
+          height: _screenSize.height * .15,
+          decoration: myBoxDecoration(Colors.green),
+          child: Row(
+            children: <Widget>[
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: textosR),
-          ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: textosL,
+              ),
+              Expanded(
+                child: SizedBox(),
+              ),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: textosR),
+            ],
+          ),
         ),
-      ),
-    ],
+      ],
+    ),
   );
 }
 
