@@ -1,3 +1,5 @@
+import 'package:dineroenunclick/src/models/UsuarioModel.dart';
+import 'package:dineroenunclick/src/providers/AyudaProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
@@ -46,8 +48,22 @@ class _AyudaPageState extends State<AyudaPage> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 15.0, top: 40.0),
-        child: Column(
+          padding: EdgeInsets.only(left: 15.0, top: 40.0), child: _loadData()),
+    );
+  }
+
+  Widget _loadData() {
+    return FutureBuilder(
+      future: AyudaProvider.emailphone(Usuario.usr.clienteId),
+      builder: (BuildContext context, AsyncSnapshot<AyudaResponse> snapshot) {
+        if (!snapshot.hasData) {
+          return Container(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        return Column(
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -56,7 +72,7 @@ class _AyudaPageState extends State<AyudaPage> {
                   'Correo',
                   style: TextStyle(color: Colors.blue[900], fontSize: 30.0),
                 ),
-                _email(),
+                _email(snapshot.data)
               ],
             ),
             SizedBox(
@@ -69,34 +85,39 @@ class _AyudaPageState extends State<AyudaPage> {
                   'Telefono',
                   style: TextStyle(color: Colors.blue[900], fontSize: 30.0),
                 ),
-                _phone(),
+                _phone(snapshot.data)
               ],
-            ),
+            )
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 
-  Widget _email() {
+  Widget _email(AyudaResponse res) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.email),
-        FlatButton(
-          onPressed: () {
-            setState(() {
-              _customLaunch(
-                  'mailto:atencionusuarios@prestamofeliz.com.mx?subject=test%20subject&body=test%20body');
-              _makeCall(
-                  'mailto:atencionusuarios@prestamofeliz.com.mx?subject=test%20subject&body=test%20body');
-            });
-          },
-          padding: EdgeInsets.only(right: 0.0),
-          child: Text(
-            '    atencionusuarios@prestamofeliz.com.mx',
-            style: TextStyle(fontSize: 15.0, color: Colors.black),
-          ),
+        Icon(
+          Icons.email,
+          color: pfAzul,
         ),
+        FlatButton(
+            onPressed: () {
+              setState(() {
+                if (res.data?.first?.email != null) {
+                  _customLaunch(
+                      'mailto:${res.data.first.email}?subject=test%20subject&body=test%20body');
+                  _makeCall(
+                      'mailto:${res.data.first.email}?subject=test%20subject&body=test%20body');
+                }
+              });
+            },
+            child: Text(
+              res.data?.first?.email ?? 'sin email',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20.0, color: Colors.black),
+            ))
       ],
     );
   }
@@ -109,19 +130,26 @@ class _AyudaPageState extends State<AyudaPage> {
     }
   }
 
-  Widget _phone() {
+  Widget _phone(AyudaResponse res) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.phone),
+        Icon(
+          Icons.phone,
+          color: pfAzul,
+        ),
         FlatButton(
           onPressed: () {
             setState(() {
-              _makeCall('tel:83904379');
+              if (res.data?.first?.telefono != null) {
+                final tel = res.data.first.telefono.split('-').join('');
+                _makeCall('tel:$tel');
+              }
             });
           },
-          padding: EdgeInsets.only(right: 0.0),
           child: Text(
-            '                       83904379',
+            res.data?.first?.telefono ?? 'sin telefono',
+            textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20.0, color: Colors.black),
           ),
         ),
