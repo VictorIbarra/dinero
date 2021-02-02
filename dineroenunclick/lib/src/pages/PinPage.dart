@@ -26,12 +26,45 @@ class _PinPageState extends State<PinPage>
     Widget _loadUrl(BuildContext context){
       return FutureBuilder(
         future: UsuarioProvider.pinUrl(Usuario.usr.clienteId, prefs.latitud, prefs.longitud),
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<PinData> snapshot) {
             if(snapshot.hasData){
-              return WebView(
-                initialUrl: snapshot.data,
-                javascriptMode: JavascriptMode.unrestricted,
-              );
+              switch (snapshot.data.idEstatus){
+                case 0:
+                  return Container(
+                    height: double.infinity,
+                    child: Center(child: Text('Usuario sin una membresia', textScaleFactor: 1.5, textAlign: TextAlign.center))
+                  );
+                  break;
+                case 1:
+                  return WebView(
+                    initialUrl: snapshot.data.url,
+                    javascriptMode: JavascriptMode.unrestricted,
+                  );
+                  break;
+                case 2:
+                  return Container(
+                    height: double.infinity,
+                    child: Center(child: Text('Su membresia se encuentra vencida', textScaleFactor: 1.5, textAlign: TextAlign.center))
+                  );
+                  break;
+                case 3:
+                  return Container(
+                    height: double.infinity,
+                    child: Center(child: Text('Sumembresia se encuentra bloqueada', textScaleFactor: 1.5, textAlign: TextAlign.center))
+                  );
+                  break;
+                default:
+                  return Container(
+                    height: double.infinity,
+                    child: Center(
+                      child: Text(
+                        'Ocurrio un problema al obtener el estado de su membresia',
+                        textScaleFactor: 1.5,
+                        textAlign: TextAlign.center
+                        )
+                      )
+                  );
+              }
             }
             else{
               return Container(

@@ -166,17 +166,31 @@ class UsuarioProvider{
 
   }
 
-  static Future<String> pinUrl(int idCliente, String latitud, String longitud) async{
+  static Future<PinData> pinUrl(int idCliente, String latitud, String longitud) async {
 
     final url = '$api_url/PiN_URL?idCliente=$idCliente&latitud=$latitud&longitud=$longitud';
     final resp = await http.get(url);
     final decodedData = json.decode(resp.body);
-    final result = decodedData['Data'];
+    final result = decodedData['Data'] == null ? null : PinData.fromJson(decodedData['Data']);
 
     print('$decodedData url de la web view de la api de PIN');
 
-    return result['PIN_URL'] == null ? null : result['PIN_URL'];
-
+    return result;
   }
+}
 
+class PinData {
+  final int idEstatus;
+  final String estatus;
+  final String url;
+
+  PinData({this.idEstatus, this.estatus, this.url});
+
+  factory PinData.fromJson(Map<String, dynamic> json) {
+    return PinData(
+        idEstatus: json['IdEstatus'],
+        estatus: json['Estatus'],
+        url: json['PIN_URL']
+      );
+  }
 }
