@@ -31,6 +31,7 @@ dependencies:
   geolocator: ^5.3.2+2
   http:
   url_launcher: ^5.5.0
+  firebase_messaging: ^7.0.3
 
 dev_dependencies:
   flutter_test:
