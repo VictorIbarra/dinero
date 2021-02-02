@@ -175,7 +175,7 @@ class UsuarioProvider{
 
     print('$decodedData url de la web view de la api de PIN');
 
-    return result;
+    return result['PIN_URL'] == null ? null : result['PIN_URL'];
 
   }
 
