@@ -37,15 +37,15 @@ class _Sucursal {
 
   factory _Sucursal.fromJson(Map<String, dynamic> json) {
     return _Sucursal(
-        id: json['IdSucursal'],
-        sucursal: json['Sucursal'],
-        telefono: json['telefono'],
-        gerente: json['gerente'],
-        email: json['email'],
-        direccion: json['direccion'],
-        colonia: json['Colonia'],
-        ciudad: json['Ciudad'],
-        estado: json['Estato']);
+        id             : json['IdSucursal'],
+        sucursal       : json['Sucursal'],
+        telefono       : json['telefono'],
+        gerente        : json['gerente'],
+        email          : json['email'],
+        direccion      : json['direccion'],
+        colonia        : json['Colonia'],
+        ciudad         : json['Ciudad'],
+        estado         : json['Estato']);
   }
 }
 

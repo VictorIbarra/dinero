@@ -1,9 +1,9 @@
-import 'package:dineroenunclick/src/models/PromocionModel.dart';
 import 'package:dineroenunclick/src/models/UsuarioModel.dart';
-import 'package:dineroenunclick/src/providers/PromocionProvider.dart';
+import 'package:dineroenunclick/src/providers/NotificasionProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
+import 'package:dineroenunclick/src/models/NotificasionModel.dart';
 
 class NotificacionesPage extends StatefulWidget {
   NotificacionesPage({Key key}) : super(key: key);
@@ -52,7 +52,7 @@ TextStyle _textStyle(String tipo, Color color) {
   return ts;
 }
 
-Widget _itemNotificacion(BuildContext context, Promocion prom, Color color) {
+Widget _itemNotificacion(BuildContext context, Notificasion prom, Color color) {
   final _screenSize = MediaQuery.of(context).size;
   final marginTop = 5.0;
   final marginLeft = 10.0;
@@ -66,7 +66,7 @@ Widget _itemNotificacion(BuildContext context, Promocion prom, Color color) {
         text: 'Tu cuenta de ',
         children: <TextSpan>[
           TextSpan(
-              text: prom.titulo,
+              text: '\$${prom.monto.toString()}',
               style: TextStyle(
                   fontStyle: FontStyle.italic, color: Colors.blue[900])),
           TextSpan(
@@ -82,16 +82,16 @@ Widget _itemNotificacion(BuildContext context, Promocion prom, Color color) {
   ));
   textos.add(Container(
     margin: EdgeInsets.only(left: marginLeft),
-    child: Text(prom.subTitulo, style: _textStyle('sBold', Colors.black54)),
+    child: Text(prom.estatus, style: _textStyle('sBold', Colors.black54)),
   ));
 
   //borrar gesture cuando se regrese servicio original
   return GestureDetector(
       onTap: () {
-        print('Seleccionaste ${prom.promocionId}');
-        Promocion.selPROM = prom;
-        Navigator.pushNamed(context, '/promocionDetalle', arguments: prom);
-        //Navigator.pushNamed(context, '/promocionDetalle');
+        // print('Seleccionaste ${prom.promocionId}');
+        // Promocion.selPROM = prom;
+        // Navigator.pushNamed(context, '/promocionDetalle', arguments: prom);
+        // //Navigator.pushNamed(context, '/promocionDetalle');
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +129,7 @@ Widget _itemNotificacion(BuildContext context, Promocion prom, Color color) {
 
 Widget _loadCreditos(BuildContext context) {
   return FutureBuilder(
-    future: PromocionProvider.creditosCliente(Usuario.usr.clienteId),
+    future: NotificasionProvider.creditosCliente(Usuario.usr.clienteId),
     builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
       if (snapshot.hasData) {
         return _drawVisitanteItems(snapshot.data, context);
@@ -141,7 +141,7 @@ Widget _loadCreditos(BuildContext context) {
   );
 }
 
-Widget _drawVisitanteItems(List<Promocion> creditos, BuildContext context) {
+Widget _drawVisitanteItems(List<Notificasion> creditos, BuildContext context) {
   return ListView.separated(
     itemCount: creditos.length,
     itemBuilder: (BuildContext context, int index) {
