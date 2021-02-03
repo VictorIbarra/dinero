@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>757499387984-7teo7jvaslu2aeldprodot4qi6iclo4u.apps.googleusercontent.com</string>
+	<string>757499387984-1abduvjvpis29up74tbg7g2e10dqpv97.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.757499387984-7teo7jvaslu2aeldprodot4qi6iclo4u</string>
+	<string>com.googleusercontent.apps.757499387984-1abduvjvpis29up74tbg7g2e10dqpv97</string>
 	<key>API_KEY</key>
 	<string>AIzaSyB2WQKhgkQmG6-yGfgyCOQUValUKSkX5RU</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.masdineroenunclick.masdinero</string>
+	<string>com.prestamofeliz.dineroenunclick</string>
 	<key>PROJECT_ID</key>
 	<string>dineroenunclick-9cdfe</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:757499387984:ios:d05bcee963bef1593ab155</string>
+	<string>1:757499387984:ios:acb725c8d64c28ca3ab155</string>
 </dict>
 </plist>
