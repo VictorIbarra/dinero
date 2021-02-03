@@ -1,115 +1,77 @@
-import 'dart:convert';
+class Credito {
+  final String idSolicutud;
+  final int idCuenta;
+  final double capital;
+  final int plazo;
+  final double disponible;
+  final double pago;
+  final String frecuencia;
+  final double tasa;
+  final int idProducto;
+  final int idConvenio;
+  final int idTipoProducto;
+  final int idCliente;
+  final double saldoCredito;
+  final String clabe;
+  final int idSucursal;
+  final int mesesSaldados;
+  final int mesesVida;
+  final int pagosRealizados;
+  final int diasMora;
+  final double saldoCapital;
+  final double saldoIntereseIVA;
 
-class Credito{
+  Credito(
+      {this.idSolicutud,
+      this.idCuenta,
+      this.capital,
+      this.plazo,
+      this.disponible,
+      this.pago,
+      this.frecuencia,
+      this.tasa,
+      this.idProducto,
+      this.idConvenio,
+      this.idTipoProducto,
+      this.idCliente,
+      this.saldoCredito,
+      this.clabe,
+      this.idSucursal,
+      this.mesesSaldados,
+      this.mesesVida,
+      this.pagosRealizados,
+      this.diasMora,
+      this.saldoCapital,
+      this.saldoIntereseIVA});
 
-  int idCuenta;
-  int idProducto;
-  double capital;
-  double erogacion;
-  int idConvenio;
-  double tasa;
-  int pagos;
-  String frecuencia;
-  int pendientes;
-  int pagados;
-  double saldo;
-  String fchRecibo;
-  String clabe;
-  String banco;
-  int idPromocion;
-
-  Credito({
-    this.idCuenta,
-    this.idProducto,
-    this.capital,
-    this.erogacion,
-    this.idConvenio,
-    this.tasa,
-    this.pagos,
-    this.frecuencia,
-    this.pendientes,
-    this.pagados,
-    this.saldo,
-    this.fchRecibo,
-    this.clabe,
-    this.banco,
-    this.idPromocion
-  });
-
-  Credito.fromJsonMap(Map<String, dynamic> json, String type){
-
-    switch(type){
-      case 'CC-1':
-        idCuenta    = int.parse(json['IdCuenta'].toString().split('.')[0]);
-        idProducto  = json['IdProducto'];
-        capital     = json['Capital'];
-        erogacion   = json['Erogacion'];
-        idConvenio  = json['IdConvenio'];
-        tasa        = json['Tasa'];
-        pagos       = int.parse(json['Pagos'].toString().split('.')[0]);
-        frecuencia  = json['Frecuencia'];
-        pendientes  = json['Pendientes'];
-        pagados     = json['Pagados'];
-        saldo       = json['Saldo'];
-        fchRecibo   = json['fch_Recibo'].toString().split('T')[0];
-        clabe       = json['Clabe'];
-        banco       = json['Banco'];
-      break;
-    }
+  factory Credito.fromJson(Map<String, dynamic> json) {
+    return new Credito(
+        idSolicutud: json['idsolicitud'],
+        idCuenta: json['idCuenta'],
+        capital: json['Capital'],
+        plazo: json['Plazo'],
+        disponible: json['Disponible'],
+        pago: json['Pago'],
+        frecuencia: json['Frecuencia'],
+        tasa: json['Tasa'],
+        idProducto: json['IdProducto'],
+        idConvenio: json['IdConvenio'],
+        idTipoProducto: json['TipoProducto_Id'],
+        idCliente: json['idCliente'],
+        saldoCredito: json['SaldoCredito'],
+        clabe: json['Clabe'],
+        idSucursal: json['IdSucursal'],
+        mesesSaldados: json['MesesSaldados'],
+        mesesVida: json['MesesVida'],
+        pagosRealizados: json['PagosRealizados'],
+        diasMora: json['DiasMora'],
+        saldoCapital: json['sdo_Capital'],
+        saldoIntereseIVA: json['sdo_InteresIva']);
   }
 
-  static List<Credito> fromJsonList(List<dynamic> jsonList, String serviceCode){
-    
-    List<Credito> items = new List();
-    
-    try{
-      
-      for(var item in jsonList){
-        final usr = new Credito.fromJsonMap(item, serviceCode);
-        items.add(usr);
-      }
-
-      return items;
-    }
-    catch(Exception){
-      return items;
-    }
+  static List<Credito> fromJsonList(List<dynamic> jsonList) {
+    List<Credito> items = new List<Credito>();
+    items = jsonList.map((e) => Credito.fromJson(e)).toList();
+    return items;
   }
-
-  Map<String, dynamic> toJsonFake() =>{
-    'Cliente_Id': idCuenta,
-    'Promocion_Id': idProducto,
-    'Capital': capital,
-    'Erogacion': erogacion,
-    'Pendientes': pendientes,
-    'Pagados': pagados,
-    'Clabe': clabe,
-  };
-
-  Map<String, dynamic> toJsonAltaCreditoPromocion() =>{
-    'Cliente_Id': idCuenta,
-    'Promocion_Id': idPromocion,
-    'Producto_Id': idProducto,
-    'Capital': capital,
-    'Erogacion': erogacion,
-  };
-
-  
-
-}
-
-String creditoModelToJson(Credito data, String type){
-
-  switch(type){
-    case 'alta_fake':
-      return json.encode(data.toJsonFake());
-    break;
-
-    case 'alta':
-      return json.encode(data.toJsonAltaCreditoPromocion());
-    break;
-  }
-  
-  
-
 }

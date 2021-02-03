@@ -57,14 +57,6 @@ Widget _itemCredito(BuildContext context, Credito item) {
   final marginTop = 5.0;
   final marginLeft = 10.0;
 
-  double montoCredito = item.capital;
-  double montoPendiente = item.saldo;
-  double montoPago = item.erogacion;
-  String fecPago = item.fchRecibo.toString();
-  int pagosRealizados = item.pagados;
-  int pagosTotales = item.pagos;
-  // String clabe = item.frecuencia;
-
   List<Widget> textosL = new List<Widget>();
   List<Widget> textosR = new List<Widget>();
 
@@ -73,16 +65,17 @@ Widget _itemCredito(BuildContext context, Credito item) {
     child: Column(
       children: [
         Text('Crédito', style: _textStyle('hBold', pfAzul)),
-        Text('\$${comma(montoCredito.round().toString())}',
+        Text('\$${comma(item.saldoCredito?.toString())}',
             style: TextStyle(color: Colors.blue[900], fontSize: 20.0)),
       ],
+      mainAxisAlignment: MainAxisAlignment.center,
     ),
   ));
   textosL.add(Container(
     margin: EdgeInsets.only(left: marginLeft),
     child: Text(
-      '24 meses',
-      style: TextStyle(color: Colors.black, fontSize: 15.0),
+      '${item.plazo} meses',
+      style: TextStyle(color: Colors.black, fontSize: 12.0),
     ),
   ));
   textosL.add(Container(
@@ -94,7 +87,7 @@ Widget _itemCredito(BuildContext context, Credito item) {
             style: TextStyle(color: Colors.black, fontSize: 15.0),
           ),
           Text(
-            '\$${comma(montoPago.round().toString())}',
+            '\$${comma(item.pago?.toString())}',
             style: TextStyle(fontSize: 15.0),
           ),
         ],
@@ -105,7 +98,7 @@ Widget _itemCredito(BuildContext context, Credito item) {
     child: Column(
       children: [
         Text('Disponible', style: _textStyle('hBold', pfAzul)),
-        Text('\$${comma(montoPago.round().toString())}',
+        Text('\$${comma(item.disponible?.toString())}',
             style: TextStyle(color: Colors.blue[900], fontSize: 20.0)),
         //espacios
         Text(''),
@@ -152,7 +145,7 @@ Widget _itemCredito(BuildContext context, Credito item) {
             children: <Widget>[
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: textosL,
               ),
               Expanded(

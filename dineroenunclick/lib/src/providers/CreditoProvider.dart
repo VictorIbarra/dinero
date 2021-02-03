@@ -3,28 +3,22 @@ import 'package:dineroenunclick/src/models/CreditoModel.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:http/http.dart' as http;
 
+class CreditoProvider {
+  CreditoProvider();
 
-class CreditoProvider{
-
-  CreditoProvider(){
-
-  }
-
-  static Future<List<Credito>> creditosCliente(int clienteId) async{
-
+  static Future<List<Credito>> creditosCliente(int clienteId) async {
     final url = '$api_url/CreditosCliente?Cliente_Id=$clienteId';
     final resp = await http.get(url);
     final decodedData = json.decode(resp.body);
-    final result = Credito.fromJsonList(decodedData['Data'], 'CC-1');
+    final result = Credito.fromJsonList(decodedData['Data']);
 
     print(decodedData);
 
     return result;
-
   }
 
-  static Future<Credito> altaCreditoPromocion(int clienteId, int promocionId, int productoId, double capital, double erogacion) async{
-
+/*   static Future<Credito> altaCreditoPromocion(int clienteId, int promocionId,
+      int productoId, double capital, double erogacion) async {
     Credito cred = new Credito();
     cred.idCuenta = clienteId;
     cred.idPromocion = promocionId;
@@ -42,20 +36,21 @@ class CreditoProvider{
 
     print(decodedData);
 
-    if(decodedData['Error'] == 0){
+    if (decodedData['Error'] == 0) {
       return cred;
-    }
-    else{
+    } else {
       return new Credito();
     }
-    
-    
-    
+  } */
 
-  }
-
-  static Future<Credito> altaCredito(int clienteId, int promocionId, double capital, double erogacion, int pendientes, int pagados, String clabe) async{
-
+/*   static Future<Credito> altaCredito(
+      int clienteId,
+      int promocionId,
+      double capital,
+      double erogacion,
+      int pendientes,
+      int pagados,
+      String clabe) async {
     Credito cred = new Credito();
     cred.idCuenta = clienteId;
     cred.idProducto = promocionId;
@@ -73,17 +68,10 @@ class CreditoProvider{
 
     print(decodedData);
 
-    if(decodedData['Error'] == 0){
+    if (decodedData['Error'] == 0) {
       return cred;
-    }
-    else{
+    } else {
       return new Credito();
     }
-    
-    
-    
-
-  }
-
-
+  } */
 }
