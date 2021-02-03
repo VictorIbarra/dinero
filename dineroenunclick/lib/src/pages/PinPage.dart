@@ -32,7 +32,7 @@ class _PinPageState extends State<PinPage>
                 case 0:
                   return Container(
                     height: double.infinity,
-                    child: Center(child: Text('Usuario sin una membresia', textScaleFactor: 1.5, textAlign: TextAlign.center))
+                    child: Center(child: Text('Usuario sin una membresía', textScaleFactor: 1.5, textAlign: TextAlign.center))
                   );
                   break;
                 case 1:
@@ -44,13 +44,13 @@ class _PinPageState extends State<PinPage>
                 case 2:
                   return Container(
                     height: double.infinity,
-                    child: Center(child: Text('Su membresia se encuentra vencida', textScaleFactor: 1.5, textAlign: TextAlign.center))
+                    child: Center(child: Text('Su membresía se encuentra vencida', textScaleFactor: 1.5, textAlign: TextAlign.center))
                   );
                   break;
                 case 3:
                   return Container(
                     height: double.infinity,
-                    child: Center(child: Text('Sumembresia se encuentra bloqueada', textScaleFactor: 1.5, textAlign: TextAlign.center))
+                    child: Center(child: Text('Su membresía se encuentra bloqueada', textScaleFactor: 1.5, textAlign: TextAlign.center))
                   );
                   break;
                 default:
@@ -58,7 +58,7 @@ class _PinPageState extends State<PinPage>
                     height: double.infinity,
                     child: Center(
                       child: Text(
-                        'Ocurrio un problema al obtener el estado de su membresia',
+                        'Ocurrio un problema al obtener el estado de su membresía',
                         textScaleFactor: 1.5,
                         textAlign: TextAlign.center
                         )

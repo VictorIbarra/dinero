@@ -114,9 +114,9 @@ class _AyudaPageState extends State<AyudaPage> {
               });
             },
             child: Text(
-              res.data?.first?.email ?? 'sin email',
+              res.data?.first?.email ?? 'direcciongeneral@prestamofeliz.com.mx',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20.0, color: Colors.black),
+              style: TextStyle(fontSize: 10.0, color: Colors.black),
             ))
       ],
     );
@@ -148,7 +148,7 @@ class _AyudaPageState extends State<AyudaPage> {
             });
           },
           child: Text(
-            res.data?.first?.telefono ?? 'sin telefono',
+            res.data?.first?.telefono ?? '800-33549-15',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20.0, color: Colors.black),
           ),
