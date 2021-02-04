@@ -71,7 +71,8 @@ class Credito {
 
   static List<Credito> fromJsonList(List<dynamic> jsonList) {
     List<Credito> items = new List<Credito>();
-    items = jsonList.map((e) => Credito.fromJson(e)).toList();
+    if (jsonList != null)
+      items = jsonList.map((e) => Credito.fromJson(e)).toList();
     return items;
   }
 }
