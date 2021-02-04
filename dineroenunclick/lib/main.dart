@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
         '/changePassword': (context) => ChangePasswordPage(),
         '/changeNIP': (context) => ChangeNipPage(),
         '/ayuda': (context) => AyudaPage(),
-        '/promocionDetalle': (context) => PromocionPage(),
+        '/promocionDetalle': (context) => DetallePage(),
         '/terminos': (context) => TerminosPage(),
       },
       theme: ThemeData(

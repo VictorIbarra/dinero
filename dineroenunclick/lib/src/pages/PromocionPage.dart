@@ -1,14 +1,198 @@
 import 'dart:collection';
 import 'dart:math';
 
+import 'package:dineroenunclick/src/models/CreditoModel.dart';
 import 'package:dineroenunclick/src/models/PromocionModel.dart';
 import 'package:dineroenunclick/src/models/UsuarioModel.dart';
-import 'package:dineroenunclick/src/providers/CreditoProvider.dart';
-import 'package:dineroenunclick/src/widgets/modals.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:dineroenunclick/src/utilities/metodos.dart';
+
+class DetallePage extends StatefulWidget {
+  DetallePage({Key key}) : super(key: key);
+
+  _DetallePageState createState() => _DetallePageState();
+}
+
+class _DetallePageState extends State<DetallePage> {
+  double monto = 1000;
+  int divisions = 10;
+  Credito credito;
+
+  int _calDivisiones(double montoMin, double montoMax) {
+    int factor = 500;
+    int montoReal = ((montoMax - montoMin).round());
+    int steps = 10;
+    if (montoMax < 30000) {
+      factor = 500;
+    } else if (montoMax >= 30000 && montoMax < 50000) {
+      factor = 1000;
+    } else if (montoMax >= 50000 && montoMax < 100000) {
+      factor = 1000;
+    } else if (montoMax >= 100000) {
+      factor = 1000;
+    }
+    steps = (montoReal / factor).round();
+    return steps;
+  }
+
+  _modalAceptarCreditoUsuario(BuildContext context) async {
+    String phoneNumber = Usuario.usr.telefono;
+    final _formKey = GlobalKey<FormState>();
+
+    return showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text('Introduce tu teléfono'),
+            content: Form(
+                key: _formKey,
+                child: TextFormField(
+                  textCapitalization: TextCapitalization.characters,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  autofocus: true,
+                  validator: (val) {
+                    if (val.isEmpty || val.length != 10) return '10 digitos';
+                    return null;
+                  },
+                  decoration: InputDecoration(hintText: '10 digitos'),
+                  onChanged: (val) => phoneNumber = val,
+                  initialValue: phoneNumber,
+                )),
+            actions: [
+              new FlatButton(
+                  child: Text('ACEPTAR'),
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      print('[VALID]');
+                    }
+                  })
+            ],
+          );
+        });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    credito = ModalRoute.of(context).settings.arguments;
+    divisions = _calDivisiones(1000, credito.capital);
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: GestureDetector(
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: pfAzul,
+          ),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        centerTitle: true,
+        actions: <Widget>[
+          Icon(
+            Icons.arrow_back_ios,
+          ),
+          Icon(
+            Icons.arrow_back_ios,
+          ),
+        ],
+        title: Center(
+          child: Text(
+            'Solicita',
+            style: TextStyle(
+              color: pfAzul,
+              fontSize: 19.0,
+              fontWeight: FontWeight.w900,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(30.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text('Disponible', style: kLabelHeader),
+            SizedBox(height: 30),
+            Text(
+              'Monto',
+              style: kLabelMiniHeader,
+            ),
+            Text(
+              '\$${comma(monto.toString())}',
+              style: kLabelHeader,
+            ),
+            Slider.adaptive(
+              value: monto,
+              min: 1000,
+              max: credito.capital,
+              onChanged: (val) {
+                setState(() {
+                  monto = val;
+                });
+              },
+              activeColor: pfAzul,
+              divisions: divisions,
+            ),
+            SizedBox(height: 30),
+            Text(
+              'Plazo en ${credito.frecuencia == 'M' ? 'mensualidades' : 'quincenas'}',
+              style: kLabelMiniHeader,
+            ),
+            Text(
+              '${credito.plazo}',
+              style: kLabelHeader,
+            ),
+            SizedBox(height: 30),
+            Text(
+              '\$${comma(credito.pago.round().toString())}',
+              style: kLabelHeader,
+            ),
+            Text(
+              'Pago ${credito.frecuencia == 'M' ? 'Mensual' : 'Quincenal'}',
+              style: kLabelMiniHeader,
+            ),
+            SizedBox(height: 30),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 15.0),
+              width: MediaQuery.of(context).size.width * .6,
+              child: RaisedButton(
+                elevation: 5.0,
+                onPressed: () {
+                  _modalAceptarCreditoUsuario(context);
+                },
+                padding: EdgeInsets.all(15),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
+                color: pfAzul,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'en 1 Click',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat'),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class PromocionPage extends StatefulWidget {
   PromocionPage({Key key}) : super(key: key);
@@ -37,25 +221,6 @@ class _PromocionPageState extends State<PromocionPage>
   List<int> rangosSlider = new List<int>();
 
   Promocion prom = new Promocion();
-
-  // _modalInfoAmpliacion(BuildContext context) async {
-  //   modalConfirmacion(
-  //       context, 'Confirmación !', 'Esta seguro de generar este crédito?', () {
-  //     productoId = _getProductoIdByPlazo(
-  //         plazosVal.round(), prom.productos, prom.frecuencia);
-
-  //     //Navigator.pop(context);
-  //     Future a = modalLoading(context, 'Generando credito ...', true);
-
-  //     CreditoProvider.altaCreditoPromocion(Usuario.usr.clienteId,
-  //             prom.promocionId, productoId, monto, erogacionFinal)
-  //         .then((obj) {
-  //       Navigator.pop(context);
-  //       Navigator.pop(context);
-  //       Navigator.pushReplacementNamed(context, '/misCreditos');
-  //     });
-  //   });
-  // }
 
   _modalAceptarCreditoUsuario(BuildContext context) async {
     return showDialog(

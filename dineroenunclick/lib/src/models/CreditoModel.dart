@@ -1,5 +1,5 @@
 class Credito {
-  final int idSolicutud;
+  final String idSolicutud;
   final int idCuenta;
   final double capital;
   final int plazo;
