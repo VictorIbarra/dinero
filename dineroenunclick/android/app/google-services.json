@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "757499387984",
+    "project_id": "dineroenunclick-9cdfe",
+    "storage_bucket": "dineroenunclick-9cdfe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757499387984:android:c56a826a7a5a23c43ab155",
+        "android_client_info": {
+          "package_name": "com.prestamofeliz.dineroenunclick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757499387984-g2792tsv9osrar5juvu9pbhl1lsog5jj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.prestamofeliz.dineroenunclick",
+            "certificate_hash": "001577b4ef5137e69aacf8657a4360b5e80ace23"
+          }
+        },
+        {
+          "client_id": "757499387984-1j5qgusc6kmhjh5v2a3qr7j82uqiflrp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLJ-NoDupd006ZN7Qj900-AsAduhrtakI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757499387984-1j5qgusc6kmhjh5v2a3qr7j82uqiflrp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "757499387984-1abduvjvpis29up74tbg7g2e10dqpv97.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.prestamofeliz.dineroenunclick"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

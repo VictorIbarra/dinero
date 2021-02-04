@@ -11,6 +11,7 @@ import 'package:dineroenunclick/src/pages/SeguridadPage.dart';
 import 'package:dineroenunclick/src/pages/TerminosPage.dart';
 import 'package:dineroenunclick/src/providers/PreferenciasUsuario.dart';
 import 'package:dineroenunclick/src/providers/db_provider.dart';
+import 'package:dineroenunclick/src/providers/push_notifications_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:dineroenunclick/src/pages/LoginPage.dart';
 
@@ -22,7 +23,28 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    final pushProvider = new PushNotificationProvider();
+    pushProvider.initNotification();
+    pushProvider.mensajesStream.listen((data) {
+      // print('argumento desde main: $argumento');
+      // navigatorKey.currentState.pushNamed('nombre page',arguments: data);
+      
+    });
+  }
+
   String _mainRoute = '/';
 
   Future<List<String>> _getUser() async {
@@ -60,6 +82,7 @@ class MyApp extends StatelessWidget {
   _drawMainPage(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
       title: 'Prestamo Feliz',
       initialRoute: _mainRoute,
       routes: {
@@ -93,7 +116,6 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
