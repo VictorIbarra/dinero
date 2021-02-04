@@ -65,7 +65,7 @@ Widget _itemCredito(BuildContext context, Credito item) {
     child: Column(
       children: [
         Text('Crédito', style: _textStyle('hBold', pfAzul)),
-        Text('\$${comma(item.saldoCredito?.toString())}',
+        Text('\$${comma(item.capital?.toString())}',
             style: TextStyle(color: Colors.blue[900], fontSize: 20.0)),
       ],
       mainAxisAlignment: MainAxisAlignment.center,
@@ -127,11 +127,7 @@ Widget _itemCredito(BuildContext context, Credito item) {
 
   return GestureDetector(
     onTap: () {
-      // print('Seleccionaste ${prom.promocionId}');
-      // Promocion.selPROM = prom;
-      // Navigator.pushNamed(context, '/promocionDetalle', arguments: prom);
-      //Navigator.pushNamed(context, '/promocionDetalle');
-      print('enviar id ');
+      Navigator.pushNamed(context, '/promocionDetalle', arguments: item);
     },
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -163,20 +159,6 @@ Widget _itemCredito(BuildContext context, Credito item) {
   );
 }
 
-Widget _loadCreditos(BuildContext context) {
-  return FutureBuilder(
-    future: CreditoProvider.creditosCliente(Usuario.usr.clienteId),
-    builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-      if (snapshot.hasData) {
-        return _drawVisitanteItems(snapshot.data, context);
-      } else {
-        return Container(
-            height: 400.0, child: Center(child: CircularProgressIndicator()));
-      }
-    },
-  );
-}
-
 Widget _drawVisitanteItems(List<Credito> creditos, BuildContext context) {
   return ListView.separated(
     itemCount: creditos.length,
@@ -189,6 +171,28 @@ Widget _drawVisitanteItems(List<Credito> creditos, BuildContext context) {
 }
 
 class _CreditosPageState extends State<CreditosPage> {
+  Future<List<Credito>> futureCreditosList;
+
+  @override
+  void initState() {
+    super.initState();
+    futureCreditosList = CreditoProvider.creditosCliente(Usuario.usr.clienteId);
+  }
+
+  Widget _loadCreditos(BuildContext context) {
+    return FutureBuilder(
+      future: futureCreditosList,
+      builder: (BuildContext context, AsyncSnapshot<List<Credito>> snapshot) {
+        if (snapshot.hasData) {
+          return _drawVisitanteItems(snapshot.data, context);
+        } else {
+          return Container(
+              height: 400.0, child: Center(child: CircularProgressIndicator()));
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
