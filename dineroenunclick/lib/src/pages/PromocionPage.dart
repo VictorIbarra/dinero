@@ -17,7 +17,7 @@ class DetallePage extends StatefulWidget {
 }
 
 class _DetallePageState extends State<DetallePage> {
-  double monto = 1000;
+  double monto = 0;
   int divisions = 10;
   Credito credito;
 
@@ -25,7 +25,9 @@ class _DetallePageState extends State<DetallePage> {
     int factor = 500;
     int montoReal = ((montoMax - montoMin).round());
     int steps = 10;
-    if (montoMax < 30000) {
+    if (montoMax < 1000) {
+      factor = 100;
+    } else if (montoMax < 30000) {
       factor = 500;
     } else if (montoMax >= 30000 && montoMax < 50000) {
       factor = 1000;
@@ -78,7 +80,12 @@ class _DetallePageState extends State<DetallePage> {
   @override
   Widget build(BuildContext context) {
     credito = ModalRoute.of(context).settings.arguments;
-    divisions = _calDivisiones(1000, credito.capital);
+    double min = credito.disponible < 1000 ? 100 : 1000;
+    divisions = _calDivisiones(
+        credito.disponible < 1000 ? 100 : 1000, credito.disponible);
+    if (min > monto) {
+      monto = credito.disponible;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -126,13 +133,13 @@ class _DetallePageState extends State<DetallePage> {
               style: kLabelMiniHeader,
             ),
             Text(
-              '\$${comma(monto.toString())}',
+              '\$${comma(monto.toStringAsFixed(1))}',
               style: kLabelHeader,
             ),
             Slider.adaptive(
               value: monto,
-              min: 1000,
-              max: credito.capital,
+              min: min,
+              max: credito.disponible,
               onChanged: (val) {
                 setState(() {
                   monto = val;
