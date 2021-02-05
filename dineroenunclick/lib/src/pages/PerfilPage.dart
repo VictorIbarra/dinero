@@ -51,98 +51,101 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Perfil',
-          style: TextStyle(
-            color: pfAzul,
-            fontSize: 30.0,
-            fontWeight: FontWeight.w900,
-            fontFamily: 'Montserrat',
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Perfil',
+            style: TextStyle(
+              color: pfAzul,
+              fontSize: 30.0,
+              fontWeight: FontWeight.w900,
+              fontFamily: 'Montserrat',
+            ),
           ),
         ),
-      ),
-      body: Column(
-        children: <Widget>[
-          Row(
-            children: [
-              Icon(
-                Icons.account_box,
-                color: Colors.grey,
-                size: 30.0,
+        body: Container(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  Icon(
+                    Icons.account_box,
+                    color: Colors.grey,
+                    size: 30.0,
+                  ),
+                  _itemOption(
+                      context, 'Información de mi cuenta', '/informacion'),
+                ],
               ),
-              _itemOption(context, 'Información de mi cuenta', '/informacion'),
-            ],
-          ),
-          Row(
-            children: [
-              Icon(
-                Icons.security,
-                color: Colors.grey,
-                size: 30.0,
+              Row(
+                children: [
+                  Icon(
+                    Icons.security,
+                    color: Colors.grey,
+                    size: 30.0,
+                  ),
+                  _itemOption(context, 'Seguridad', '/seguridad'),
+                ],
               ),
-              _itemOption(context, 'Seguridad', '/seguridad'),
-            ],
-          ),
 
-          Row(
-            children: [
-              Icon(
-                Icons.phone_android,
-                color: Colors.grey,
-                size: 30.0,
+              Row(
+                children: [
+                  Icon(
+                    Icons.phone_android,
+                    color: Colors.grey,
+                    size: 30.0,
+                  ),
+                  _itemOption(context, 'Centro de ayuda', '/ayuda'),
+                ],
               ),
-              _itemOption(context, 'Centro de ayuda', '/ayuda'),
+
+              // _itemOption(context, 'Mis créditos', '/misCreditos'),
+
+              Expanded(
+                child: SizedBox(),
+              ),
+
+              _cerrarSesion(context),
+
+              SizedBox(
+                height: 20.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _botonTerminosYCondiciones(),
+                  _botonPoliticaDePrivacidad(),
+                ],
+              ),
+              // Text('Terminos y condiciones | Politicas de privacidad', style: kLabelTerminosCondiciones,),
+              SizedBox(
+                height: 01.0,
+              ),
+              Text(
+                'Préstamo Feliz 2021',
+                style: kLabelTerminosCondiciones,
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              // Text(
+              //   'f',
+              //   style: TextStyle(
+              //     color: Color(0xFF1747AC),
+              //     fontSize: 25.0,
+              //     fontWeight: FontWeight.w900,
+              //     fontFamily: 'Montserrat',
+              //   ),
+              // ),
+              SizedBox(
+                height: 15.0,
+              ),
             ],
           ),
-
-          // _itemOption(context, 'Mis créditos', '/misCreditos'),
-
-          Expanded(
-            child: SizedBox(),
-          ),
-
-          _cerrarSesion(context),
-
-          SizedBox(
-            height: 20.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _botonTerminosYCondiciones(),
-              _botonPoliticaDePrivacidad(),
-            ],
-          ),
-          // Text('Terminos y condiciones | Politicas de privacidad', style: kLabelTerminosCondiciones,),
-          SizedBox(
-            height: 01.0,
-          ),
-          Text(
-            'Préstamo Feliz 2021',
-            style: kLabelTerminosCondiciones,
-          ),
-          SizedBox(
-            height: 15.0,
-          ),
-          // Text(
-          //   'f',
-          //   style: TextStyle(
-          //     color: Color(0xFF1747AC),
-          //     fontSize: 25.0,
-          //     fontWeight: FontWeight.w900,
-          //     fontFamily: 'Montserrat',
-          //   ),
-          // ),
-          SizedBox(
-            height: 15.0,
-          ),
-        ],
-      ),
-    );
+        ));
   }
 
   Widget _botonTerminosYCondiciones() {
