@@ -52,124 +52,6 @@ TextStyle _textStyle(String tipo, Color color) {
   return ts;
 }
 
-Widget _itemCredito(BuildContext context, Credito item) {
-  final _screenSize = MediaQuery.of(context).size;
-  final marginTop = 5.0;
-  final marginLeft = 10.0;
-
-  List<Widget> textosL = new List<Widget>();
-  List<Widget> textosR = new List<Widget>();
-
-  textosL.add(Container(
-    margin: EdgeInsets.only(left: marginLeft),
-    child: Column(
-      children: [
-        Text('Crédito', style: _textStyle('hBold', pfAzul)),
-        Text('\$${comma(item.capital?.toString())}',
-            style: TextStyle(color: Colors.blue[900], fontSize: 20.0)),
-      ],
-      mainAxisAlignment: MainAxisAlignment.center,
-    ),
-  ));
-  textosL.add(Container(
-    margin: EdgeInsets.only(left: marginLeft),
-    child: Text(
-      '${item.plazo} meses',
-      style: TextStyle(color: Colors.black, fontSize: 12.0),
-    ),
-  ));
-  textosL.add(Container(
-      margin: EdgeInsets.only(left: marginLeft),
-      child: Column(
-        children: <Widget>[
-          Text(
-            'Monto pago ',
-            style: TextStyle(color: Colors.black, fontSize: 15.0),
-          ),
-          Text(
-            '\$${comma(item.pago?.toString())}',
-            style: TextStyle(fontSize: 15.0),
-          ),
-        ],
-      )));
-
-  textosR.add(Container(
-    margin: EdgeInsets.only(right: marginLeft),
-    child: Column(
-      children: [
-        Text('Disponible', style: _textStyle('hBold', pfAzul)),
-        Text('\$${comma(item.disponible?.toString())}',
-            style: TextStyle(color: Colors.blue[900], fontSize: 20.0)),
-        //espacios
-        Text(''),
-        Text(''),
-        Text(''),
-      ],
-    ),
-  ));
-
-  // textosR.add(Container(
-  //     margin: EdgeInsets.only(right: marginLeft),
-  //     child: Row(
-  //       children: <Widget>[
-  //         Text('Monto de Pago', style: _textStyle('hLight', pfNaranja)),
-  //       ],
-  //     )));
-
-  // textosR.add(Container(
-  //     margin: EdgeInsets.only(right: marginLeft),
-  //     child: Row(
-  //       children: <Widget>[
-  //         Text('$pagosRealizados', style: _textStyle('sBold', pfNaranja)),
-  //         Text(' de $pagosTotales', style: _textStyle('hLight', Colors.grey)),
-  //       ],
-  //     )));
-
-  return GestureDetector(
-    onTap: () {
-      Navigator.pushNamed(context, '/promocionDetalle', arguments: item);
-    },
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(top: marginTop),
-          width: _screenSize.width * .95,
-          height: _screenSize.height * .15,
-          decoration: myBoxDecoration(Colors.green),
-          child: Row(
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: textosL,
-              ),
-              Expanded(
-                child: SizedBox(),
-              ),
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: textosR),
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget _drawVisitanteItems(List<Credito> creditos, BuildContext context) {
-  return ListView.separated(
-    itemCount: creditos.length,
-    itemBuilder: (BuildContext context, int index) {
-      return _itemCredito(
-          context, creditos[index]); //_drawVisitante(creditos[index], context);
-    },
-    separatorBuilder: (BuildContext context, int index) => const Divider(),
-  );
-}
-
 class _CreditosPageState extends State<CreditosPage> {
   Widget _loadCreditos(BuildContext context) {
     return FutureBuilder(
@@ -190,6 +72,126 @@ class _CreditosPageState extends State<CreditosPage> {
               height: 400.0, child: Center(child: CircularProgressIndicator()));
         }
       },
+    );
+  }
+
+  Widget _itemCredito(BuildContext context, Credito item) {
+    final _screenSize = MediaQuery.of(context).size;
+    final marginTop = 5.0;
+    final marginLeft = 10.0;
+
+    List<Widget> textosL = new List<Widget>();
+    List<Widget> textosR = new List<Widget>();
+
+    textosL.add(Container(
+      margin: EdgeInsets.only(left: marginLeft),
+      child: Column(
+        children: [
+          Text('Crédito', style: _textStyle('hBold', pfAzul)),
+          Text('\$${comma(item.capital?.toString())}',
+              style: TextStyle(color: Colors.blue[900], fontSize: 20.0)),
+        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+      ),
+    ));
+    textosL.add(Container(
+      margin: EdgeInsets.only(left: marginLeft),
+      child: Text(
+        '${item.plazo} meses',
+        style: TextStyle(color: Colors.black, fontSize: 12.0),
+      ),
+    ));
+    textosL.add(Container(
+        margin: EdgeInsets.only(left: marginLeft),
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Monto pago ',
+              style: TextStyle(color: Colors.black, fontSize: 15.0),
+            ),
+            Text(
+              '\$${comma(item.pago?.toString())}',
+              style: TextStyle(fontSize: 15.0),
+            ),
+          ],
+        )));
+
+    textosR.add(Container(
+      margin: EdgeInsets.only(right: marginLeft),
+      child: Column(
+        children: [
+          Text('Disponible', style: _textStyle('hBold', pfAzul)),
+          Text('\$${comma(item.disponible?.toString())}',
+              style: TextStyle(color: Colors.blue[900], fontSize: 20.0)),
+          //espacios
+          Text(''),
+          Text(''),
+          Text(''),
+        ],
+      ),
+    ));
+
+    // textosR.add(Container(
+    //     margin: EdgeInsets.only(right: marginLeft),
+    //     child: Row(
+    //       children: <Widget>[
+    //         Text('Monto de Pago', style: _textStyle('hLight', pfNaranja)),
+    //       ],
+    //     )));
+
+    // textosR.add(Container(
+    //     margin: EdgeInsets.only(right: marginLeft),
+    //     child: Row(
+    //       children: <Widget>[
+    //         Text('$pagosRealizados', style: _textStyle('sBold', pfNaranja)),
+    //         Text(' de $pagosTotales', style: _textStyle('hLight', Colors.grey)),
+    //       ],
+    //     )));
+
+    return GestureDetector(
+      onTap: () async {
+        await Navigator.pushNamed(context, '/promocionDetalle',
+            arguments: item);
+        setState(() => {});
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: marginTop),
+            width: _screenSize.width * .95,
+            height: _screenSize.height * .15,
+            decoration: myBoxDecoration(Colors.green),
+            child: Row(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: textosL,
+                ),
+                Expanded(
+                  child: SizedBox(),
+                ),
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: textosR),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _drawVisitanteItems(List<Credito> creditos, BuildContext context) {
+    return ListView.separated(
+      itemCount: creditos.length,
+      itemBuilder: (BuildContext context, int index) {
+        return _itemCredito(context,
+            creditos[index]); //_drawVisitante(creditos[index], context);
+      },
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
     );
   }
 
