@@ -18,9 +18,11 @@ class DetallePage extends StatefulWidget {
 }
 
 class _DetallePageState extends State<DetallePage> {
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   double monto = 0;
-  int divisions = 10;
+  int divisions = 0;
   Credito credito;
+  String phoneNumber = Usuario.usr.telefono;
 
   int _calDivisiones(double montoMin, double montoMax) {
     int factor = 500;
@@ -41,47 +43,25 @@ class _DetallePageState extends State<DetallePage> {
     return steps;
   }
 
-  _modalAceptarCreditoUsuario(BuildContext context) async {
-    String phoneNumber = Usuario.usr.telefono;
-    final _formKey = GlobalKey<FormState>();
-
-    return showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog(
-            title: Text('Introduce tu teléfono'),
-            content: Form(
-                key: _formKey,
-                child: TextFormField(
-                  textCapitalization: TextCapitalization.characters,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  autofocus: true,
-                  validator: (val) {
-                    if (val.isEmpty || val.length != 10) return '10 digitos';
-                    return null;
-                  },
-                  decoration: InputDecoration(hintText: '10 digitos'),
-                  onChanged: (val) => phoneNumber = val,
-                  initialValue: phoneNumber,
-                )),
-            actions: [
-              new FlatButton(
-                  child: Text('ACEPTAR'),
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      PromocionProvider.subirAplicacionCredito(
-                          idSolicitud: credito.idSolicutud,
-                          idProducto: credito.idProducto,
-                          idSucursal: credito.idSucursal,
-                          clabe: credito.clabe,
-                          saldoCredito: credito.saldoCredito + monto,
-                          phoneNumber: phoneNumber);
-                    }
-                  })
-            ],
-          );
-        });
+  Future<void> _handleSubmit(BuildContext context, String phone) async {
+    Dialogs.showLoadingDialog(context, _keyLoader);
+    final valid = await PromocionProvider.subirAplicacionCredito(
+        idSolicitud: credito.idSolicutud,
+        idProducto: credito.idProducto,
+        idSucursal: credito.idSucursal,
+        clabe: credito.clabe,
+        saldoCredito: credito.saldoCredito + monto,
+        phoneNumber: phone);
+    if (valid) {
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+        ..pop()
+        ..pop()
+        ..popAndPushNamed('/respuestaCredito');
+    } else {
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+        ..pop()
+        ..pop();
+    }
   }
 
   @override
@@ -89,7 +69,7 @@ class _DetallePageState extends State<DetallePage> {
     credito = ModalRoute.of(context).settings.arguments;
     double min = credito.disponible < 1000 ? 100 : 1000;
     divisions = _calDivisiones(
-        credito.disponible < 1000 ? 100 : 1000, credito.disponible);
+        credito.disponible < 1000 ? 1 : 1000, credito.disponible);
     if (min > monto) {
       monto = credito.disponible;
     }
@@ -180,7 +160,9 @@ class _DetallePageState extends State<DetallePage> {
               child: RaisedButton(
                 elevation: 5.0,
                 onPressed: () {
-                  _modalAceptarCreditoUsuario(context);
+                  Dialogs.showConfirmationDialog(context,
+                      action: () => _handleSubmit(context, phoneNumber),
+                      phoneNumber: phoneNumber);
                 },
                 padding: EdgeInsets.all(15),
                 shape: RoundedRectangleBorder(
@@ -208,14 +190,80 @@ class _DetallePageState extends State<DetallePage> {
   }
 }
 
-class PromocionPage extends StatefulWidget {
-  PromocionPage({Key key}) : super(key: key);
+class Dialogs {
+  static Future<void> showLoadingDialog(
+      BuildContext context, GlobalKey key) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: SimpleDialog(
+              key: key,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 10),
+                      Text('Por favor espere...')
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        });
+  }
 
-  _PromocionPageState createState() => _PromocionPageState();
+  static Future<void> showConfirmationDialog(BuildContext context,
+      {String phoneNumber, Function action}) async {
+    final _formKey = GlobalKey<FormState>();
+
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            elevation: 0,
+            title: Text('Introduce tu teléfono'),
+            content: Form(
+              key: _formKey,
+              child: TextFormField(
+                textCapitalization: TextCapitalization.characters,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                autofocus: true,
+                validator: (val) {
+                  if (val.isEmpty || val.length != 10) return '10 digitos';
+                  return null;
+                },
+                decoration: InputDecoration(hintText: '10 digitos'),
+                onChanged: (val) => phoneNumber = val,
+                initialValue: phoneNumber,
+              ),
+            ),
+            actions: [
+              FlatButton(
+                  child: Text('ACEPTAR'),
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      action();
+                    }
+                  })
+            ],
+          );
+        });
+  }
 }
 
-class _PromocionPageState extends State<PromocionPage>
-    with AutomaticKeepAliveClientMixin<PromocionPage> {
+/// ESTA CLASE ERA LA ANTERIORMENET UTILIZADA PARA CALCULAT Y MOSTRAR
+/// AQUI SE ENCUENTRA UN EJEMPLO DEL METODO UTILIZADO PARA CALCULAR EL PAGO
+class _PromocionPageState extends State with AutomaticKeepAliveClientMixin {
   final codigoKey = GlobalKey<FormState>();
   double mensual = 3000 / 24;
   double monto = 3000;
@@ -235,94 +283,6 @@ class _PromocionPageState extends State<PromocionPage>
   List<int> rangosSlider = new List<int>();
 
   Promocion prom = new Promocion();
-
-  _modalAceptarCreditoUsuario(BuildContext context) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Introduce tu teléfono'),
-            content: Form(
-              // key: codigoKey,
-              child: TextFormField(
-                textCapitalization: TextCapitalization.characters,
-                autofocus: true,
-                validator: (value) {
-                  return '10 digitos';
-                },
-                // controller: _codigoController,
-                decoration: InputDecoration(hintText: "10 digitos"),
-                onChanged: (valor) {
-                  // _codigo = valor;
-                  //_codigo = 'UY25P3';
-                },
-              ),
-            ),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text('ACEPTAR'),
-                onPressed: () {
-                  /*setState(() {
-                    _codigo = 'UY25P3';                    
-                  });*/
-
-                  // if (_codigo.length != 6) {
-                  //   codigoKey.currentState.validate();
-                  // } else {
-                  //   wsUsuario.validaCodigoUsuario(_codigo).then((obj) {
-                  //     if (obj.idCliente != null) {
-                  //       Navigator.pop(context);
-                  //       Navigator.pushNamed(context, '/registro');
-                  //     } else {
-                  //       codigoKey.currentState.validate();
-                  //     }
-                  //   });
-                  // }
-                },
-              )
-            ],
-          );
-        });
-  }
-
-  Widget _buildContinuarBtn(BuildContext context) {
-    final _screenSize = MediaQuery.of(context).size;
-
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 15.0),
-      width: _screenSize.width * .6,
-      child: RaisedButton(
-          elevation: 5.0,
-          onPressed: () async {
-            // _modalInfoAmpliacion(context);
-            _modalAceptarCreditoUsuario(context);
-          },
-          padding: EdgeInsets.all(15.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          color: pfAzul,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'en 1 Click',
-                style: TextStyle(
-                  //color: Color(0xFFFF960A),
-                  color: Colors.white,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Montserrat',
-                ),
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Icon(Icons.check, color: Colors.white)
-            ],
-          )),
-    );
-  }
 
   int _getProductoIdByPlazo(int plazo, String productos, String frec) {
     List<String> plazos = productos.split('|');
@@ -459,137 +419,5 @@ class _PromocionPageState extends State<PromocionPage>
   }
 
   @override
-  Widget build(BuildContext context) {
-    final Promocion promocion = ModalRoute.of(context).settings.arguments;
-
-    setState(() {
-      //monto = promocion.monto;
-    });
-
-    super.build(context);
-
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          //automaticallyImplyLeading: false,
-          leading: GestureDetector(
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: pfAzul,
-            ),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          centerTitle: true,
-          actions: <Widget>[
-            Icon(
-              Icons.arrow_back_ios,
-            ),
-            Icon(
-              Icons.arrow_back_ios,
-            ),
-          ],
-          title: Center(
-            child: Text(
-              'Solicita',
-              style: TextStyle(
-                color: pfAzul,
-                fontSize: 19.0,
-                fontWeight: FontWeight.w900,
-                fontFamily: 'Montserrat',
-              ),
-            ),
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                height: 30,
-              ),
-
-              Text('Disponible', style: kLabelHeader),
-
-              SizedBox(
-                height: 30.0,
-              ),
-
-              Text('Monto', style: kLabelMiniHeader),
-              Text(
-                '\$${comma(monto.round().toString())}',
-                style: kLabelHeader,
-              ),
-
-              Slider.adaptive(
-                value: monto,
-                min: 1000,
-                max: promocion.monto,
-                onChanged: (valor) {
-                  setState(() {
-                    monto = valor;
-                  });
-                },
-                activeColor: pfAzul,
-                divisions: divisiones,
-              ),
-
-              SizedBox(
-                height: 30.0,
-              ),
-
-              Text(
-                  'Plazo en ' +
-                      (prom.frecuencia == 'M' ? 'mensualidades' : 'quincenas'),
-                  style: kLabelMiniHeader),
-              Text(
-                '${plazosVal.round()}',
-                style: kLabelHeader,
-              ),
-
-              // Slider.adaptive(
-              //   value: plazosValSlider,
-              //   min: plazosMin,
-              //   max: plazosMax,
-              //   onChanged: (valor){
-              //     setState(() {
-              //       plazosValSlider = valor;
-              //       //print(valor);
-              //       int step = (valor/((((plazosMax-plazosMin)-1)/plazosDiv))).round();
-              //       //print(step);
-              //       //print(rangosSlider[step-1]);
-              //       plazosVal = double.parse(rangosSlider[step-1].toString());
-              //     });
-              //   },
-              //   activeColor: pfAzul,
-              //   divisions: plazosDiv,
-              // ),
-
-              SizedBox(
-                height: 60,
-              ),
-
-              Text(
-                '\$${comma((_calPago(monto, plazosVal, prom.tasa, 0)).round().toString())}',
-                style: kLabelHeader,
-              ),
-              Text('Pago ' + (prom.frecuencia == 'M' ? 'Mensual' : 'Quincenal'),
-                  style: kLabelMiniHeader),
-
-              //Expanded(child: SizedBox(),),
-
-              SizedBox(
-                height: 30,
-              ),
-
-              _buildContinuarBtn(context),
-            ],
-          ),
-        ));
-  }
-
-  @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

@@ -24,7 +24,7 @@ class PromocionProvider {
     //print(decodedData);
   }
 
-  static Future<List> subirAplicacionCredito(
+  static Future<bool> subirAplicacionCredito(
       {int idSolicitud,
       int idProducto,
       int idSucursal,
@@ -41,17 +41,14 @@ class PromocionProvider {
       'Telefono': phoneNumber,
     };
 
-    // String encodedBody =
-    // bodyRequest.keys.map((key) => '$key=${bodyRequest[key]}').join('&');
-
     final resp = await http.post(
       url,
       body: bodyRequest,
     );
 
-    final decodedData = json.decode(resp.body);
-    print(decodedData);
-
-    return decodedData;
+    if (resp.statusCode == 200)
+      return true;
+    else
+      return false;
   }
 }
