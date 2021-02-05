@@ -28,17 +28,15 @@ class _DetallePageState extends State<DetallePage> {
     int factor = 500;
     int montoReal = ((montoMax - montoMin).round());
     int steps = 10;
-    if (montoMax < 1000) {
+    if (montoMax < 100)
+      factor = 10;
+    else if (montoMax < 1000)
       factor = 100;
-    } else if (montoMax < 30000) {
+    else if (montoMax < 30000)
       factor = 500;
-    } else if (montoMax >= 30000 && montoMax < 50000) {
+    else
       factor = 1000;
-    } else if (montoMax >= 50000 && montoMax < 100000) {
-      factor = 1000;
-    } else if (montoMax >= 100000) {
-      factor = 1000;
-    }
+
     steps = (montoReal / factor).round();
     return steps;
   }
@@ -67,7 +65,7 @@ class _DetallePageState extends State<DetallePage> {
   @override
   Widget build(BuildContext context) {
     credito = ModalRoute.of(context).settings.arguments;
-    double min = credito.disponible < 1000 ? 100 : 1000;
+    double min = credito.disponible < 1000 ? credito.disponible < 100 ? 10 : 100 : 1000;
     divisions = _calDivisiones(
         credito.disponible < 1000 ? 1 : 1000, credito.disponible);
     if (min > monto) {
@@ -201,8 +199,6 @@ class Dialogs {
             onWillPop: () async => false,
             child: SimpleDialog(
               key: key,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
               children: [
                 Center(
                   child: Column(
@@ -227,8 +223,6 @@ class Dialogs {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             elevation: 0,
             title: Text('Introduce tu teléfono'),
             content: Form(
