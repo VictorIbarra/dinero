@@ -52,10 +52,12 @@ TextStyle _textStyle(String tipo, Color color) {
   return ts;
 }
 
+
 Widget _itemNotificacion(BuildContext context, Notificasion prom, Color color) {
   final _screenSize = MediaQuery.of(context).size;
   final marginTop = 5.0;
   final marginLeft = 10.0;
+  // final arg = ModalRoute.of(context).settings.arguments;
 
   List<Widget> textos = new List<Widget>();
 
