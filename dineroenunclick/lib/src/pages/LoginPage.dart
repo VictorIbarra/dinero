@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   final LocalAuthentication auth = LocalAuthentication();
   bool _canCheckBiometrics;
   List<BiometricType> _availableBiometrics;
-  String _authorized = 'Not Authorized Puto';
+  String _authorized = 'Not Authorized';
   bool _isAuthenticating = false;
 
   final prefs = new PreferenciasUsuario();

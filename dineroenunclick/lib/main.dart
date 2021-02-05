@@ -9,6 +9,7 @@ import 'package:dineroenunclick/src/pages/PromocionPage.dart';
 import 'package:dineroenunclick/src/pages/RegistroPage.dart';
 import 'package:dineroenunclick/src/pages/SeguridadPage.dart';
 import 'package:dineroenunclick/src/pages/TerminosPage.dart';
+import 'package:dineroenunclick/src/pages/respuestaCredito.dart';
 import 'package:dineroenunclick/src/providers/PreferenciasUsuario.dart';
 import 'package:dineroenunclick/src/providers/db_provider.dart';
 import 'package:dineroenunclick/src/providers/push_notifications_provider.dart';
@@ -97,6 +98,7 @@ class _MyAppState extends State<MyApp> {
         '/ayuda': (context) => AyudaPage(),
         '/promocionDetalle': (context) => DetallePage(),
         '/terminos': (context) => TerminosPage(),
+        '/respuestaCredito': (context) => RespuestaCreditoPage(),
       },
       theme: ThemeData(
           // This is the theme of your application.
