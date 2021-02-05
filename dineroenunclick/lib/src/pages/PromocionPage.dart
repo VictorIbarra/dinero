@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:dineroenunclick/src/models/CreditoModel.dart';
 import 'package:dineroenunclick/src/models/PromocionModel.dart';
 import 'package:dineroenunclick/src/models/UsuarioModel.dart';
+import 'package:dineroenunclick/src/providers/PromocionProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -69,7 +70,13 @@ class _DetallePageState extends State<DetallePage> {
                   child: Text('ACEPTAR'),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-                      print('[VALID]');
+                      PromocionProvider.subirAplicacionCredito(
+                          idSolicitud: credito.idSolicutud,
+                          idProducto: credito.idProducto,
+                          idSucursal: credito.idSucursal,
+                          clabe: credito.clabe,
+                          saldoCredito: credito.saldoCredito + monto,
+                          phoneNumber: phoneNumber);
                     }
                   })
             ],
