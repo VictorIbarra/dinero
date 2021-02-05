@@ -171,19 +171,19 @@ Widget _drawVisitanteItems(List<Credito> creditos, BuildContext context) {
 }
 
 class _CreditosPageState extends State<CreditosPage> {
-  Future<List<Credito>> futureCreditosList;
-
-  @override
-  void initState() {
-    super.initState();
-    futureCreditosList = CreditoProvider.creditosCliente(Usuario.usr.clienteId);
-  }
-
   Widget _loadCreditos(BuildContext context) {
     return FutureBuilder(
-      future: futureCreditosList,
+      future: CreditoProvider.creditosCliente(Usuario.usr.clienteId),
       builder: (BuildContext context, AsyncSnapshot<List<Credito>> snapshot) {
         if (snapshot.hasData) {
+          if (snapshot.data.isEmpty)
+            return Container(
+              alignment: Alignment.center,
+              child: Text(
+                'No tienes Creditos disponibles a renovar',
+                textScaleFactor: 1.3,
+              ),
+            );
           return _drawVisitanteItems(snapshot.data, context);
         } else {
           return Container(
