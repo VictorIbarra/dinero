@@ -118,10 +118,7 @@ _itemSwitchOption(BuildContext context, String title, String goTo){
         children: <Widget>[
           _itemOption(context, 'Cambio de Contraseña', '/changePassword'),
           // _itemOption(context, 'Cambio de NIP', '/changeNIP'),
-          _itemSwitchOption(context, 'Acceso biometrico', '/ayuda'),
-
-
-
+          // _itemSwitchOption(context, 'Acceso biometrico', '/ayuda'),
 
         ],
       ),

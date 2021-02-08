@@ -102,7 +102,7 @@ class _InformacionPageState extends State<InformacionPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Numero celular',
+          'Número celular',
           style: kLabelStyle,
         ),
         SizedBox(height: 5.0),

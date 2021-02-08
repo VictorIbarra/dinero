@@ -151,7 +151,7 @@ class _PerfilPageState extends State<PerfilPage> {
   Widget _botonTerminosYCondiciones() {
     return FlatButton(
       onPressed: () {
-        launch('https://www.prestamofeliz.com.mx');
+        launch('https://dinero1click.prestamofeliz.com.mx/terminos.pdf');
       },
       padding: EdgeInsets.only(right: 0.0),
       child: Text(
@@ -164,7 +164,7 @@ class _PerfilPageState extends State<PerfilPage> {
   Widget _botonPoliticaDePrivacidad() {
     return FlatButton(
       onPressed: () {
-        launch('https://www.prestamofeliz.com.mx');
+        launch('https://dinero1click.prestamofeliz.com.mx/aviso.pdf');
       },
       padding: EdgeInsets.only(right: 0.0),
       child: Text(

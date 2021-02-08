@@ -52,7 +52,6 @@ TextStyle _textStyle(String tipo, Color color) {
   return ts;
 }
 
-
 Widget _itemNotificacion(BuildContext context, Notificasion prom, Color color) {
   final _screenSize = MediaQuery.of(context).size;
   final marginTop = 5.0;
@@ -65,14 +64,15 @@ Widget _itemNotificacion(BuildContext context, Notificasion prom, Color color) {
     margin: EdgeInsets.only(left: marginLeft),
     child: Text.rich(
       TextSpan(
-        text: 'Tu cuenta de ',
+        text: 'Tu disponible solicitado de ',
         children: <TextSpan>[
           TextSpan(
-              text: '\$${prom.monto.toString()}',
+              text: ' \$${prom.disponible.toString()},',
               style: TextStyle(
                   fontStyle: FontStyle.italic, color: Colors.blue[900])),
           TextSpan(
-              text: '   se encuentra',
+              text:
+                  ' de tu crédito de \$${prom.monto.toString()}, está  ${prom.estatus.toString()}',
               style:
                   TextStyle(fontStyle: FontStyle.italic, color: Colors.black)),
         ],
@@ -82,11 +82,6 @@ Widget _itemNotificacion(BuildContext context, Notificasion prom, Color color) {
   textos.add(SizedBox(
     height: 5.0,
   ));
-  textos.add(Container(
-    margin: EdgeInsets.only(left: marginLeft),
-    child: Text(prom.estatus, style: _textStyle('sBold', Colors.black54)),
-  ));
-
   //borrar gesture cuando se regrese servicio original
   return GestureDetector(
       onTap: () {
@@ -134,7 +129,19 @@ Widget _loadCreditos(BuildContext context) {
     future: NotificasionProvider.creditosCliente(Usuario.usr.clienteId),
     builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
       if (snapshot.hasData) {
+        if (snapshot.data.isEmpty)
+          return Container(
+            alignment: Alignment.center,
+            child: Text(
+              'No tienes notificaciones',
+              textScaleFactor: 1.3,
+            ),
+          );
         return _drawVisitanteItems(snapshot.data, context);
+        //   return _drawVisitanteItems(snapshot.data, context);
+        // } else {
+        //   return Container(
+        //       height: 400.0, child: Center(child: CircularProgressIndicator()));
       } else {
         return Container(
             height: 400.0, child: Center(child: CircularProgressIndicator()));
@@ -147,8 +154,7 @@ Widget _drawVisitanteItems(List<Notificasion> creditos, BuildContext context) {
   return ListView.separated(
     itemCount: creditos.length,
     itemBuilder: (BuildContext context, int index) {
-      return _itemNotificacion(context, creditos[index],
-          pfAzul); //_drawVisitante(creditos[index], context);
+      return _itemNotificacion(context, creditos[index], pfAzul);
     },
     separatorBuilder: (BuildContext context, int index) => SizedBox(
       height: 10,
@@ -174,45 +180,6 @@ class _NotificacionesPageState extends State<NotificacionesPage> {
             ),
           ),
         ),
-        body: _loadCreditos(context)
-        /*body: SingleChildScrollView(
-        child: Column(
-          
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10.0),
-              child: Text('\$', style: TextStyle(
-                color: Color(0xFF21D702),
-                fontSize: 50.0,
-                fontWeight: FontWeight.w900,
-                fontFamily: 'Montserrat',
-                )
-              ),
-            ),
-
-            _itemNotificacion(context, 'Renueva tu Crédito', null, pfAzul),
-            _itemNotificacion(context, '\$ para tus vacaciones', '¡Fácil y rápido!', pfAzul),
-            _itemNotificacion(context, '\$ para el regreso a clases', 'Contacta a alguno de nuestros asesores', pfAzul),
-
-
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10.0),
-              child: Icon(Icons.location_on, color: pfRojo, size: 50.0,)
-              ),
-            
-
-            _itemNotificacion(context, 'Ya es hora de comer!', '¿Dónde ahorrarás hoy con PiN?', pfRojo),
-            _itemNotificacion(context, '¿Reunión Familiar?', 'Ahorra \$ con PiN', pfRojo),
-            _itemNotificacion(context, 'Gana hasta \$100 MXN. *', 'Por cada amigo que compre PiN', pfRojo),
-            _itemNotificacion(context, 'Ya es hora de comer!', '¿Dónde ahorrarás hoy con PiN?', pfRojo),
-
-          ],
-        ),
-      ),*/
-
-        );
+        body: _loadCreditos(context));
   }
 }

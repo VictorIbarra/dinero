@@ -49,6 +49,7 @@ class _DetallePageState extends State<DetallePage> {
         idSucursal: credito.idSucursal,
         clabe: credito.clabe,
         saldoCredito: credito.saldoCredito + monto,
+        disponible: monto,
         phoneNumber: phone);
     if (valid) {
       Navigator.of(_keyLoader.currentContext, rootNavigator: true)

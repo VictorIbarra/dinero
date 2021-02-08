@@ -14,10 +14,10 @@ class _RespuestaCreditoPageState extends State<RespuestaCreditoPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: GestureDetector(
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: pfAzul,
-          ),
+          // child: Icon(
+          //   Icons.arrow_back_ios,
+          //   color: pfAzul,
+          // ),
           onTap: () {
             Navigator.pop(context);
           },

@@ -30,6 +30,7 @@ class PromocionProvider {
       int idSucursal,
       String clabe,
       double saldoCredito,
+      double disponible,
       String phoneNumber}) async {
     final url = '$api_url/SubirAplicacionCredito';
     Map<String, dynamic> bodyRequest = {
@@ -38,6 +39,7 @@ class PromocionProvider {
       'IdSucursal': idSucursal.toString(),
       'Clabe': clabe,
       'SaldoCreditoNuevo': saldoCredito.toString(),
+      'Disponible': disponible.toString(),
       'Telefono': phoneNumber,
     };
 
