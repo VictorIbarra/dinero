@@ -18,7 +18,9 @@ class DetallePage extends StatefulWidget {
 }
 
 class _DetallePageState extends State<DetallePage> {
+
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+
   double monto = 0;
   int divisions = 0;
   Credito credito;
@@ -33,7 +35,8 @@ class _DetallePageState extends State<DetallePage> {
     else if (montoMax < 1000)
       factor = 100;
     else if (montoMax < 30000)
-      factor = 500;
+    //posiblemente cambio y mas validadciones en 500 el de menor a 3000
+      factor = 100;
     else
       factor = 1000;
 
@@ -41,6 +44,8 @@ class _DetallePageState extends State<DetallePage> {
     return steps;
   }
 
+
+  // funcion que manda a guardar todos los valores para generar el nuevo credito
   Future<void> _handleSubmit(BuildContext context, String phone) async {
     Dialogs.showLoadingDialog(context, _keyLoader);
     final valid = await PromocionProvider.subirAplicacionCredito(
@@ -216,6 +221,7 @@ class Dialogs {
         });
   }
 
+  // alert introduce tu telefono 
   static Future<void> showConfirmationDialog(BuildContext context,
       {String phoneNumber, Function action}) async {
     final _formKey = GlobalKey<FormState>();

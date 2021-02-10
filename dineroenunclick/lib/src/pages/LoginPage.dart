@@ -41,8 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
 
     try {
-      _correo.text = Usuario.usr.rfc;
-
+      // _correo.text = Usuario.usr.telefono;
       if (prefs.huella) {
         _loginType = 2;
       } else {
