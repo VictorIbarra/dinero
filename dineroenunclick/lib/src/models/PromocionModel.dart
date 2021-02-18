@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Promocion{
 
   static Promocion selPROM = new Promocion();

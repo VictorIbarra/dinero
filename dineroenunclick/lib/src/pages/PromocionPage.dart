@@ -1,8 +1,4 @@
-import 'dart:collection';
-import 'dart:math';
-
 import 'package:dineroenunclick/src/models/CreditoModel.dart';
-import 'package:dineroenunclick/src/models/PromocionModel.dart';
 import 'package:dineroenunclick/src/models/UsuarioModel.dart';
 import 'package:dineroenunclick/src/providers/PromocionProvider.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +14,6 @@ class DetallePage extends StatefulWidget {
 }
 
 class _DetallePageState extends State<DetallePage> {
-
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
   double monto = 0;
@@ -35,7 +30,6 @@ class _DetallePageState extends State<DetallePage> {
     else if (montoMax < 1000)
       factor = 100;
     else if (montoMax < 30000)
-    //posiblemente cambio y mas validadciones en 500 el de menor a 3000
       factor = 100;
     else
       factor = 1000;
@@ -44,8 +38,6 @@ class _DetallePageState extends State<DetallePage> {
     return steps;
   }
 
-
-  // funcion que manda a guardar todos los valores para generar el nuevo credito
   Future<void> _handleSubmit(BuildContext context, String phone) async {
     Dialogs.showLoadingDialog(context, _keyLoader);
     final valid = await PromocionProvider.subirAplicacionCredito(
@@ -70,8 +62,13 @@ class _DetallePageState extends State<DetallePage> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {});
     credito = ModalRoute.of(context).settings.arguments;
-    double min = credito.disponible < 1000 ? credito.disponible < 100 ? 10 : 100 : 1000;
+    double min = credito.disponible < 1000
+        ? credito.disponible < 100
+            ? 10
+            : 100
+        : 1000;
     divisions = _calDivisiones(
         credito.disponible < 1000 ? 1 : 1000, credito.disponible);
     if (min > monto) {
@@ -141,6 +138,15 @@ class _DetallePageState extends State<DetallePage> {
             ),
             SizedBox(height: 30),
             Text(
+              'Monto Total',
+              style: kLabelMiniHeader,
+            ),
+            Text(
+              '${credito.capital}',
+              style: kLabelHeader,
+            ),
+            SizedBox(height: 30),
+            Text(
               'Plazo en ${credito.frecuencia == 'M' ? 'mensualidades' : 'quincenas'}',
               style: kLabelMiniHeader,
             ),
@@ -149,13 +155,39 @@ class _DetallePageState extends State<DetallePage> {
               style: kLabelHeader,
             ),
             SizedBox(height: 30),
-            Text(
-              '\$${comma(credito.pago.round().toString())}',
-              style: kLabelHeader,
+            Padding(
+              padding: const EdgeInsets.only(left: 90.0, right: 90.0),
+              child: RaisedButton(
+                elevation: 5.0,
+                onPressed: () {
+                  setState(() {});
+                },
+                padding: EdgeInsets.all(5),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                color: Colors.grey,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Calcular pago mensual',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat'),
+                    ),
+                  ],
+                ),
+              ),
             ),
             Text(
               'Pago ${credito.frecuencia == 'M' ? 'Mensual' : 'Quincenal'}',
               style: kLabelMiniHeader,
+            ),
+            Text(
+              '\$${comma(credito.pago.round().toString())}',
+              style: kLabelHeader,
             ),
             SizedBox(height: 30),
             Container(
@@ -221,7 +253,6 @@ class Dialogs {
         });
   }
 
-  // alert introduce tu telefono 
   static Future<void> showConfirmationDialog(BuildContext context,
       {String phoneNumber, Function action}) async {
     final _formKey = GlobalKey<FormState>();
@@ -260,165 +291,4 @@ class Dialogs {
           );
         });
   }
-}
-
-/// ESTA CLASE ERA LA ANTERIORMENET UTILIZADA PARA CALCULAT Y MOSTRAR
-/// AQUI SE ENCUENTRA UN EJEMPLO DEL METODO UTILIZADO PARA CALCULAR EL PAGO
-class _PromocionPageState extends State with AutomaticKeepAliveClientMixin {
-  final codigoKey = GlobalKey<FormState>();
-  double mensual = 3000 / 24;
-  double monto = 3000;
-  double erogacionFinal = 0;
-  int productoId = 0;
-  double montoIni = 1000;
-
-  int divisiones = 10;
-
-  int plazosDiv = 6;
-  double plazosMin = 8;
-  double plazosMax = 8;
-  double plazosVal = 12;
-  double plazosValSlider = 12;
-  HashMap plazosRangos = new HashMap<dynamic, dynamic>();
-
-  List<int> rangosSlider = new List<int>();
-
-  Promocion prom = new Promocion();
-
-  int _getProductoIdByPlazo(int plazo, String productos, String frec) {
-    List<String> plazos = productos.split('|');
-    int prodId = 0;
-
-    plazos.forEach((prod) {
-      var obj = prod.trim().split(',');
-
-      if (obj[0] == frec &&
-          int.parse(obj[1]) == plazo &&
-          double.parse(obj[2]) == prom.tasa) {
-        prodId = int.parse(obj[3]);
-        return prodId;
-      }
-    });
-
-    return prodId;
-  }
-
-  int _calPago(double capital, double pagos, double tasa, int frecAnual) {
-    if (prom.frecuencia == 'M') {
-      frecAnual = 12;
-    }
-    if (prom.frecuencia == 'Q') {
-      frecAnual = 24;
-    }
-
-    plazosRangos.forEach((k, v) {
-      if (k == pagos) {
-        tasa = v;
-      }
-    });
-
-    double factorTasa = tasa / 100;
-    double fTasaFrec = factorTasa / frecAnual;
-    double conIva = fTasaFrec * 1.16;
-    double pagoBase = conIva * capital;
-
-    double pagoDiff = 1 - (pow((1 + conIva), (pagos * -1)));
-    double erogacion = pagoBase / pagoDiff;
-
-    erogacionFinal = int.parse(erogacion.toString().split('.')[0]) * 1.0;
-
-    return erogacionFinal.round();
-  }
-
-  int _calDivisiones(double montoMin, double montoMax) {
-    int factor = 500;
-    int montoReal = ((montoMax - montoMin).round());
-    int steps = 10;
-
-    if (montoMax < 30000) {
-      factor = 500;
-    } else if (montoMax >= 30000 && montoMax < 50000) {
-      factor = 1000;
-    } else if (montoMax >= 50000 && montoMax < 100000) {
-      factor = 1000;
-    } else if (montoMax >= 100000) {
-      factor = 1000;
-    }
-
-    steps = (montoReal / factor).round();
-
-    return steps;
-  }
-
-  HashMap _setPlazos(String productos, String frec) {
-    //productos = 'Q,6,113.7931034|  Q,8,110.0689655|  Q,10,106.4482759|  Q,12,102.7241379|  Q,14,99.0000000|  Q,16,95.2758621|  Q,18,91.6551724|  Q,20,87.9310345|';
-
-    List<String> plazos = productos.split('|');
-    HashMap rangos = new HashMap<dynamic, dynamic>();
-
-    int first = 0;
-    int last = 0;
-    int steps = 1;
-
-    int pagos = 0;
-    double tasa = 0;
-    int prodId = 0;
-
-    plazos.forEach((prod) {
-      var obj = prod.trim().split(',');
-
-      if (obj[0] == frec && double.parse(obj[2]) == prom.tasa) {
-        pagos = int.parse(obj[1]);
-        tasa = double.parse(obj[2]);
-        prodId = int.parse(obj[3]);
-        if (first == 0) {
-          first = pagos;
-        }
-
-        rangos.addAll({pagos: tasa});
-      }
-    });
-
-    rangos.forEach((key, value) {
-      rangosSlider.add(key);
-    });
-
-    rangosSlider.sort((a, b) {
-      return a.compareTo(b);
-    });
-
-    print(rangosSlider);
-
-    last = pagos;
-
-    steps = (rangos.length - 1); //((last - first)/(rangos.length-1)).round();
-
-    plazosDiv = steps;
-    plazosMin = first * 1.0;
-    plazosMax = last * 1.0;
-    plazosVal = plazosMax;
-    plazosValSlider = plazosMax;
-
-    setState(() {});
-
-    return rangos;
-  }
-
-  @override
-  void initState() {
-    prom = Promocion.selPROM;
-
-    monto = prom.monto;
-
-    divisiones = _calDivisiones(1000, monto);
-
-    print(prom.productos);
-
-    plazosRangos = _setPlazos(prom.productos, prom.frecuencia);
-
-    super.initState();
-  }
-
-  @override
-  bool get wantKeepAlive => true;
 }

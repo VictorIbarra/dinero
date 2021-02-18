@@ -20,8 +20,6 @@ class PromocionProvider {
     } catch (Exception) {
       Promocion.selCotizacion.idPromocionCliente = -1;
     }
-
-    //print(decodedData);
   }
 
   static Future<bool> subirAplicacionCredito(
@@ -53,4 +51,31 @@ class PromocionProvider {
     else
       return false;
   }
+
+   static Future<bool> calculaMontoMensual(
+      { double taza,
+      int plazo,
+      double monto,
+      String frecuencia,}) async {
+    final url = '$api_url/CalculoErogacion';
+    Map<String, dynamic> bodyRequest = {
+      'taza': taza.toString(),
+      'plazo': plazo.toString(),
+      'monto': monto.toString(),
+      'frecuencia': frecuencia.toString(),
+    };
+
+    final resp = await http.post(
+      url,
+      body: bodyRequest,
+
+    );
+      print(resp);
+    if (resp.statusCode == 200)
+      return true;
+    else
+      return false;
+  }
+
+
 }
