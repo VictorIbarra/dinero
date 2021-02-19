@@ -72,6 +72,9 @@ class _DetallePageState extends State<DetallePage> {
     Navigator.of(_calcularLoadingKey.currentContext, rootNavigator: true).pop();
     if (res.error != 0) {
       Dialogs.showErrorDialog(context, res.message);
+      setState(() {
+        pagoMensual = "--";
+      });
     } else {
       setState(() {
         pagoMensual = res.data.pagoErogacion.toString();
