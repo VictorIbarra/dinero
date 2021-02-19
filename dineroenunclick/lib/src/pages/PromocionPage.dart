@@ -15,11 +15,13 @@ class DetallePage extends StatefulWidget {
 
 class _DetallePageState extends State<DetallePage> {
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _calcularLoadingKey = new GlobalKey<State>();
 
   double monto = 0;
   int divisions = 0;
   Credito credito;
   String phoneNumber = Usuario.usr.telefono;
+  String pagoMensual = '--';
 
   int _calDivisiones(double montoMin, double montoMax) {
     int factor = 500;
@@ -57,6 +59,23 @@ class _DetallePageState extends State<DetallePage> {
       Navigator.of(_keyLoader.currentContext, rootNavigator: true)
         ..pop()
         ..pop();
+    }
+  }
+
+  Future<void> _handleCalcularPagoMensual(BuildContext context) async {
+    Dialogs.showLoadingDialog(context, _calcularLoadingKey);
+    final res = await PromocionProvider.calculaMontoMensual(
+        frecuencia: credito.frecuencia,
+        plazo: credito.plazo,
+        taza: credito.tasa,
+        monto: credito.saldoCredito + monto);
+    Navigator.of(_calcularLoadingKey.currentContext, rootNavigator: true).pop();
+    if (res.error != 0) {
+      Dialogs.showErrorDialog(context, res.message);
+    } else {
+      setState(() {
+        pagoMensual = res.data.pagoErogacion.toString();
+      });
     }
   }
 
@@ -130,6 +149,7 @@ class _DetallePageState extends State<DetallePage> {
               max: credito.disponible,
               onChanged: (val) {
                 setState(() {
+                  pagoMensual = "--";
                   monto = val;
                 });
               },
@@ -160,7 +180,7 @@ class _DetallePageState extends State<DetallePage> {
               child: RaisedButton(
                 elevation: 5.0,
                 onPressed: () {
-                  setState(() {});
+                  _handleCalcularPagoMensual(context);
                 },
                 padding: EdgeInsets.all(5),
                 shape: RoundedRectangleBorder(
@@ -186,7 +206,7 @@ class _DetallePageState extends State<DetallePage> {
               style: kLabelMiniHeader,
             ),
             Text(
-              '\$${comma(credito.pago.round().toString())}',
+              '\$${comma(pagoMensual)}',
               style: kLabelHeader,
             ),
             SizedBox(height: 30),
@@ -288,6 +308,19 @@ class Dialogs {
                     }
                   })
             ],
+          );
+        });
+  }
+
+  static Future<void> showErrorDialog(
+      BuildContext context, String content) async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            elevation: 0,
+            title: Text('Error'),
+            content: Text(content),
           );
         });
   }

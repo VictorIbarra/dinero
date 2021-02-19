@@ -52,30 +52,42 @@ class PromocionProvider {
       return false;
   }
 
-   static Future<bool> calculaMontoMensual(
-      { double taza,
-      int plazo,
-      double monto,
-      String frecuencia,}) async {
-    final url = '$api_url/CalculoErogacion';
-    Map<String, dynamic> bodyRequest = {
-      'taza': taza.toString(),
-      'plazo': plazo.toString(),
-      'monto': monto.toString(),
-      'frecuencia': frecuencia.toString(),
-    };
-
-    final resp = await http.post(
-      url,
-      body: bodyRequest,
-
-    );
-      print(resp);
-    if (resp.statusCode == 200)
-      return true;
-    else
-      return false;
+  static Future<MontoMensualResponse> calculaMontoMensual({
+    double taza,
+    int plazo,
+    double monto,
+    String frecuencia,
+  }) async {
+    final url =
+        '$api_url/CalculoErogacion?Tasa=$taza&Plazo=$plazo&Monto=$monto&Frecuencia=$frecuencia';
+    final resp = await http.get(url);
+    final jsonResponse = json.decode(resp.body);
+    return MontoMensualResponse.fromJson(jsonResponse);
   }
+}
 
+class MontoMensualData {
+  final double pagoErogacion;
+  MontoMensualData({this.pagoErogacion});
 
+  factory MontoMensualData.fromJson(Map<String, dynamic> json) {
+    return MontoMensualData(pagoErogacion: json['PagoErogacion']);
+  }
+}
+
+class MontoMensualResponse {
+  final int error;
+  final String message;
+  final MontoMensualData data;
+
+  MontoMensualResponse({this.error, this.message, this.data});
+
+  factory MontoMensualResponse.fromJson(Map<String, dynamic> json) {
+    return MontoMensualResponse(
+        error: json['Error'],
+        message: json['Message'],
+        data: (json['Data'] == null)
+            ? null
+            : MontoMensualData.fromJson(json['Data']));
+  }
 }
