@@ -77,7 +77,7 @@ class _DetallePageState extends State<DetallePage> {
       });
     } else {
       setState(() {
-        pagoMensual = res.data.pagoErogacion.toString();
+        pagoMensual = res.data.pagoErogacion.toStringAsFixed(1);
       });
     }
   }
