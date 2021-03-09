@@ -4,6 +4,7 @@ import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:dineroenunclick/src/widgets/modals.dart';
 // import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cool_alert/cool_alert.dart';
 
 class PerfilPage extends StatefulWidget {
   PerfilPage({Key key}) : super(key: key);
@@ -26,12 +27,19 @@ _itemOption(BuildContext context, String title, String goTo) {
 _cerrarSesion(BuildContext context) {
   return GestureDetector(
     onTap: () {
-      modalConfirmacion(context, 'Salir', 'Estas seguro de cerrar sesion ?',
-          () {
-        //DBProvider.db.resetUsuario();
-        Navigator.pop(context);
-        Navigator.pushReplacementNamed(context, '/login');
-      });
+      CoolAlert.show(
+          context: context,
+          type: CoolAlertType.confirm,
+          title: '',
+          text: 'Estas seguro de cerrar la sesion?',
+          confirmBtnText: "Si",
+          onConfirmBtnTap: () {
+            print('cerrar sesion');
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, '/login');
+          },
+          cancelBtnText: "No",
+          confirmBtnColor: Colors.red[700]);
     },
     child: Container(
       child: Text(
@@ -58,7 +66,7 @@ class _PerfilPageState extends State<PerfilPage> {
           title: Text(
             'Perfil',
             style: TextStyle(
-              color: pfAzul,
+              color: pfazul2,
               fontSize: 30.0,
               fontWeight: FontWeight.w900,
               fontFamily: 'Montserrat',
@@ -108,6 +116,16 @@ class _PerfilPageState extends State<PerfilPage> {
                 child: SizedBox(),
               ),
 
+              new Image.asset(
+                'assets/prestamo.png',
+                height: 60.0,
+                fit: BoxFit.cover,
+              ),
+
+              SizedBox(
+                height: 80.0,
+              ),
+
               _cerrarSesion(context),
 
               SizedBox(
@@ -124,10 +142,7 @@ class _PerfilPageState extends State<PerfilPage> {
               SizedBox(
                 height: 01.0,
               ),
-              Text(
-                'Préstamo Feliz 2021',
-                style: kLabelTerminosCondiciones,
-              ),
+              _botonPrestamoFeliz(),
               SizedBox(
                 height: 15.0,
               ),
@@ -156,7 +171,7 @@ class _PerfilPageState extends State<PerfilPage> {
       padding: EdgeInsets.only(right: 0.0),
       child: Text(
         'Terminos Y Condiciones',
-        style: TextStyle(fontSize: 10.0, color: Color(0xFF1747AC)),
+        style: TextStyle(fontSize: 12.0, color: pfazul2),
       ),
     );
   }
@@ -169,7 +184,20 @@ class _PerfilPageState extends State<PerfilPage> {
       padding: EdgeInsets.only(right: 0.0),
       child: Text(
         'Politica De Privacidad',
-        style: TextStyle(fontSize: 10.0, color: Color(0xFF1747AC)),
+        style: TextStyle(fontSize: 12.0, color: pfazul2),
+      ),
+    );
+  }
+
+  Widget _botonPrestamoFeliz() {
+    return FlatButton(
+      onPressed: () {
+        launch('https://www.prestamofeliz.com.mx/');
+      },
+      padding: EdgeInsets.only(right: 0.0),
+      child: Text(
+        'PRESTAMO FELIZ',
+        style: TextStyle(fontSize: 15.0, color: pfazul2),
       ),
     );
   }

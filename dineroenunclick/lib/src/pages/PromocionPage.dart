@@ -196,7 +196,7 @@ class _DetallePageState extends State<DetallePage> {
                       'Calcular pago mensual',
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 12.0,
+                          fontSize: 9.0,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Montserrat'),
                     ),
@@ -285,7 +285,7 @@ class Dialogs {
         builder: (BuildContext context) {
           return AlertDialog(
             elevation: 0,
-            title: Text('Introduce tu teléfono'),
+            title: Text('Nos contactaremos al siguiente número'),
             content: Form(
               key: _formKey,
               child: TextFormField(

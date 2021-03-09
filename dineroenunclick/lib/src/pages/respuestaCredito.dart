@@ -14,10 +14,6 @@ class _RespuestaCreditoPageState extends State<RespuestaCreditoPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: GestureDetector(
-          // child: Icon(
-          //   Icons.arrow_back_ios,
-          //   color: pfAzul,
-          // ),
           onTap: () {
             Navigator.pop(context);
           },
@@ -35,7 +31,7 @@ class _RespuestaCreditoPageState extends State<RespuestaCreditoPage> {
           child: Text(
             'Solicita',
             style: TextStyle(
-              color: pfAzul,
+              color: pfazul2,
               fontSize: 19.0,
               fontWeight: FontWeight.w900,
               fontFamily: 'Montserrat',
@@ -86,7 +82,7 @@ class _RespuestaCreditoPageState extends State<RespuestaCreditoPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: Colors.blue[900],
+          color: pfazul2,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

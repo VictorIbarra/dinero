@@ -143,7 +143,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        color: pfAzul,
+        color: pfVerde2,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -204,7 +204,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         ],
         title: Center(
           child: Text('Cambio de Contraseña', style: TextStyle(
-          color: pfAzul,
+          color: pfazul2,
           fontSize: 19.0,
           fontWeight: FontWeight.w900,
           fontFamily: 'Montserrat',

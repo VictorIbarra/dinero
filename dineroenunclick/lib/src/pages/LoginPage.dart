@@ -339,7 +339,7 @@ class _LoginPageState extends State<LoginPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: Colors.blue[900],
+          color: Color.fromRGBO(6, 6, 159, 1),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -403,7 +403,7 @@ class _LoginPageState extends State<LoginPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: Colors.blue[900],
+          color:Color.fromRGBO(6, 6, 159, 1),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -439,7 +439,7 @@ class _LoginPageState extends State<LoginPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: Colors.blue[900],
+          color: Color.fromRGBO(6, 6, 159, 1),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

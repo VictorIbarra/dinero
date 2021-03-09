@@ -224,7 +224,7 @@ class _InformacionPageState extends State<InformacionPage> {
         ],
         title: Center(
           child: Text('Mi cuenta', style: TextStyle(
-          color: pfAzul,
+          color: pfazul2,
           fontSize: 19.0,
           fontWeight: FontWeight.w900,
           fontFamily: 'Montserrat',

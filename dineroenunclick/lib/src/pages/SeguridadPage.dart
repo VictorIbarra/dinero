@@ -106,7 +106,7 @@ _itemSwitchOption(BuildContext context, String title, String goTo){
         ],
         title: Center(
           child: Text('Seguridad', style: TextStyle(
-          color: pfAzul,
+          color: pfazul2,
           fontSize: 19.0,
           fontWeight: FontWeight.w900,
           fontFamily: 'Montserrat',

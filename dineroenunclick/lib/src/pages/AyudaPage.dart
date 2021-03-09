@@ -39,7 +39,7 @@ class _AyudaPageState extends State<AyudaPage> {
           child: Text(
             'Centro de Ayuda',
             style: TextStyle(
-              color: pfAzul,
+              color: pfazul2,
               fontSize: 19.0,
               fontWeight: FontWeight.w900,
               fontFamily: 'Montserrat',
@@ -70,7 +70,7 @@ class _AyudaPageState extends State<AyudaPage> {
               children: [
                 Text(
                   'Correo',
-                  style: TextStyle(color: Colors.blue[900], fontSize: 30.0),
+                  style: TextStyle(color: pfazul2, fontSize: 30.0),
                 ),
                 _email(snapshot.data)
               ],
@@ -83,7 +83,7 @@ class _AyudaPageState extends State<AyudaPage> {
               children: [
                 Text(
                   'Telefono',
-                  style: TextStyle(color: Colors.blue[900], fontSize: 30.0),
+                  style: TextStyle(color: pfazul2, fontSize: 30.0),
                 ),
                 _phone(snapshot.data)
               ],
@@ -100,7 +100,7 @@ class _AyudaPageState extends State<AyudaPage> {
       children: [
         Icon(
           Icons.email,
-          color: pfAzul,
+          color: pfazul2,
         ),
         FlatButton(
             onPressed: () {
@@ -136,7 +136,7 @@ class _AyudaPageState extends State<AyudaPage> {
       children: [
         Icon(
           Icons.phone,
-          color: pfAzul,
+          color: pfazul2,
         ),
         FlatButton(
           onPressed: () {

@@ -15,6 +15,7 @@ import 'package:dineroenunclick/src/providers/db_provider.dart';
 import 'package:dineroenunclick/src/providers/push_notifications_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:dineroenunclick/src/pages/LoginPage.dart';
+// import 'package:screenshot_callback/screenshot_callback.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +31,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // ScreenshotCallback screenshotCallback;
+  // String text = "Ready..";
 
   final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -44,7 +47,24 @@ class _MyAppState extends State<MyApp> {
       // navigatorKey.currentState.pushNamed('nombre page',arguments: data);
       
     });
+    // void init() async {
+
+    //   await initScreenshotCallback();
+    // }
   }
+
+  // Future<void> initScreenshotCallback() async {
+  //   screenshotCallback = ScreenshotCallback();
+
+  //   screenshotCallback.addListener(() {
+  //     setState(() {
+  //       text = 'Screenshot callback fired!';
+  //     });
+  //   });
+  //   screenshotCallback.addListener(() {
+  //     print('we can add multiple listeners');
+  //   });
+  // }
 
   String _mainRoute = '/';
 

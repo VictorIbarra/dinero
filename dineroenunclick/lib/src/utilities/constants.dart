@@ -7,9 +7,9 @@ final developMode = true;
 // produccion
 // final ip_default = 'https://wsdinero1click.prestamofeliz.com.mx:9026';
 // desarrollo
-final ip_default = 'http://172.25.111.102:9004';
+// final ip_default = 'http://172.25.111.102:9004';
 // testing
-// final ip_default = 'http://saga.prestamofeliz.com.mx:9253';
+final ip_default = 'http://saga.prestamofeliz.com.mx:9253';
  
 final ip = prefs.ip;
 String api_url = ip + '/api/UsuarioCliente';
@@ -23,7 +23,10 @@ final headers = <String, String>{
 };
 
 final pfVerde = Color(0xFF21D702);
+final pfVerde2 =Color.fromRGBO(68, 214, 44, 1);
 final pfAzul = Color(0xFF007DEB);
+final pfazul2 =Color.fromRGBO(6, 6, 159, 1);
+final pffgris2 =Color.fromRGBO(188, 188, 188, 1);
 final pfRojo = Color(0xFFF42F2F);
 final pfGris = Color(0xFFABABAB);
 final pfNaranja = Color(0xFFFD9027);

@@ -69,7 +69,7 @@ Widget _itemNotificacion(BuildContext context, Notificasion prom, Color color) {
           TextSpan(
               text: ' \$${prom.disponible.toString()},',
               style: TextStyle(
-                  fontStyle: FontStyle.italic, color: Colors.blue[900])),
+                  fontStyle: FontStyle.italic, color: pfazul2)),
           TextSpan(
               text:
                   ' de tu crédito de \$${prom.monto.toString()}, está  ${prom.estatus.toString()}',
@@ -132,9 +132,23 @@ Widget _loadCreditos(BuildContext context) {
         if (snapshot.data.isEmpty)
           return Container(
             alignment: Alignment.center,
-            child: Text(
-              'No tienes notificaciones',
-              textScaleFactor: 1.3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'No hay notificaciones',
+                  textScaleFactor: 1.3,style: TextStyle(color: Colors.grey[500]),
+                ),
+                SizedBox(
+                  height: 40.0,
+                ),
+                new Image.asset(
+                  'assets/13.png',
+                  height: 60.0,
+                  fit: BoxFit.cover,
+                ),
+              ],
             ),
           );
         return _drawVisitanteItems(snapshot.data, context);
@@ -173,7 +187,7 @@ class _NotificacionesPageState extends State<NotificacionesPage> {
           title: Text(
             'Notificaciones',
             style: TextStyle(
-              color: pfAzul,
+              color: pfazul2,
               fontSize: 30.0,
               fontWeight: FontWeight.w900,
               fontFamily: 'Montserrat',

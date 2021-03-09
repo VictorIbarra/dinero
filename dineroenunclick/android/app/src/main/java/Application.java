@@ -1,4 +1,4 @@
-package com.prestamofeliz.dineroenunclick;
+package com.prestamofeliz.dineroen1click;
 
 import io.flutter.app.FlutterApplication;
 import io.flutter.plugin.common.PluginRegistry;

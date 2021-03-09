@@ -1,4 +1,5 @@
 import 'package:dineroenunclick/src/pages/CreditosPage.dart';
+import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:dineroenunclick/src/pages/SolicitaPage.dart';
@@ -63,6 +64,7 @@ class _ClientePageState extends State<ClientePage> {
   Widget _buildNavigationBar(){
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
+      selectedItemColor: pfazul2,
       //iconSize: 30.0,
       //showSelectedLabels: false,
       //showUnselectedLabels: false,
