@@ -206,7 +206,7 @@ class _InformacionPageState extends State<InformacionPage> {
     
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         //automaticallyImplyLeading: false,

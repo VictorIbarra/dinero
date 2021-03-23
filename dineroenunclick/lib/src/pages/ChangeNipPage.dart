@@ -189,7 +189,7 @@ class _ChangeNipPageState extends State<ChangeNipPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         //automaticallyImplyLeading: false,
