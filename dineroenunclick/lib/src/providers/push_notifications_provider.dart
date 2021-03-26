@@ -12,16 +12,12 @@ class PushNotificationProvider {
   static Future<dynamic> onBackgroundMessage(
       Map<String, dynamic> message) async {
     if (message.containsKey('data')) {
-      // Handle data message
       final dynamic data = message['data'];
     }
 
     if (message.containsKey('notification')) {
-      // Handle notification message
       final dynamic notification = message['notification'];
     }
-
-    // Or do other work.
   }
 
   initNotification() async {
@@ -43,7 +39,6 @@ class PushNotificationProvider {
   Future<dynamic> onMessage(Map<String, dynamic> message) async {
     print('======== onMessage =======');
     print('message: $message');
-    // print('argumento: $argumento');
     String argumento = 'no-data';
 
     if (Platform.isAndroid) {
@@ -56,8 +51,6 @@ class PushNotificationProvider {
 
   Future<dynamic> onLaunch(Map<String, dynamic> message) async {
     print('======== onLaunch =======');
-    // print('message: $message');
-    // print('argumento: $argumento');
     String argumento = 'no-data';
     if (Platform.isAndroid) {
       argumento = message['data']['comida'] ?? 'no-data';
@@ -69,8 +62,6 @@ class PushNotificationProvider {
 
   Future<dynamic> onResume(Map<String, dynamic> message) async {
     print('======== onResume =======');
-    // print('message: $message');
-    // print('argumento: $argumento');
     String argumento = 'no-data';
     if (Platform.isAndroid) {
       argumento = message['data']['comida'] ?? 'no-data';

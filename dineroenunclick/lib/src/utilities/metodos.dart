@@ -1,17 +1,13 @@
-import 'dart:collection';
-
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:geolocator/geolocator.dart';
 
 bool validaVacio(String value){
-
   if(value.trim().length >= 2){
     return true;
   }
   else{
     return false;
   }
-
 }
 
 Function mathFunc = (Match match) => '${match[1]},';
@@ -30,7 +26,7 @@ bool validaCombo(String value){
   }
 
 }
-
+ 
 void getCurrentLocation(Function callback) {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   
@@ -45,4 +41,3 @@ void getCurrentLocation(Function callback) {
       print(e);
     });
 }
-

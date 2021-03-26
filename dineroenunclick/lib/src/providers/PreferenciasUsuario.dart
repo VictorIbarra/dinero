@@ -17,9 +17,7 @@ class PreferenciasUsuario{
   initPrefs() async {
     this._prefs = await SharedPreferences.getInstance();
   }
-
   
-
   //GET y SET de huella
   get huella {
     return _prefs.getBool('huella') ?? false;
@@ -58,8 +56,4 @@ class PreferenciasUsuario{
   set longitud (String valor){
     _prefs.setString('longitud', valor);
   }
-
-
-
-
 }

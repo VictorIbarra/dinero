@@ -5,7 +5,7 @@ class Dialogs {
   static void alert(BuildContext context, {String title, String description}) {
     showDialog(
       context: context,
-      child: CupertinoAlertDialog(
+      builder: (_) => CupertinoAlertDialog(
         title: title != null ? Text(title) : null,
         content: description != null ? Text(description) : null,
         actions: <Widget>[

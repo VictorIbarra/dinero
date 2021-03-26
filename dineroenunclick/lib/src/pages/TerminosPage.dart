@@ -35,7 +35,7 @@ class _TerminosPageState extends State<TerminosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         //automaticallyImplyLeading: false,

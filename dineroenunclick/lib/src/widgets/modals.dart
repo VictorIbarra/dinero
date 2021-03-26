@@ -42,17 +42,9 @@ modalInput(BuildContext context, GlobalKey<FormState> _key, TextInputType _typeI
               child: TextFormField(
                 obscureText: secret,
                 keyboardType: _typeInput,
-                //textCapitalization: _typeInput,
                 autofocus: true,
-                /*validator: (value){
-                  return 'Codigo Invalido';
-                },*/
                 controller: _controller,
                 decoration: InputDecoration(hintText: hint),
-                /*onChanged: (valor){
-                    _codigo = valor;
-                    //_codigo = 'UY25P3';
-                },*/
               ),
             ),
             actions: <Widget>[
@@ -77,12 +69,9 @@ modalInput(BuildContext context, GlobalKey<FormState> _key, TextInputType _typeI
             ],
           );
         });
-  
   }
 
-
 Future<T> modalLoading<T>(BuildContext context, String titulo, bool linearLoader) async {
-    
     return showDialog(
       barrierDismissible: false,
       context: context,
@@ -92,11 +81,9 @@ Future<T> modalLoading<T>(BuildContext context, String titulo, bool linearLoader
             child:  Text(titulo)
           ),
           content: Container(
-            //child: Text(mensaje),
             child: linearLoader ? LinearProgressIndicator() : CircularProgressIndicator(),
           ),
         );
       }
     );
   }
-

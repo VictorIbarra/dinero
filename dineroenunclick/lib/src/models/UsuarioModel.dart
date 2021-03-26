@@ -3,7 +3,6 @@ import 'dart:convert';
 class Usuario{
 
   static int idCliente = 0;
-
   static Usuario usr;
 
   int idUsuarioCliente;
@@ -19,11 +18,10 @@ class Usuario{
   double lineaCreditoMax;
   DateTime fecAlta;
   bool activo;
-
+  bool clientePF;
   int error;
   String mensaje;
   int usuarioClienteId;
-
   String clabe;
   String claveRegistroPiN;
 
@@ -41,18 +39,15 @@ class Usuario{
     this.lineaCreditoMax,
     this.fecAlta,
     this.activo,
-
     this.error,
     this.mensaje,
     this.usuarioClienteId,
-
     this.claveRegistroPiN,
-    this.clabe
+    this.clabe,
+    this.clientePF
   });
 
   Usuario.fromJsonMap(Map<String, dynamic> json, String type){
-    //idUsuarioCliente = int.parse(json['Id_UsuarioCliente']);
-
     switch(type){
       case 'RU-1':
         error             = json['Error'];
@@ -65,27 +60,20 @@ class Usuario{
         nombreCompleto  = json['NombreCompleto'];
         rfc             = json['RFC'];
         correo          = json['Correo'];
-        //pass              = json['Pass'];
         telefono        = (json['Telefono']);
         direccion       = json['Direccion'];
         lineaCreditoMax = (json['LineaCreditoMax']);
 
         clabe = (json['Clabe']);
         claveRegistroPiN = (json['ClaveRegistroPiN']);
+
+        clientePF = json['ClientePF'];
       break;
     }
-
-    
-    //fecAlta           = DateTime.parse(json['FecAlta']);
-    //activo            = json['Activo'];
-
-    
   }
 
   static List<Usuario> fromJsonList(List<dynamic> jsonList, String serviceCode){
-    
     List<Usuario> items = new List();
-    
     try{
       
       for(var item in jsonList){
@@ -109,11 +97,12 @@ class Usuario{
     telefono          : (json['Telefono']),
     lineaCreditoMax   : (json['LineaCreditoMax']),
     claveRegistroPiN          : (json['ClaveRegistroPiN']),
-    clabe          : (json['Clabe'])
+    clabe          : (json['Clabe']),
+    clientePF       : (json['ClientePF']),
     );
+    
 
   Map<String, dynamic> toJson() =>{
-    //'idUsuarioCliente': idUsuarioCliente,
     'Cliente_Id': clienteId,
     'Promotor_Id': promotorId,
     'NombreCompleto': nombreCompleto,
@@ -122,14 +111,11 @@ class Usuario{
     'Pass': pass,
     'Telefono': telefono,
     'Direccion': direccion,
-    'LineaCreditoMax': lineaCreditoMax
-    
-    //'fecAlta': fecAlta,
-    //'activo': activo,
+    'LineaCreditoMax': lineaCreditoMax,
+    'ClientePF': clientePF
   };
 
   Map<String, dynamic> toJsonLoginResponse() =>{
-    //'idUsuarioCliente': idUsuarioCliente,
     'Cliente_Id': clienteId,
     'Promotor_Id': promotorId,
     'NombreCompleto': nombreCompleto,
@@ -138,9 +124,7 @@ class Usuario{
     'Telefono': telefono,
     'LineaCreditoMax': lineaCreditoMax,
     'ClaveRegistroPiN': claveRegistroPiN,
-    'Clabe': clabe
-    //'fecAlta': fecAlta,
-    //'activo': activo,
+    'Clabe': clabe,
   };
 
   Map<String, dynamic> toJsonLogin() =>{
@@ -158,12 +142,9 @@ class Usuario{
     'Nip': nip,
     'Pass': pass
   };
-
-
 }
 
 String usuarioModelToJson(Usuario data, String type){
-
   switch(type){
     case 'login':
       return json.encode(data.toJsonLogin());
@@ -181,10 +162,4 @@ String usuarioModelToJson(Usuario data, String type){
       return null;
     break;
   }
-  
-  
-
 }
- 
-
-

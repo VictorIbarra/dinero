@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class Registro{
+class RegistroNew{
 
   int idCliente;
   String cliente;
@@ -10,9 +10,9 @@ class Registro{
   double capital;
   double erogacion;
 
-  static Registro obj = null;
+  static RegistroNew obj = null;
 
-  Registro({
+  RegistroNew({
     this.idCliente,
     this.cliente,
     this.celular,
@@ -22,7 +22,7 @@ class Registro{
     this.erogacion
   });
 
-  Registro.fromJsonMap(Map<String, dynamic> json){
+  RegistroNew.fromJsonMap(Map<String, dynamic> json){
     //idUsuarioCliente = int.parse(json['Id_UsuarioCliente']);
     idCliente   = int.parse(json['IdCliente'].toString().split('.')[0]);
     cliente     = (json['Cliente']);
@@ -33,10 +33,10 @@ class Registro{
     erogacion   = (json['Erogacion']);
   }
 
-  static List<Registro> fromJsonList(List<dynamic> jsonList){
-    List<Registro> items = new List();
+  static List<RegistroNew> fromJsonList(List<dynamic> jsonList){
+    List<RegistroNew> items = new List();
     for(var item in jsonList){
-      final reg = new Registro.fromJsonMap(item);
+      final reg = new RegistroNew.fromJsonMap(item);
       items.add(reg);
     }
 

@@ -13,13 +13,10 @@ class _InformacionPageState extends State<InformacionPage> {
   TextEditingController _nombre = TextEditingController();
   TextEditingController _correo = TextEditingController();
   TextEditingController _celular = TextEditingController();
-
   String nombre = Usuario.usr.nombreCompleto;
   String correo = Usuario.usr.correo;
   String celular = Usuario.usr.telefono;
   
-
-
   Widget _buildNombreTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,10 +32,7 @@ class _InformacionPageState extends State<InformacionPage> {
           height: 50.0,
           child: TextField(
             onChanged: (valor){
-              //_nombre.text = valor;
-
             },
-            
             keyboardType: TextInputType.text,
             controller: _nombre,
             style: TextStyle(
@@ -48,11 +42,7 @@ class _InformacionPageState extends State<InformacionPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.email,
-                color: Colors.white,
-              ),*/
-              hintText: 'Ingresa tu nombre',
+              hintText: 'Tu nombre se actualizara ...',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -84,10 +74,6 @@ class _InformacionPageState extends State<InformacionPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.email,
-                color: Colors.white,
-              ),*/
               hintText: 'Ingresa tu email',
               hintStyle: kHintTextStyle,
             ),
@@ -120,10 +106,6 @@ class _InformacionPageState extends State<InformacionPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.email,
-                color: Colors.white,
-              ),*/
               hintText: 'Ingresa tu celular',
               hintStyle: kHintTextStyle,
             ),
@@ -135,9 +117,7 @@ class _InformacionPageState extends State<InformacionPage> {
 
   Widget _buildGuardarBtn() {
     final _screenSize = MediaQuery.of(context).size;
-
     return Container(
-      //margin: EdgeInsets.only(top: 0),
       padding: EdgeInsets.symmetric(vertical: 5.0),
       width: _screenSize.width * .4,
       height: _screenSize.height * .09,
@@ -158,7 +138,6 @@ class _InformacionPageState extends State<InformacionPage> {
             Text(
               'Guardar',
               style: TextStyle(
-                //color: Color(0xFFFF960A),
                 color: Colors.white,
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
@@ -206,7 +185,7 @@ class _InformacionPageState extends State<InformacionPage> {
     
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         //automaticallyImplyLeading: false,

@@ -24,7 +24,6 @@ class _SeguridadPageState extends State<SeguridadPage> {
     
   }
 
-  
   _setAccesoBiometrico(bool valor){
     prefs.huella = valor;
 

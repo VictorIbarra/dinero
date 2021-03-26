@@ -1,18 +1,16 @@
-import 'package:dineroenunclick/src/models/RegistroModel.dart';
-import 'package:dineroenunclick/src/models/UsuarioModel.dart';
-import 'package:dineroenunclick/src/providers/UsuarioProvider.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:dineroenunclick/src/utilities/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
 
-class RegistroPage extends StatefulWidget {
-  RegistroPage({Key key}) : super(key: key);
-  _RegistroPageState createState() => _RegistroPageState();
+class RegistroNewPage extends StatefulWidget {
+  RegistroNewPage({Key key}) : super(key: key);
+  _RegistroNewPageState createState() => _RegistroNewPageState();
 }
 
-class _RegistroPageState extends State<RegistroPage> {
+class _RegistroNewPageState extends State<RegistroNewPage> {
+  
   TextEditingController _correo = TextEditingController();
   TextEditingController _rfc = TextEditingController();
   TextEditingController _celular = TextEditingController();
@@ -45,10 +43,6 @@ class _RegistroPageState extends State<RegistroPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.email,
-                color: Colors.white,
-              ),*/
               hintText: 'Ingresa tu RFC',
               hintStyle: kHintTextStyle,
             ),
@@ -81,10 +75,6 @@ class _RegistroPageState extends State<RegistroPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.email,
-                color: Colors.white,
-              ),*/
               hintText: 'Ingresa tu email',
               hintStyle: kHintTextStyle,
             ),
@@ -94,12 +84,12 @@ class _RegistroPageState extends State<RegistroPage> {
     );
   }
 
-  Widget _buildCelularTF() {
+  Widget _buildCelTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Número celular',
+          'Número Celular',
           style: kLabelStyle,
         ),
         SizedBox(height: 5.0),
@@ -117,11 +107,7 @@ class _RegistroPageState extends State<RegistroPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.email,
-                color: Colors.white,
-              ),*/
-              hintText: Registro.obj.celular.toString(),
+              hintText: 'Ingresa tu TELEFONO',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -154,10 +140,6 @@ class _RegistroPageState extends State<RegistroPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.lock,
-                color: Colors.white,
-              ),*/
               hintText: 'Ingresa tu nueva contraseña',
               hintStyle: kHintTextStyle,
             ),
@@ -191,10 +173,6 @@ class _RegistroPageState extends State<RegistroPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.lock,
-                color: Colors.white,
-              ),*/
               hintText: 'Confirma tu contraseña',
               hintStyle: kHintTextStyle,
             ),
@@ -203,8 +181,7 @@ class _RegistroPageState extends State<RegistroPage> {
       ],
     );
   }
-
-  Widget _buildRegistrarseBtn(ScaffoldState contextScaffold) {
+   Widget _buildRegistrarseBtn(ScaffoldState contextScaffold) {
     final _screenSize = MediaQuery.of(context).size;
 
     return Container(
@@ -214,7 +191,6 @@ class _RegistroPageState extends State<RegistroPage> {
           elevation: 5.0,
           onPressed: () async {
             FocusScope.of(context).requestFocus(new FocusNode());
-
             if (_value1) {
               print('boton rechazar oprimido ');
               if (_value1 == false) {
@@ -223,36 +199,8 @@ class _RegistroPageState extends State<RegistroPage> {
                         'Nesesitas aceptar los términos y condiciones');
               } else {
                 if (_value1 = true && _pass.text == _passConfirm.text) {
-                  UsuarioProvider wsUsuario = new UsuarioProvider();
-                  wsUsuario
-                      .registroUsuario(
-                          Registro.obj.idCliente,
-                          Registro.obj.idPromotor,
-                          Registro.obj.cliente,
-                          _passConfirm.text,
-                          (_celular.text),
-                          '-',
-                          Registro.obj.capital,
-                          _correo.text,
-                          _rfc.text)
-                      .then((obj) async {
-                    if (obj.error == 0) {
-                      await UsuarioProvider.login(new Usuario(
-                          correo: _correo.text, pass: _passConfirm.text));
-                      Navigator.pushReplacementNamed(context, '/cliente');
-                    } else {
-                      print(obj.error);
-
-                      if (obj.mensaje == null) {
-                        obj.mensaje = 'Ingrese la informacion';
-                      }
-
-                      (contextScaffold).showSnackBar(SnackBar(
-                        backgroundColor: pfNaranja,
-                        content: Text(obj.mensaje),
-                      ));
-                    }
-                  });
+                  //metodo de crear 
+                  print('entro y mostrara la respjesta');
                 } else {
                   (contextScaffold).showSnackBar(SnackBar(
                     backgroundColor: pfNaranja,
@@ -265,44 +213,6 @@ class _RegistroPageState extends State<RegistroPage> {
               Dialogs.alert(context,
                   description: 'Nesesitas aceptar los términos y condiciones');
             }
-
-            // if ( _value1 = true && _pass.text == _passConfirm.text) {
-            //   UsuarioProvider wsUsuario = new UsuarioProvider();
-            //   wsUsuario
-            //       .registroUsuario(
-            //           Registro.obj.idCliente,
-            //           Registro.obj.idPromotor,
-            //           Registro.obj.cliente,
-            //           _passConfirm.text,
-            //           (_celular.text),
-            //           '-',
-            //           Registro.obj.capital,
-            //           _correo.text,
-            //           _rfc.text)
-            //       .then((obj) async {
-            //     if (obj.error == 0) {
-            //       await UsuarioProvider.login(new Usuario(
-            //           correo: _correo.text, pass: _passConfirm.text));
-            //       Navigator.pushReplacementNamed(context, '/cliente');
-            //     } else {
-            //       print(obj.mensaje);
-
-            //       if (obj.mensaje == null) {
-            //         obj.mensaje = 'Ingrese la informacion';
-            //       }
-
-            //       (contextScaffold).showSnackBar(SnackBar(
-            //         backgroundColor: pfNaranja,
-            //         content: Text(obj.mensaje),
-            //       ));
-            //     }
-            //   });
-            // } else {
-            //   (contextScaffold).showSnackBar(SnackBar(
-            //     backgroundColor: pfNaranja,
-            //     content: Text('Las Contraseñas no coinciden.'),
-            //   ));
-            // }
           },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
@@ -315,7 +225,6 @@ class _RegistroPageState extends State<RegistroPage> {
               Text(
                 'Continuar',
                 style: TextStyle(
-                  //color: Color(0xFFFF960A),
                   color: Colors.white,
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
@@ -332,7 +241,6 @@ class _RegistroPageState extends State<RegistroPage> {
     final _screenSize = MediaQuery.of(context).size;
 
     return Container(
-      //margin: EdgeInsets.only(top: 0),
       padding: EdgeInsets.symmetric(vertical: 5.0),
       width: _screenSize.width * .3,
       height: _screenSize.height * .07,
@@ -401,7 +309,7 @@ class _RegistroPageState extends State<RegistroPage> {
         automaticallyImplyLeading: false,
         title: Center(
           child: Text(
-            'Registro',
+            ' Nuevo Registro',
             style: TextStyle(
               color: pfGris,
               fontSize: 15.0,
@@ -424,7 +332,7 @@ class _RegistroPageState extends State<RegistroPage> {
               SizedBox(height: 10.0),
               _buildEmailTF(),
               SizedBox(height: 10.0),
-              _buildCelularTF(),
+              _buildCelTF(),
               SizedBox(height: 10.0),
               _buildPasswordTF(),
               SizedBox(height: 10.0),
@@ -442,7 +350,6 @@ class _RegistroPageState extends State<RegistroPage> {
                             style: TextStyle(color: Colors.redAccent[700])),
                         onTap: () {
                           _launchInBrowser(_launchUrl);
-                          print('entro');
                         },
                       )
                     ],

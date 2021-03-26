@@ -5,7 +5,6 @@ import 'package:dineroenunclick/src/providers/db_provider.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:http/http.dart' as http;
 
-
 class UsuarioProvider{
 
   UsuarioProvider(){
@@ -75,7 +74,6 @@ class UsuarioProvider{
     return usr;
 
   }
-
   static Future<Usuario> login(Usuario usr) async{
 
     final url = '$api_url/ValidaIngreso';

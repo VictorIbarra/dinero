@@ -18,7 +18,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _rememberMe = false;
   TextEditingController _codigoController = TextEditingController();
-  TextEditingController _correoController = TextEditingController();
+  TextEditingController _correoController = TextEditingController(); 
   TextEditingController _correo = TextEditingController();
   TextEditingController _pass = TextEditingController();
   String _codigo = "";
@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Ingresa tu Codigo'),
+            title: Text('Si ya eres cliente pide tu codigo'),
             content: Form(
               key: codigoKey,
               child: TextFormField(
@@ -138,32 +138,44 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(hintText: "Codigo de 6 caracteres"),
                 onChanged: (valor) {
                   _codigo = valor;
-                  //_codigo = 'UY25P3';
                 },
               ),
             ),
             actions: <Widget>[
-              new FlatButton(
-                child: new Text('GUARDAR'),
-                onPressed: () {
-                  /*setState(() {
-                    _codigo = 'UY25P3';                    
-                  });*/
-
-                  if (_codigo.length != 6) {
-                    codigoKey.currentState.validate();
-                  } else {
-                    wsUsuario.validaCodigoUsuario(_codigo).then((obj) {
-                      if (obj.idCliente != null) {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, '/registro');
-                      } else {
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  FlatButton(
+                    color: Colors.green,
+                    child: Text(' ENVIAR'),
+                    onPressed: () {
+                      if (_codigo.length != 6) {
                         codigoKey.currentState.validate();
+                      } else {
+                        wsUsuario.validaCodigoUsuario(_codigo).then((obj) {
+                          if (obj.idCliente != null) {
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, '/registro');
+                          } else {
+                            codigoKey.currentState.validate();
+                          }
+                        });
                       }
-                    });
-                  }
-                },
-              )
+                    },
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'si no eres cliente da click aqui            ',
+                      style: TextStyle(color: Colors.redAccent[700]),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/registroNewPage');
+                    },
+                  ),
+                ],
+              ),
             ],
           );
         });
@@ -403,7 +415,7 @@ class _LoginPageState extends State<LoginPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color:Color.fromRGBO(6, 6, 159, 1),
+          color: Color.fromRGBO(6, 6, 159, 1),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -512,7 +524,6 @@ class _LoginPageState extends State<LoginPage> {
                 )),
             onTap: () {
               prefs.huella = false;
-
               Navigator.pop(context);
               Navigator.pushReplacementNamed(context, '/login');
             },
@@ -560,7 +571,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: Builder(
         builder: (context) => Container(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
