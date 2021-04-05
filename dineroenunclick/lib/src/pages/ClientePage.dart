@@ -42,12 +42,12 @@ Widget _creditoElemento(BuildContext context, solicitud, monto) {
 
 class _ClientePageState extends State<ClientePage> {
   int _currentPage = 0;
-  bool userStatus = true;
-  String pantallaPrincipal = 'Solicita';
+  bool userStatus = Usuario.usr.clientePF;
+  String pantallaPrincipal = Usuario.usr.pantallaPrincipal;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   Widget _loadPage(int page) {
-    if (userStatus == true) {
+    if (userStatus) {
       if (pantallaPrincipal == 'Solicita') {
         switch (page) {
           case 0:
@@ -61,7 +61,7 @@ class _ClientePageState extends State<ClientePage> {
           default:
             return CreditosPage();
         }
-      } else if (pantallaPrincipal == 'Pin') {
+      } else if (pantallaPrincipal == 'PIN') {
         switch (page) {
           case 0:
             return PinPage();
@@ -92,7 +92,7 @@ class _ClientePageState extends State<ClientePage> {
   }
 
   Widget _buildNavigationBar() {
-    if (userStatus == true) {
+    if (userStatus) {
       if (pantallaPrincipal == 'Solicita') {
         return BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -114,7 +114,7 @@ class _ClientePageState extends State<ClientePage> {
                 icon: Icon(Icons.account_circle), title: Text('Perfil')),
           ],
         );
-      } else if (pantallaPrincipal == 'Pin') {
+      } else if (pantallaPrincipal == 'PIN') {
         return BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: pfazul2,
