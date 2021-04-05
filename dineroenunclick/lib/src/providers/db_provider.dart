@@ -22,15 +22,39 @@ class DBProvider {
 
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-
     final path = join(documentsDirectory.path, 'DineroEnUnClick_v2.db');
-
     print(path);
-
-    return await openDatabase(path, version: 3, onOpen: (db) {},
-        onCreate: (Database db, int version) async {
+    return await openDatabase(path, version: 11, onOpen: (db) {},
+        onUpgrade: (Database db, int version, int v) async {
+      await db.execute("""DROP TABLE IF EXISTS Usuario""");
       await db.execute("""
-            CREATE TABLE Usuario( Cliente_Id INTEGER, Promotor_Id INTEGER, NombreCompleto TEXT, RFC TEXT, Correo TEXT, Telefono TEXT, LineaCreditoMax REAL, ClaveRegistroPiN TEXT, Clabe TEXT
+            CREATE TABLE Usuario(
+              Cliente_Id INTEGER,
+              Promotor_Id INTEGER,
+              NombreCompleto TEXT,
+              RFC TEXT,
+              Correo TEXT,
+              Telefono TEXT,
+              LineaCreditoMax REAL,
+              ClaveRegistroPiN TEXT,
+              Clabe TEXT,
+              PantallaPrincipal TEXT,
+              ClientePF BOOLEAN
+            )""");
+    }, onCreate: (Database db, int version) async {
+      await db.execute("""
+            CREATE TABLE Usuario(
+              Cliente_Id INTEGER,
+              Promotor_Id INTEGER,
+              NombreCompleto TEXT,
+              RFC TEXT,
+              Correo TEXT,
+              Telefono TEXT,
+              LineaCreditoMax REAL,
+              ClaveRegistroPiN TEXT,
+              Clabe TEXT,
+              PantallaPrincipal TEXT,
+              ClientePF BOOLEAN
             )""");
     });
   }
@@ -46,7 +70,8 @@ class DBProvider {
     resetUsuario();
 
     final db = await database;
-    final res = await db.insert('Usuario', usr.toJsonLoginResponse());
+    final userToInsert = usr.toJsonLoginResponse();
+    final res = await db.insert('Usuario', userToInsert);
     Usuario.idCliente = usr.clienteId;
     return res;
   }
