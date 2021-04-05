@@ -1,5 +1,10 @@
+import 'package:dineroenunclick/src/models/UsuarioModel.dart';
+import 'package:dineroenunclick/src/providers/PromocionProvider.dart';
+import 'package:dineroenunclick/src/providers/RegistroProvisionalProvider.dart';
+import 'package:dineroenunclick/src/providers/UsuarioProvider.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:dineroenunclick/src/utilities/dialogs.dart';
+import 'package:dineroenunclick/src/widgets/modals.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +15,6 @@ class RegistroNewPage extends StatefulWidget {
 }
 
 class _RegistroNewPageState extends State<RegistroNewPage> {
-  
   TextEditingController _correo = TextEditingController();
   TextEditingController _rfc = TextEditingController();
   TextEditingController _celular = TextEditingController();
@@ -181,7 +185,8 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
       ],
     );
   }
-   Widget _buildRegistrarseBtn(ScaffoldState contextScaffold) {
+
+  Widget _buildRegistrarseBtn(ScaffoldState contextScaffold) {
     final _screenSize = MediaQuery.of(context).size;
 
     return Container(
@@ -198,9 +203,36 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
                     description:
                         'Nesesitas aceptar los términos y condiciones');
               } else {
-                if (_value1 = true && _pass.text == _passConfirm.text) {
-                  //metodo de crear 
-                  print('entro y mostrara la respjesta');
+                if (_value1 == true && _pass.text == _passConfirm.text) {
+                  //metodo de crear
+                  final u = await RegistroProvisionalProvider.registrarUsuario(
+                      _rfc.text, _correo.text, _celular.text, _pass.text);
+                  if (u != null) {
+                    modalLoading(context, 'Validando', true);
+                    final Usuario user =
+                        await UsuarioProvider.login(new Usuario(
+                      correo: _correo.text,
+                      pass: _pass.text,
+                    ));
+                    if (user.clienteId != null) {
+                      PromocionProvider.cotizacionCliente(user.clienteId).then(
+                          (value) => {
+                                print(value),
+                                Navigator.pushReplacementNamed(
+                                    context, '/cliente')
+                              });
+                    } else {
+                      contextScaffold.showSnackBar(SnackBar(
+                        backgroundColor: pfNaranja,
+                        content: Text('Datos incorrectos'),
+                      ));
+                    }
+                  } else {
+                    contextScaffold.showSnackBar(SnackBar(
+                      backgroundColor: pfNaranja,
+                      content: Text('Datos incorrectos'),
+                    ));
+                  }
                 } else {
                   (contextScaffold).showSnackBar(SnackBar(
                     backgroundColor: pfNaranja,
