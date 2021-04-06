@@ -5,7 +5,6 @@ import 'package:dineroenunclick/src/pages/ChangePasswordPage.dart';
 import 'package:dineroenunclick/src/pages/ClientePage.dart';
 import 'package:dineroenunclick/src/pages/CreditosPage.dart';
 import 'package:dineroenunclick/src/pages/InformacionPage.dart';
-import 'package:dineroenunclick/src/pages/PromocionPage.dart';
 import 'package:dineroenunclick/src/pages/RegistroNewPage.dart';
 import 'package:dineroenunclick/src/pages/RegistroPage.dart';
 import 'package:dineroenunclick/src/pages/SeguridadPage.dart';
@@ -95,7 +94,6 @@ class _MyAppState extends State<MyApp> {
         '/changePassword': (context) => ChangePasswordPage(),
         '/changeNIP': (context) => ChangeNipPage(),
         '/ayuda': (context) => AyudaPage(),
-        '/promocionDetalle': (context) => DetallePage(),
         '/terminos': (context) => TerminosPage(),
         '/respuestaCredito': (context) => RespuestaCreditoPage(),
         '/registroNewPage': (context) => RegistroNewPage(),
