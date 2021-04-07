@@ -1,4 +1,7 @@
+import 'package:dineroenunclick/src/models/UsuarioModel.dart';
+import 'package:dineroenunclick/src/providers/NuevoCreditoProvider.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
+import 'package:dineroenunclick/src/utilities/dialogs.dart';
 import 'package:flutter/material.dart';
 
 class FormNuevosCreditos extends StatefulWidget {
@@ -9,11 +12,11 @@ class FormNuevosCreditos extends StatefulWidget {
 }
 
 class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   TextEditingController _nombre = TextEditingController();
   TextEditingController _apellidoPaterno = TextEditingController();
   TextEditingController _correo = TextEditingController();
   TextEditingController _celular = TextEditingController();
-  bool _error = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
             ),
           )),
       body: Container(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -70,7 +73,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
             SizedBox(height: 10.0),
             _buildCelular(),
             SizedBox(height: 10.0),
-            _buildRegistrarseBtn(Scaffold.of(context)),
+            _buildRegistrarseBtn(),
           ],
         ),
       ),
@@ -206,7 +209,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
     );
   }
 
-  Widget _buildRegistrarseBtn(ScaffoldState contextScaffold) {
+  Widget _buildRegistrarseBtn() {
     final _screenSize = MediaQuery.of(context).size;
 
     return Container(
@@ -214,8 +217,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
       width: _screenSize.width * .6,
       child: RaisedButton(
           elevation: 5.0,
-          onPressed: () {
-          },
+          onPressed: () => _handleSubmit(),
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
@@ -237,5 +239,20 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
             ],
           )),
     );
+  }
+
+  Future<void> _handleSubmit() async {
+    Dialogs.showLoadingDialog(context, _keyLoader);
+    final valid = await NuevoCreditoProvider.submitPrellenado(
+      _nombre.text,
+      _apellidoPaterno.text,
+      _correo.text,
+      _celular.text,
+    );
+    if (valid)
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+          .popAndPushNamed('/respuestaCredito');
+    else
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
   }
 }
