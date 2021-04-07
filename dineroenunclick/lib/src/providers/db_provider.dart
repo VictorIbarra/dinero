@@ -24,7 +24,7 @@ class DBProvider {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, 'DineroEnUnClick_v2.db');
     print(path);
-    return await openDatabase(path, version: 11, onOpen: (db) {},
+    return await openDatabase(path, version: 12, onOpen: (db) {},
         onUpgrade: (Database db, int version, int v) async {
       await db.execute("""DROP TABLE IF EXISTS Usuario""");
       await db.execute("""
@@ -39,6 +39,7 @@ class DBProvider {
               ClaveRegistroPiN TEXT,
               Clabe TEXT,
               PantallaPrincipal TEXT,
+              IdUsuarioCliente INTEGER,
               ClientePF BOOLEAN
             )""");
     }, onCreate: (Database db, int version) async {
@@ -54,6 +55,7 @@ class DBProvider {
               ClaveRegistroPiN TEXT,
               Clabe TEXT,
               PantallaPrincipal TEXT,
+              IdUsuarioCliente INTEGER,
               ClientePF BOOLEAN
             )""");
     });

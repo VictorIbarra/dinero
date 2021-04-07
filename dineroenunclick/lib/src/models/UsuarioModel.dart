@@ -87,17 +87,24 @@ class Usuario {
   }
 
   factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
-      clienteId: json["Cliente_Id"],
-      promotorId: (json['Promotor_Id']),
-      nombreCompleto: json['NombreCompleto'],
-      correo: json['Correo'],
-      rfc: json['RFC'],
-      telefono: (json['Telefono']),
-      lineaCreditoMax: (json['LineaCreditoMax']),
-      claveRegistroPiN: (json['ClaveRegistroPiN']),
-      clabe: (json['Clabe']),
-      clientePF: (json['ClientePF'] == 1),
-      pantallaPrincipal: json['PantallaPrincipal']);
+        idUsuarioCliente: json['IdUsuarioCliente'],
+        clienteId: json['Cliente_Id'],
+        promotorId: json['Promotor_Id'],
+        nombreCompleto: json['NombreCompleto'],
+        rfc: json['RFC'],
+        correo: json['Correo'],
+        telefono: json['Telefono'],
+        direccion: json['Direccion'],
+        lineaCreditoMax: json['LineaCreditoMax'],
+        clientePF: json['ClientePF'] == 1
+            ? true
+            : json['ClientePF'] == true
+                ? true
+                : false,
+        pantallaPrincipal: json['PantallaPrincipal'],
+        claveRegistroPiN: json['ClaveRegistroPiN'],
+        clabe: json['Clabe'],
+      );
 
   Map<String, dynamic> toJson() => {
         'Cliente_Id': clienteId,
@@ -125,6 +132,7 @@ class Usuario {
         'Clabe': clabe,
         'ClientePF': clientePF,
         'PantallaPrincipal': pantallaPrincipal,
+        'IdUsuarioCliente': idUsuarioCliente
       };
 
   Map<String, dynamic> toJsonLogin() => {
