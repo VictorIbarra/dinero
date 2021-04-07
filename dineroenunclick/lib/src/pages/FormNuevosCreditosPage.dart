@@ -12,7 +12,7 @@ class FormNuevosCreditos extends StatefulWidget {
 }
 
 class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>(); 
   TextEditingController _nombre = TextEditingController();
   TextEditingController _apellidoPaterno = TextEditingController();
   TextEditingController _correo = TextEditingController();
@@ -58,7 +58,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Bienvenid@, envianos tus datos para regresarte una llamada y ofrecerte un credito a tu medida :)',
+              'Bienvenid@, envíanos tus datos para regresarte una llamada y ofrecerte un credito a tu medida :)',
               style: TextStyle(
                 color: pfAzul,
                 fontSize: 20.0,

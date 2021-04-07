@@ -42,7 +42,7 @@ class _InformacionPageState extends State<InformacionPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              hintText: 'Tu nombre se actualizara ...',
+              hintText: 'Tu nombre se actualizará ...',
               hintStyle: kHintTextStyle,
             ),
           ),
