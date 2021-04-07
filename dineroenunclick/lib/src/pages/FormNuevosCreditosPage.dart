@@ -244,6 +244,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
   Future<void> _handleSubmit() async {
     Dialogs.showLoadingDialog(context, _keyLoader);
     final valid = await NuevoCreditoProvider.submitPrellenado(
+      Usuario.usr.idUsuarioCliente,
       _nombre.text,
       _apellidoPaterno.text,
       _correo.text,
