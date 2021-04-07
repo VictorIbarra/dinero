@@ -105,13 +105,13 @@ class _ClientePageState extends State<ClientePage> {
           },
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money), title: Text('Solicita')),
+                icon: Icon(Icons.attach_money), label: 'Solicita'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.location_on), title: Text('Ofertas PiN')),
+                icon: Icon(Icons.location_on), label: 'Ofertas PiN'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.notifications), title: Text('Notificaciones')),
+                icon: Icon(Icons.notifications), label: 'Notificaciones'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), title: Text('Perfil')),
+                icon: Icon(Icons.account_circle), label: 'Perfil'),
           ],
         );
       } else if (pantallaPrincipal == 'PIN') {
@@ -126,13 +126,13 @@ class _ClientePageState extends State<ClientePage> {
           },
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money), title: Text('Ofertas PiN')),
+                icon: Icon(Icons.attach_money), label: 'Ofertas PiN'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.location_on), title: Text('Solicita')),
+                icon: Icon(Icons.location_on), label: 'Solicita'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.notifications), title: Text('Notificaciones')),
+                icon: Icon(Icons.notifications), label: 'Notificaciones'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), title: Text('Perfil')),
+                icon: Icon(Icons.account_circle), label: 'Perfil'),
           ],
         );
       }
@@ -148,13 +148,13 @@ class _ClientePageState extends State<ClientePage> {
         },
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.attach_money), title: Text('Ofertas PiN')),
+              icon: Icon(Icons.attach_money), label: 'Ofertas PiN'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.location_on), title: Text('Solicita')),
+              icon: Icon(Icons.location_on), label: 'Solicita'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), title: Text('Notificaciones')),
+              icon: Icon(Icons.notifications), label: 'Notificaciones'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), title: Text('Perfil')),
+              icon: Icon(Icons.account_circle), label: 'Perfil'),
         ],
       );
     }
