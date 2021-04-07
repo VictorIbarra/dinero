@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:dineroenunclick/src/providers/db_provider.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
-import 'package:dineroenunclick/src/widgets/modals.dart';
-// import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cool_alert/cool_alert.dart';
 

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Notificasion {
   static Notificasion selPROM = new Notificasion();
   static Notificasion selCotizacion = new Notificasion();

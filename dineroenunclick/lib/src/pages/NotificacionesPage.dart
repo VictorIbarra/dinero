@@ -20,38 +20,6 @@ BoxDecoration myBoxDecoration(Color color) {
   );
 }
 
-TextStyle _textStyle(String tipo, Color color) {
-  TextStyle ts = TextStyle();
-
-  switch (tipo) {
-    case 'hBold':
-      ts = TextStyle(
-        color: color,
-        fontSize: 20.0,
-        fontWeight: FontWeight.w900,
-        fontFamily: 'Montserrat',
-      );
-      break;
-    case 'hLight':
-      ts = TextStyle(
-        color: color,
-        fontSize: 18.0,
-        fontFamily: 'Montserrat',
-      );
-      break;
-    case 'sBold':
-      ts = TextStyle(
-        color: color,
-        fontSize: 12.0,
-        fontWeight: FontWeight.w900,
-        fontFamily: 'Montserrat',
-      );
-      break;
-  }
-
-  return ts;
-}
-
 Widget _itemNotificacion(BuildContext context, Notificasion prom, Color color) {
   final _screenSize = MediaQuery.of(context).size;
   final marginTop = 5.0;
@@ -68,8 +36,7 @@ Widget _itemNotificacion(BuildContext context, Notificasion prom, Color color) {
         children: <TextSpan>[
           TextSpan(
               text: ' \$${prom.disponible.toString()},',
-              style: TextStyle(
-                  fontStyle: FontStyle.italic, color: pfazul2)),
+              style: TextStyle(fontStyle: FontStyle.italic, color: pfazul2)),
           TextSpan(
               text:
                   ' de tu crédito de \$${prom.monto.toString()}, está  ${prom.estatus.toString()}',
@@ -138,7 +105,8 @@ Widget _loadCreditos(BuildContext context) {
               children: [
                 Text(
                   'No hay notificaciones',
-                  textScaleFactor: 1.3,style: TextStyle(color: Colors.grey[500]),
+                  textScaleFactor: 1.3,
+                  style: TextStyle(color: Colors.grey[500]),
                 ),
                 SizedBox(
                   height: 40.0,

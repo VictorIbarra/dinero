@@ -29,7 +29,7 @@ class PreferenciasUsuario{
 
 
   //GET y SET de ip de WebServices
-  get ip {
+  String get ip {
     return _prefs.getString('ip') ?? ip_default;
   }
 
