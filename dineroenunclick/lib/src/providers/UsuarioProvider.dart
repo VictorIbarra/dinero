@@ -77,22 +77,13 @@ class UsuarioProvider{
     final url = '$api_url/ValidaIngreso';
     final resp = await http.post(url, headers: headers, body: usuarioModelToJson(usr, 'login'));
     final decodedData = json.decode(resp.body);
-    final result = Usuario.fromJsonList(decodedData['Data'], 'LO-1');
+    final result = Usuario.fromJson(decodedData['Data'][0]);
 
-    print(decodedData);
-
-    if(result.length > 0){
-      usr = result[0];
-      await DBProvider.db.insertUsuario((usr));
-    }
-    else{
-      usr = new Usuario();
-    }
-
+    usr = result;
+    await DBProvider.db.insertUsuario(usr);
     await DBProvider.db.selectUsuario();
-    
-    return usr;
 
+    return usr;
   }
 
   Future<Usuario> validaIngreso(String correo, String pass) async{
