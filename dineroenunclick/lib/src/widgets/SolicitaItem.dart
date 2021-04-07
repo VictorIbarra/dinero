@@ -3,6 +3,7 @@ import 'package:dineroenunclick/src/models/UsuarioModel.dart';
 import 'package:dineroenunclick/src/providers/PromocionProvider.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:dineroenunclick/src/utilities/debouncer.dart';
+import 'package:dineroenunclick/src/utilities/dialogs.dart';
 import 'package:dineroenunclick/src/utilities/metodos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -292,75 +293,7 @@ class _SolicitaItem extends State<SolicitaItem> {
         ..pop()
         ..popAndPushNamed('/respuestaCredito');
     } else {
-      Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-        ..pop();
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true)..pop();
     }
-  }
-}
-
-class Dialogs {
-  static Future<void> showLoadingDialog(
-      BuildContext context, GlobalKey key) async {
-    return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return WillPopScope(
-            onWillPop: () async => false,
-            child: SimpleDialog(
-              key: key,
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      CircularProgressIndicator(),
-                      SizedBox(height: 10),
-                      Text('Por favor espere...'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
-  }
-
-  static Future<void> showConfirmationDialog(BuildContext context,
-      {String phone, Function action}) async {
-    final _formKey = GlobalKey<FormState>();
-
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          elevation: 0,
-          title: Text('Nos contactaremos al siguiente número'),
-          content: Form(
-            key: _formKey,
-            child: TextFormField(
-              textCapitalization: TextCapitalization.characters,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              autofocus: true,
-              validator: (value) {
-                if (value.isEmpty || value.length != 10) return '10 digitos';
-                return null;
-              },
-              decoration: InputDecoration(hintText: '10 digitos'),
-              onChanged: (value) => phone = value,
-              initialValue: phone,
-            ),
-          ),
-          actions: [
-            FlatButton(
-              child: Text('ACEPTAR'),
-              onPressed: () {
-                if (_formKey.currentState.validate()) action();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 }
