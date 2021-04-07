@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                   return 'Codigo Invalido';
                 },
                 controller: _codigoController,
-                decoration: InputDecoration(hintText: "Codigo de 6 caracteres"),
+                decoration: InputDecoration(hintText: "Código de 6 caracteres"),
                 onChanged: (valor) {
                   _codigo = valor;
                 },
@@ -166,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   FlatButton(
                     child: Text(
-                      'si no eres cliente da click aqui            ',
+                      '   SI NO ERES CLIENTE DA CLICK AQUI            ',
                       style: TextStyle(color: Colors.redAccent[700]),
                     ),
                     onPressed: () {

@@ -25,6 +25,7 @@ _cerrarSesion(BuildContext context) {
   return GestureDetector(
     onTap: () {
       CoolAlert.show(
+        backgroundColor: pfazul2,
           context: context,
           type: CoolAlertType.confirm,
           title: '',
@@ -47,7 +48,7 @@ _cerrarSesion(BuildContext context) {
           fontWeight: FontWeight.w800,
           fontFamily: 'Montserrat',
         ),
-      ),
+      ),   
     ),
   );
 }

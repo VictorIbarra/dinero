@@ -64,6 +64,4 @@ class Promocion{
       return items;
     }
   }
-
-
 }
