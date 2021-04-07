@@ -5,8 +5,7 @@ import 'package:http/http.dart' as http;
 
 class NotificasionProvider{
 
-  NotificasionProvider(){
-  }
+  NotificasionProvider();
   
   static Future<List<Notificasion>> creditosCliente(int clienteId) async{
     final url = '$api_url/Notificaciones?Cliente_Id=$clienteId';

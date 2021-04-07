@@ -7,9 +7,7 @@ import 'package:http/http.dart' as http;
 
 class UsuarioProvider{
 
-  UsuarioProvider(){
-
-  }
+  UsuarioProvider();
 
   Future<Registro> validaCodigoUsuario(String codigo) async{
 
