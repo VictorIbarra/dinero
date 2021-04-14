@@ -4,9 +4,10 @@ import 'package:dineroenunclick/src/providers/PromocionProvider.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:dineroenunclick/src/utilities/debouncer.dart';
 import 'package:dineroenunclick/src/utilities/dialogs.dart';
-import 'package:dineroenunclick/src/utilities/metodos.dart';
+// import 'package:dineroenunclick/src/utilities/metodos.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
+import 'package:flutter/cupertino.dart';
 
 class SolicitaItem extends StatefulWidget {
   final Credito credito;
@@ -71,23 +72,70 @@ class _SolicitaItem extends State<SolicitaItem> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Title('Disponible'),
-              SizedBox(height: 30),
-              Slider.adaptive(
-                value: _slider,
-                min: _min,
-                max: credito.disponible,
-                activeColor: pfazul2,
-                divisions: _divisions,
-                label: _slider.round().toString(),
-                onChanged: (val) {
-                  setState(() {
-                    _slider = val;
-                  });
-                  _debouncer(() {
-                    _handleCalcularPagoMensual();
-                  });
-                },
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Icon(
+                        Icons.attach_money,
+                        color: pfVerde2,
+                        size: 50.0,
+                        semanticLabel:
+                            'Text to announce in accessibility modes',
+                      ),
+                      Text(
+                        'Disponible',
+                        style: TextStyle(
+                            color: pfVerde,
+                            fontSize: 35.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        credito.index.toString(),
+                        style: TextStyle(
+                            color: pfVerde,
+                            fontSize: 35.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    'Monto a solicitar',
+                    style: TextStyle(
+                        color: pfVerde,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              SizedBox(height: 60),
+              SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                    valueIndicatorColor: pfazul2,
+                    activeTrackColor: Colors.white,
+                    overlayColor: Color(0x29EB1555),
+                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                    overlayShape: RoundSliderOverlayShape(overlayRadius: 20.0),
+                    valueIndicatorTextStyle: TextStyle(
+                        color: Colors.white, letterSpacing: 2.0, fontSize: 25.0)),
+                child: Slider(
+                  value: _slider,
+                  min: _min,
+                  max: credito.disponible,
+                  activeColor: pfazul2,
+                  inactiveColor: pfVerde2,
+                  onChanged: (val) {
+                    setState(() {
+                      _slider = val;
+                    });
+                    _debouncer(() {
+                      _handleCalcularPagoMensual();
+                    });
+                  },
+                  divisions: _divisions,
+                  label: ' \$' +  _slider.round().toString(),
+                ),
               ),
               SizedBox(height: 30),
               Container(
@@ -129,105 +177,111 @@ class _SolicitaItem extends State<SolicitaItem> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        // Column(
+                        //   children: [
+                        //     Text(
+                        //       'MONTO DISPONIBLE',
+                        //       style: TextStyle(fontSize: 10, color: pffgris2),
+                        //     ),
+                        //     Text(
+                        //       '\$ ${comma(_slider.toStringAsFixed(0))}',
+                        //       style: TextStyle(
+                        //         color: pfazul2,
+                        //         fontSize: 18,
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
                         Column(
                           children: [
-                            Text(
-                              'MONTO DISPONIBLE',
-                              style: TextStyle(fontSize: 10, color: pffgris2),
-                            ),
-                            Text(
-                              '\$ ${comma(_slider.toStringAsFixed(0))}',
-                              style: TextStyle(
-                                color: pfazul2,
-                                fontSize: 18,
-                              ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              'PLAZO',
-                              style: TextStyle(fontSize: 10, color: pffgris2),
-                            ),
                             Text(
                               '${credito.plazo} ${credito.frecuencia == 'M' ? 'Meses' : 'Quincenas'}',
                               style: TextStyle(
                                 color: pfazul2,
                                 fontSize: 18,
                               ),
+                            ),
+                            Text(
+                              'PLAZO',
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  color: pfVerde2,
+                                  fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
                         Column(
                           children: [
-                            Text(
-                              'PAGO ${credito.frecuencia == 'M' ? 'MENSUAL' : 'QUINCENAL'}',
-                              style: TextStyle(fontSize: 10, color: pffgris2),
-                            ),
                             Text(
                               '\$ $_pago',
                               style: TextStyle(
                                 color: pfazul2,
                                 fontSize: 18,
                               ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              'MONTO',
-                              style: TextStyle(fontSize: 10, color: pffgris2),
                             ),
-                            Text(
-                              '\$ ${comma(credito.capital.toStringAsFixed(0))}',
-                              style: TextStyle(
-                                color: pfazul2,
-                                fontSize: 18,
-                              ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              'PLAZO',
-                              style: TextStyle(fontSize: 10, color: pffgris2),
-                            ),
-                            Text(
-                              '${credito.plazo} ${credito.frecuencia == 'M' ? 'Meses' : 'Quincenas'}',
-                              style: TextStyle(
-                                color: pfazul2,
-                                fontSize: 18,
-                              ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          children: [
                             Text(
                               'PAGO ${credito.frecuencia == 'M' ? 'MENSUAL' : 'QUINCENAL'}',
-                              style: TextStyle(fontSize: 10, color: pffgris2),
-                            ),
-                            Text(
-                              '\$ ${credito.pago.toStringAsFixed(0)}',
                               style: TextStyle(
-                                color: pfazul2,
-                                fontSize: 18,
-                              ),
+                                  fontSize: 10,
+                                  color: pfVerde2,
+                                  fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
                       ],
                     ),
+                    // Divider(),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: [
+                    //     Column(
+                    //       children: [
+                    //         Text(
+                    //           'MONTO',
+                    //           style: TextStyle(fontSize: 10, color: pffgris2),
+                    //         ),
+                    //         Text(
+                    //           '\$ ${comma(credito.capital.toStringAsFixed(0))}',
+                    //           style: TextStyle(
+                    //             color: pfazul2,
+                    //             fontSize: 18,
+                    //           ),
+                    //         )
+                    //       ],
+                    //     ),
+                    //     Column(
+                    //       children: [
+                    //         Text(
+                    //           'PLAZO',
+                    //           style: TextStyle(fontSize: 10, color: pffgris2),
+                    //         ),
+                    //         Text(
+                    //           '${credito.plazo} ${credito.frecuencia == 'M' ? 'Meses' : 'Quincenas'}',
+                    //           style: TextStyle(
+                    //             color: pfazul2,
+                    //             fontSize: 18,
+                    //           ),
+                    //         )
+                    //       ],
+                    //     ),
+                    //     Column(
+                    //       children: [
+                    //         Text(
+                    //           'PAGO ${credito.frecuencia == 'M' ? 'MENSUAL' : 'QUINCENAL'}',
+                    //           style: TextStyle(fontSize: 10, color: pffgris2),
+                    //         ),
+                    //         Text(
+                    //           '\$ ${credito.pago.toStringAsFixed(0)}',
+                    //           style: TextStyle(
+                    //             color: pfazul2,
+                    //             fontSize: 18,
+                    //           ),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),

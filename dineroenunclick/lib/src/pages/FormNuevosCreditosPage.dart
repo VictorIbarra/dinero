@@ -95,7 +95,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
           height: 50.0,
           child: TextField(
             keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.characters,
+            // textCapitalization: TextCapitalization.characters,
             controller: _nombre,
             style: TextStyle(
               color: Colors.black,

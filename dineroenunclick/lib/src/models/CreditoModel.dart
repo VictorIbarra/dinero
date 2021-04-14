@@ -20,6 +20,7 @@ class Credito {
   final int diasMora;
   final double saldoCapital;
   final double saldoIntereseIVA;
+  final int index;
 
   Credito(
       {this.idSolicutud,
@@ -42,6 +43,7 @@ class Credito {
       this.pagosRealizados,
       this.diasMora,
       this.saldoCapital,
+      this.index,
       this.saldoIntereseIVA});
 
   factory Credito.fromJson(Map<String, dynamic> json) {
@@ -66,6 +68,7 @@ class Credito {
         pagosRealizados: json['PagosRealizados'],
         diasMora: json['DiasMora'],
         saldoCapital: json['sdo_Capital'],
+        index: json['Index'],
         saldoIntereseIVA: json['sdo_InteresIva']);
   }
 
