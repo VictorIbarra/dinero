@@ -58,6 +58,7 @@ class _SolicitaItem extends State<SolicitaItem> {
         : 1000;
     _divisions = _calculateDivisions(
         credito.disponible < 1000 ? 1 : 1000, credito.disponible);
+    _handleCalcularPagoMensual();
   }
 
   @override
@@ -118,7 +119,9 @@ class _SolicitaItem extends State<SolicitaItem> {
                     thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
                     overlayShape: RoundSliderOverlayShape(overlayRadius: 20.0),
                     valueIndicatorTextStyle: TextStyle(
-                        color: Colors.white, letterSpacing: 2.0, fontSize: 25.0)),
+                        color: Colors.white,
+                        letterSpacing: 2.0,
+                        fontSize: 25.0)),
                 child: Slider(
                   value: _slider,
                   min: _min,
@@ -134,7 +137,7 @@ class _SolicitaItem extends State<SolicitaItem> {
                     });
                   },
                   divisions: _divisions,
-                  label: ' \$' +  _slider.round().toString(),
+                  label: ' \$' + _slider.round().toString(),
                 ),
               ),
               SizedBox(height: 30),
