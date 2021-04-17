@@ -4,9 +4,7 @@ import 'package:dineroenunclick/src/providers/PromocionProvider.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:dineroenunclick/src/utilities/debouncer.dart';
 import 'package:dineroenunclick/src/utilities/dialogs.dart';
-// import 'package:dineroenunclick/src/utilities/metodos.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 
 class SolicitaItem extends StatefulWidget {
@@ -116,8 +114,13 @@ class _SolicitaItem extends State<SolicitaItem> {
                     valueIndicatorColor: pfazul2,
                     activeTrackColor: Colors.white,
                     overlayColor: Color(0x29EB1555),
-                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
-                    overlayShape: RoundSliderOverlayShape(overlayRadius: 20.0),
+                    thumbShape: _ThumbShape(
+                      min: _min,
+                      max: credito.disponible,
+                      thumbHeight: 25,
+                      thumbRadius: 15,
+                    ),
+                    showValueIndicator: ShowValueIndicator.never,
                     valueIndicatorTextStyle: TextStyle(
                         color: Colors.white,
                         letterSpacing: 2.0,
@@ -352,5 +355,89 @@ class _SolicitaItem extends State<SolicitaItem> {
     } else {
       Navigator.of(_keyLoader.currentContext, rootNavigator: true)..pop();
     }
+  }
+}
+
+class _ThumbShape extends RoundSliderThumbShape {
+  final double thumbRadius;
+  final double thumbHeight;
+  final double min;
+  final double max;
+
+  const _ThumbShape({
+    this.thumbRadius,
+    this.thumbHeight,
+    this.min,
+    this.max,
+  });
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
+    return Size.fromRadius(thumbRadius);
+  }
+
+  String getValue(double value) {
+    return (min + (max - min) * value).round().toString();
+  }
+
+  @override
+  void paint(PaintingContext context, Offset center,
+      {Animation<double> activationAnimation,
+      Animation<double> enableAnimation,
+      bool isDiscrete,
+      TextPainter labelPainter,
+      RenderBox parentBox,
+      SliderThemeData sliderTheme,
+      TextDirection textDirection,
+      double value,
+      double textScaleFactor,
+      Size sizeWithOverflow}) {
+    super.paint(
+      context,
+      center,
+      activationAnimation: activationAnimation,
+      enableAnimation: enableAnimation,
+      sliderTheme: sliderTheme,
+      value: value,
+      textScaleFactor: textScaleFactor,
+      sizeWithOverflow: sizeWithOverflow,
+    );
+    final Canvas canvas = context.canvas;
+
+    final rRect = RRect.fromRectAndRadius(
+      Rect.fromCenter(
+        center: center,
+        width: thumbHeight * 3.5,
+        height: thumbHeight * 1.1,
+      ),
+      Radius.circular(thumbRadius),
+    );
+
+    final paint = Paint()
+      ..color = pfazul2 //Thumb Background Color
+      ..style = PaintingStyle.fill;
+
+    TextSpan span = new TextSpan(
+      style: new TextStyle(
+        fontSize: thumbHeight,
+        fontWeight: FontWeight.w700,
+        color: Colors.white,
+      ),
+      text: getValue(value),
+    );
+
+    TextPainter tp = new TextPainter(
+      text: span,
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    );
+    tp.layout();
+    Offset textCenter =
+        Offset(center.dx - (tp.width / 2), center.dy - (tp.height / 2));
+
+    canvas.save();
+    canvas.translate(0, center.dy * -1.2);
+    canvas.drawRRect(rRect, paint);
+    tp.paint(canvas, textCenter);
   }
 }
