@@ -4,6 +4,7 @@ import 'package:dineroenunclick/src/providers/PromocionProvider.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:dineroenunclick/src/utilities/debouncer.dart';
 import 'package:dineroenunclick/src/utilities/dialogs.dart';
+import 'package:dineroenunclick/src/utilities/metodos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -111,20 +112,14 @@ class _SolicitaItem extends State<SolicitaItem> {
               SizedBox(height: 60),
               SliderTheme(
                 data: SliderTheme.of(context).copyWith(
-                    valueIndicatorColor: pfazul2,
-                    activeTrackColor: Colors.white,
-                    overlayColor: Color(0x29EB1555),
-                    thumbShape: _ThumbShape(
-                      min: _min,
-                      max: credito.disponible,
-                      thumbHeight: 25,
-                      thumbRadius: 15,
-                    ),
-                    showValueIndicator: ShowValueIndicator.never,
-                    valueIndicatorTextStyle: TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 2.0,
-                        fontSize: 25.0)),
+                  thumbShape: _ThumbShape(
+                    min: _min,
+                    max: credito.disponible,
+                    thumbHeight: 25,
+                    thumbRadius: 15,
+                  ),
+                  showValueIndicator: ShowValueIndicator.never,
+                ),
                 child: Slider(
                   value: _slider,
                   min: _min,
@@ -140,7 +135,6 @@ class _SolicitaItem extends State<SolicitaItem> {
                     });
                   },
                   divisions: _divisions,
-                  label: ' \$' + _slider.round().toString(),
                 ),
               ),
               SizedBox(height: 30),
@@ -377,7 +371,8 @@ class _ThumbShape extends RoundSliderThumbShape {
   }
 
   String getValue(double value) {
-    return (min + (max - min) * value).round().toString();
+    final val = (min + (max - min) * value);
+    return '\$ ' + comma(val.round().toString());
   }
 
   @override
@@ -419,7 +414,7 @@ class _ThumbShape extends RoundSliderThumbShape {
 
     TextSpan span = new TextSpan(
       style: new TextStyle(
-        fontSize: thumbHeight,
+        fontSize: thumbHeight * 0.7,
         fontWeight: FontWeight.w700,
         color: Colors.white,
       ),
