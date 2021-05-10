@@ -44,9 +44,9 @@ class _RespuestaCreditoPageState extends State<RespuestaCreditoPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'SE TE NOTIFICARÁ CUANDO SE AUTORICE',
+              'Felicidades, tu crédito ha sido autorizado, enseguida nos ponemos en contacto contigo',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 50.0, color: Colors.grey),
+              style: TextStyle(fontSize: 30.0, color: Colors.grey),
             ),
             SizedBox(
               height: 25.0,

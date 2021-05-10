@@ -149,10 +149,34 @@ class _NotificacionesPageState extends State<NotificacionesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+
+
+            backgroundColor: Colors.white,
+          leading: GestureDetector(
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
           centerTitle: true,
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          title: Text(
+           actions: [
+          IconButton(
+            icon: Icon(
+              Icons.account_circle,
+              color: pfazul2,
+            ),
+            onPressed: () {
+              setState(() {
+                     Navigator.pushNamed(context, '/hola');
+              });
+            },
+          )
+        ],
+        title: Center(
+          child: Text(
             'Notificaciones',
             style: TextStyle(
               color: pfazul2,
@@ -161,6 +185,7 @@ class _NotificacionesPageState extends State<NotificacionesPage> {
               fontFamily: 'Montserrat',
             ),
           ),
+        )
         ),
         body: _loadCreditos(context));
   }

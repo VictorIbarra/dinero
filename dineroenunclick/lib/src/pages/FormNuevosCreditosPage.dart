@@ -1,4 +1,5 @@
 import 'package:dineroenunclick/src/models/UsuarioModel.dart';
+import 'package:dineroenunclick/src/pages/PerfilPage.dart';
 import 'package:dineroenunclick/src/providers/NuevoCreditoProvider.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:dineroenunclick/src/utilities/dialogs.dart';
@@ -12,7 +13,7 @@ class FormNuevosCreditos extends StatefulWidget {
 }
 
 class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>(); 
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   TextEditingController _nombre = TextEditingController();
   TextEditingController _apellidoPaterno = TextEditingController();
   TextEditingController _correo = TextEditingController();
@@ -21,6 +22,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
           backgroundColor: Colors.white,
           leading: GestureDetector(
@@ -33,14 +35,19 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
             },
           ),
           centerTitle: true,
-          actions: <Widget>[
-            Icon(
-              Icons.arrow_back_ios,
+           actions: [
+          IconButton(
+            icon: Icon(
+              Icons.account_circle,
+              color: pfazul2,
             ),
-            Icon(
-              Icons.arrow_back_ios,
-            ),
-          ],
+            onPressed: () {
+              setState(() {
+                     Navigator.pushNamed(context, '/hola');
+              });
+            },
+          )
+        ],
           title: Center(
             child: Text(
               'Solicita tu Credito',
@@ -51,30 +58,34 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
                 fontFamily: 'Montserrat',
               ),
             ),
-          )),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Bienvenid@, envíanos tus datos para regresarte una llamada y ofrecerte un credito a tu medida :)',
-              style: TextStyle(
-                color: pfAzul,
-                fontSize: 20.0,
+          )
+          ),
+      body: SingleChildScrollView(
+        reverse: true,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Bienvenid@, envíanos tus datos para regresarte una llamada y ofrecerte un credito a tu medida :)',
+                style: TextStyle(
+                  color: pfAzul,
+                  fontSize: 20.0,
+                ),
               ),
-            ),
-            SizedBox(height: 10.0),
-            _builName(),
-            SizedBox(height: 10.0),
-            _buildLastName(),
-            SizedBox(height: 10.0),
-            _buildEmail(),
-            SizedBox(height: 10.0),
-            _buildCelular(),
-            SizedBox(height: 10.0),
-            _buildRegistrarseBtn(),
-          ],
+              SizedBox(height: 10.0),
+              _builName(),
+              SizedBox(height: 10.0),
+              _buildLastName(),
+              SizedBox(height: 10.0),
+              _buildEmail(),
+              SizedBox(height: 10.0),
+              _buildCelular(),
+              SizedBox(height: 10.0),
+              _buildRegistrarseBtn(),
+            ],
+          ),
         ),
       ),
     );
@@ -252,7 +263,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
     );
     if (valid)
       Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-          .popAndPushNamed('/respuestaCredito');
+          .popAndPushNamed('/respuestaFormulario');
     else
       Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
   }

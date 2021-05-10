@@ -69,17 +69,41 @@ class _CreditosPageState extends State<CreditosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        title: Text(
-          'Solicita',
-          style: TextStyle(
-            color: pfazul2,
-            fontSize: 30.0,
-            fontWeight: FontWeight.w900,
-            fontFamily: 'Montserrat',
+          backgroundColor: Colors.white,
+          leading: GestureDetector(
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
           ),
-        ),
+          centerTitle: true,
+           actions: [
+          IconButton(
+            icon: Icon(
+              Icons.account_circle,
+              color: pfazul2,
+            ),
+            onPressed: () {
+              setState(() {
+                     Navigator.pushNamed(context, '/hola');
+              });
+            },
+          )
+        ],
+        title: Center(
+          child: Text(
+            'Solicita',
+            style: TextStyle(
+              color: pfazul2,
+              fontSize: 30.0,
+              fontWeight: FontWeight.w900,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+        )
       ),
       body: _loadCreditos(context),
     );

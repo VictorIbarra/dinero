@@ -58,8 +58,18 @@ class _PerfilPageState extends State<PerfilPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+           backgroundColor: Colors.white,
+          leading: GestureDetector(
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: pfazul2,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
           centerTitle: true,
-          backgroundColor: Colors.white,
+         
           automaticallyImplyLeading: false,
           title: Text(
             'Perfil',

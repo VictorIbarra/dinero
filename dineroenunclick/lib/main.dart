@@ -5,11 +5,13 @@ import 'package:dineroenunclick/src/pages/ChangePasswordPage.dart';
 import 'package:dineroenunclick/src/pages/ClientePage.dart';
 import 'package:dineroenunclick/src/pages/CreditosPage.dart';
 import 'package:dineroenunclick/src/pages/InformacionPage.dart';
+import 'package:dineroenunclick/src/pages/PerfilPage.dart';
 import 'package:dineroenunclick/src/pages/RegistroNewPage.dart';
 import 'package:dineroenunclick/src/pages/RegistroPage.dart';
 import 'package:dineroenunclick/src/pages/SeguridadPage.dart';
 import 'package:dineroenunclick/src/pages/TerminosPage.dart';
 import 'package:dineroenunclick/src/pages/respuestaCredito.dart';
+import 'package:dineroenunclick/src/pages/respuestaFormulario.dart';
 import 'package:dineroenunclick/src/providers/PreferenciasUsuario.dart';
 import 'package:dineroenunclick/src/providers/db_provider.dart';
 import 'package:dineroenunclick/src/providers/push_notifications_provider.dart';
@@ -96,7 +98,10 @@ class _MyAppState extends State<MyApp> {
         '/ayuda': (context) => AyudaPage(),
         '/terminos': (context) => TerminosPage(),
         '/respuestaCredito': (context) => RespuestaCreditoPage(),
+        '/respuestaFormulario': (context) => RespuestaFormularioPage(),
         '/registroNewPage': (context) => RegistroNewPage(),
+        '/hola': (context) => PerfilPage(),
+        
       },
       theme: ThemeData(
           primaryColor: Colors.blue,

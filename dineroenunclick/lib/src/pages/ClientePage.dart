@@ -56,21 +56,17 @@ class _ClientePageState extends State<ClientePage> {
             return PinPage();
           case 2:
             return NotificacionesPage();
-          case 3:
-            return PerfilPage();
           default:
             return CreditosPage();
         }
       } else if (pantallaPrincipal == 'PIN') {
         switch (page) {
           case 0:
-            return PinPage();
-          case 1:
             return CreditosPage();
+          case 1:
+            return PinPage();
           case 2:
             return NotificacionesPage();
-          case 3:
-            return PerfilPage();
           default:
             return CreditosPage();
         }
@@ -78,13 +74,11 @@ class _ClientePageState extends State<ClientePage> {
     } else {
       switch (page) {
         case 0:
-          return PinPage();
+         return FormNuevosCreditos();
         case 1:
-          return FormNuevosCreditos();
+         return PinPage();
         case 2:
           return NotificacionesPage();
-        case 3:
-          return PerfilPage();
         default:
           return CreditosPage();
       }
@@ -110,8 +104,6 @@ class _ClientePageState extends State<ClientePage> {
                 icon: Icon(Icons.location_on), label: 'Ofertas PiN'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.notifications), label: 'Notificaciones'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), label: 'Perfil'),
           ],
         );
       } else if (pantallaPrincipal == 'PIN') {
@@ -126,13 +118,11 @@ class _ClientePageState extends State<ClientePage> {
           },
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money), label: 'Ofertas PiN'),
+                icon: Icon(Icons.attach_money), label: 'Solicita'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.location_on), label: 'Solicita'),
+                icon: Icon(Icons.location_on), label: 'Ofertas PiN'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.notifications), label: 'Notificaciones'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), label: 'Perfil'),
           ],
         );
       }
@@ -148,13 +138,11 @@ class _ClientePageState extends State<ClientePage> {
         },
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.attach_money), label: 'Ofertas PiN'),
+              icon: Icon(Icons.attach_money), label: 'Solicita'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.location_on), label: 'Solicita'),
+              icon: Icon(Icons.location_on), label: 'Ofertas PiN'),
           BottomNavigationBarItem(
               icon: Icon(Icons.notifications), label: 'Notificaciones'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: 'Perfil'),
         ],
       );
     }

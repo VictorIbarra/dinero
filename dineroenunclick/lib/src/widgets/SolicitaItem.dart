@@ -213,7 +213,7 @@ class _SolicitaItem extends State<SolicitaItem> {
                         Column(
                           children: [
                             Text(
-                              '\$ $_pago',
+                              comma('\$ $_pago'),
                               style: TextStyle(
                                 color: pfazul2,
                                 fontSize: 18,
@@ -323,7 +323,7 @@ class _SolicitaItem extends State<SolicitaItem> {
 
     if (res.error != 0)
       setState(() {
-        _pago = "--";
+        _pago = "0.00";
       });
     else
       setState(() {
@@ -372,7 +372,7 @@ class _ThumbShape extends RoundSliderThumbShape {
 
   String getValue(double value) {
     final val = (min + (max - min) * value);
-    return '\$ ' + comma(val.round().toString());
+    return '\$' + comma(val.round().toString());
   }
 
   @override

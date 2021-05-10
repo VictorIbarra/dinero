@@ -54,7 +54,7 @@ class Dialogs {
       builder: (context) {
         return AlertDialog(
           elevation: 0,
-          title: Text('Nos contactaremos al siguiente número'),
+          title: Text('¿Tu teléfono sigue siendo este?'),
           content: Form(
             key: _formKey,
             child: TextFormField(
