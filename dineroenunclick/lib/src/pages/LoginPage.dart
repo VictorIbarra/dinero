@@ -25,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   String _correoStr = "";
   final codigoKey = GlobalKey<FormState>();
   final formKey = GlobalKey<FormState>();
+  final focus = FocusNode();
 
   /* BIOMETRIC.AUTH */
   final LocalAuthentication auth = LocalAuthentication();
@@ -240,6 +241,7 @@ class _LoginPageState extends State<LoginPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextFormField(
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             controller: _correo,
             validator: (value) {
@@ -260,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                 Icons.email,
                 color: Colors.white,
               ),*/
-              hintText: 'RFC ó Correo electrónico',
+              hintText: 'Correo electrónico',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -283,6 +285,7 @@ class _LoginPageState extends State<LoginPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextFormField(
+            textInputAction: TextInputAction.done,
             validator: (value) {
               if (!validaVacio(value)) {
                 return 'Ingresa tu contraseña';
@@ -572,70 +575,81 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Builder(
-        builder: (context) => Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Form(
-              key: formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  // Text('\$',
-                  //     style: TextStyle(
-                  //       color: Color(0xFF21D702),
-                  //       fontSize: 100.0,
-                  //       fontWeight: FontWeight.w900,
-                  //       fontFamily: 'Montserrat',
-                  //     )),
-                  // GestureDetector(
-                  //   onLongPress: () {
-                  //     if (developMode) {
-                  //       modalInput(
-                  //           context,
-                  //           null,
-                  //           TextInputType.text,
-                  //           false,
-                  //           prefs.ip,
-                  //           prefs.ip,
-                  //           'CANCELAR',
-                  //           'GUARDAR',
-                  //           null, (texto) {
-                  //         prefs.ip = texto;
-                  //         print(prefs.ip);
-                  //         setApi();
-                  //         Navigator.pop(context);
-                  //       });
-                  //     }
-                  //   },
-                  //   child: Text('en 1 click ',
-                  //       style: TextStyle(
-                  //         color: pfAzul,
-                  //         fontSize: 35.0,
-                  //         fontWeight: FontWeight.w900,
-                  //         fontFamily: 'Montserrat',
-                  //       )),
-                  // ),
+      // revisar este gesture detector para ver si funciona 
+      body: GestureDetector(
+         behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Container(
+          decoration: BoxDecoration(
+           gradient: LinearGradient(colors: [Colors.blue, Colors.blueGrey],begin: Alignment.topCenter,end: Alignment.bottomCenter,)),
+          child: Builder(
+            builder: (context) => Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 40.0,
+                      ),
+                      // Text('\$',
+                      //     style: TextStyle(
+                      //       color: Color(0xFF21D702),
+                      //       fontSize: 100.0,
+                      //       fontWeight: FontWeight.w900,
+                      //       fontFamily: 'Montserrat',
+                      //     )),
+                      // GestureDetector(
+                      //   onLongPress: () {
+                      //     if (developMode) {
+                      //       modalInput(
+                      //           context,
+                      //           null,
+                      //           TextInputType.text,
+                      //           false,
+                      //           prefs.ip,
+                      //           prefs.ip,
+                      //           'CANCELAR',
+                      //           'GUARDAR',
+                      //           null, (texto) {
+                      //         prefs.ip = texto;
+                      //         print(prefs.ip);
+                      //         setApi();
+                      //         Navigator.pop(context);
+                      //       });
+                      //     }
+                      //   },
+                      //   child: Text('en 1 click ',
+                      //       style: TextStyle(
+                      //         color: pfAzul,
+                      //         fontSize: 35.0,
+                      //         fontWeight: FontWeight.w900,
+                      //         fontFamily: 'Montserrat',
+                      //       )),
+                      // ),
 
-                  Image.asset(
-                    'assets/dinero1click.png',
-                    height: 250,
-                    width: 250,
-                  ),
+                      Image.asset(
+                        'assets/dinero1click.png',
+                        height: 250,
+                        width: 250,
+                      ),
 
-                  _fragmentLogin(context),
-                  Expanded(
-                    child: SizedBox(),
+                      _fragmentLogin(context),
+                      Expanded(
+                        child: SizedBox(),
+                      ),
+                      _footer(context, Scaffold.of(context)),
+                      SizedBox(
+                        height: 25.0,
+                      ),
+                    ],
                   ),
-                  _footer(context, Scaffold.of(context)),
-                  SizedBox(
-                    height: 25.0,
-                  ),
-                ],
-              ),
-            )),
+                )),
+          ),
+        ),
       ),
     );
   }

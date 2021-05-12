@@ -31,7 +31,7 @@ class _CreditosPageState extends State<CreditosPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'No cuentas con créditos a renovar',
+                    'Si cumples tus pagos, en 2 meses podrás contar con tu primera renovación',
                     textScaleFactor: 1.3,
                     style: TextStyle(color: Colors.grey[500]),
                   ),
@@ -83,7 +83,7 @@ class _CreditosPageState extends State<CreditosPage> {
            actions: [
           IconButton(
             icon: Icon(
-              Icons.account_circle,
+              Icons.view_headline,
               color: pfazul2,
             ),
             onPressed: () {

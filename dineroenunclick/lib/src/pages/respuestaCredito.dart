@@ -44,7 +44,7 @@ class _RespuestaCreditoPageState extends State<RespuestaCreditoPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Felicidades, tu crédito ha sido autorizado, enseguida nos ponemos en contacto contigo',
+              'En menos de 15 minutos alguien se comunicara contigo, solo para la autorización',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 30.0, color: Colors.grey),
             ),

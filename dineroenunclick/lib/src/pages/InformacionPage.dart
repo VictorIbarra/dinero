@@ -9,14 +9,13 @@ class InformacionPage extends StatefulWidget {
 }
 
 class _InformacionPageState extends State<InformacionPage> {
-
   TextEditingController _nombre = TextEditingController();
   TextEditingController _correo = TextEditingController();
   TextEditingController _celular = TextEditingController();
   String nombre = Usuario.usr.nombreCompleto;
   String correo = Usuario.usr.correo;
   String celular = Usuario.usr.telefono;
-  
+
   Widget _buildNombreTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,8 +30,7 @@ class _InformacionPageState extends State<InformacionPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
-            onChanged: (valor){
-            },
+            onChanged: (valor) {},
             keyboardType: TextInputType.text,
             controller: _nombre,
             style: TextStyle(
@@ -122,39 +120,33 @@ class _InformacionPageState extends State<InformacionPage> {
       width: _screenSize.width * .4,
       height: _screenSize.height * .09,
       child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () async{
-          Navigator.pop(context);
-
-        },
-        padding: EdgeInsets.all(5.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: pfVerde,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Guardar',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Montserrat',
-              ),
-            )
-
-          ],
-        )
-        
-      ),
+          elevation: 5.0,
+          onPressed: () async {
+            Navigator.pop(context);
+          },
+          padding: EdgeInsets.all(5.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          color: pfVerde,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Guardar',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Montserrat',
+                ),
+              )
+            ],
+          )),
     );
   }
 
-
-
-  Widget _footer(BuildContext context){
+  Widget _footer(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -181,63 +173,71 @@ class _InformacionPageState extends State<InformacionPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         //automaticallyImplyLeading: false,
         leading: GestureDetector(
-          child: Icon(Icons.arrow_back_ios, color: pfAzul,),
-          onTap: (){
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: pfAzul,
+          ),
+          onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
             Navigator.pop(context);
           },
         ),
         centerTitle: true,
         actions: <Widget>[
-          Icon(Icons.arrow_back_ios, ),
-          Icon(Icons.arrow_back_ios, ),
+          Icon(
+            Icons.arrow_back_ios,
+          ),
+          Icon(
+            Icons.arrow_back_ios,
+          ),
         ],
         title: Center(
-          child: Text('Mi cuenta', style: TextStyle(
-          color: pfazul2,
-          fontSize: 19.0,
-          fontWeight: FontWeight.w900,
-          fontFamily: 'Montserrat',
+          child: Text(
+            'Mi cuenta',
+            style: TextStyle(
+              color: pfazul2,
+              fontSize: 19.0,
+              fontWeight: FontWeight.w900,
+              fontFamily: 'Montserrat',
+            ),
           ),
         ),
-        ),
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: 30.0,),
-                        
-            _buildNombreTF(),
-            
-            SizedBox(height: 20.0),
-
-            _buildEmailTF(),
-
-            SizedBox(height: 20.0),
-            
-            _buildCelularTF(),
-
-            Expanded(child: SizedBox(),),
-            
-            _footer(context),
-            
-            SizedBox(height: 25.0,),
-
-          ],
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                height: 30.0,
+              ),
+              _buildNombreTF(),
+              SizedBox(height: 20.0),
+              _buildEmailTF(),
+              SizedBox(height: 20.0),
+              _buildCelularTF(),
+              Expanded(
+                child: SizedBox(),
+              ),
+              _footer(context),
+              SizedBox(
+                height: 25.0,
+              ),
+            ],
+          ),
         ),
       ),
     );
-    
   }
 }

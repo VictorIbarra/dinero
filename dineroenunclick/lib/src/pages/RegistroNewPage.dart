@@ -22,6 +22,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
   TextEditingController _passConfirm = TextEditingController();
   String _launchUrl = 'https://dinero1click.prestamofeliz.com.mx/terminos.pdf';
   bool _value1 = false;
+  final focus = FocusNode();
 
   Widget _buildRFCTF() {
     return Column(
@@ -37,6 +38,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.text,
             textCapitalization: TextCapitalization.characters,
             controller: _rfc,
@@ -70,6 +72,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             controller: _correo,
             style: TextStyle(
@@ -102,7 +105,9 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
-            keyboardType: TextInputType.phone,
+            textInputAction: TextInputAction.done,
+            keyboardType:
+                TextInputType.numberWithOptions(signed: true, decimal: true),
             controller: _celular,
             style: TextStyle(
               color: Colors.black,
@@ -134,6 +139,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            textInputAction: TextInputAction.next,
             obscureText: true,
             keyboardType: TextInputType.text,
             controller: _pass,
@@ -167,6 +173,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            textInputAction: TextInputAction.done,
             obscureText: true,
             keyboardType: TextInputType.text,
             controller: _passConfirm,
@@ -186,7 +193,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
     );
   }
 
-  Widget _buildRegistrarseBtn(ScaffoldState contextScaffold) {
+  Widget _buildRegistrarseBtn() {
     final _screenSize = MediaQuery.of(context).size;
 
     return Container(
@@ -222,22 +229,14 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
                                     context, '/cliente')
                               });
                     } else {
-                      contextScaffold.showSnackBar(SnackBar(
-                        backgroundColor: pfNaranja,
-                        content: Text('Datos incorrectos'),
-                      ));
+                      Dialogs.alert(context, description: 'Datos incorrectos');
                     }
                   } else {
-                    contextScaffold.showSnackBar(SnackBar(
-                      backgroundColor: pfNaranja,
-                      content: Text('Datos incorrectos'),
-                    ));
+                    Dialogs.alert(context, description: 'Datos incorrectos');
                   }
                 } else {
-                  (contextScaffold).showSnackBar(SnackBar(
-                    backgroundColor: pfNaranja,
-                    content: Text('Las Contraseñas no coinciden.'),
-                  ));
+                  Dialogs.alert(context,
+                      description: 'Las Contraseñas no coinciden');
                 }
               }
             } else {
@@ -351,52 +350,49 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           ),
         ),
       ),
-      body: Builder(
-        builder: (context) => Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                height: 20.0,
-              ),
-              _buildRFCTF(),
-              SizedBox(height: 10.0),
-              _buildEmailTF(),
-              SizedBox(height: 10.0),
-              _buildCelTF(),
-              SizedBox(height: 10.0),
-              _buildPasswordTF(),
-              SizedBox(height: 10.0),
-              _buildPasswordConfirmTF(),
-              SizedBox(height: 10.0),
-              Row(
-                children: [
-                  _createChecBox(),
-                  Column(
-                    children: [
-                      Text('Al Continuar, Aceptas Nuestros'),
-                      InkWell(
-                        child: Text(
-                            'Términos y Condiciones y Aviso de privacidad',
-                            style: TextStyle(color: Colors.redAccent[700])),
-                        onTap: () {
-                          _launchInBrowser(_launchUrl);
-                        },
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              _buildRegistrarseBtn(Scaffold.of(context)),
-              Expanded(
-                child: SizedBox(),
-              ),
-              _footer(context),
-              SizedBox(
-                height: 25.0,
-              ),
-            ],
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: SingleChildScrollView(
+          reverse: true,
+          child: Container(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                _buildRFCTF(),
+                SizedBox(height: 10.0),
+                _buildEmailTF(),
+                SizedBox(height: 10.0),
+                _buildCelTF(),
+                SizedBox(height: 10.0),
+                _buildPasswordTF(),
+                SizedBox(height: 10.0),
+                _buildPasswordConfirmTF(),
+                SizedBox(height: 10.0),
+                Row(
+                  children: [
+                    _createChecBox(),
+                    Column(
+                      children: [
+                        Text('Al Continuar, Aceptas Nuestros'),
+                        InkWell(
+                          child: Text(
+                              'Términos y Condiciones y Aviso de privacidad',
+                              style: TextStyle(color: Colors.redAccent[700])),
+                          onTap: () {
+                            _launchInBrowser(_launchUrl);
+                          },
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                _buildRegistrarseBtn(),
+                _footer(context),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:dineroenunclick/src/models/UsuarioModel.dart';
-import 'package:dineroenunclick/src/pages/PerfilPage.dart';
 import 'package:dineroenunclick/src/providers/NuevoCreditoProvider.dart';
 import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:dineroenunclick/src/utilities/dialogs.dart';
@@ -18,7 +17,8 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
   TextEditingController _apellidoPaterno = TextEditingController();
   TextEditingController _correo = TextEditingController();
   TextEditingController _celular = TextEditingController();
-
+  final focus = FocusNode();
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +38,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
            actions: [
           IconButton(
             icon: Icon(
-              Icons.account_circle,
+              Icons.view_headline,
               color: pfazul2,
             ),
             onPressed: () {
@@ -60,31 +60,37 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
             ),
           )
           ),
-      body: SingleChildScrollView(
-        reverse: true,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Bienvenid@, envíanos tus datos para regresarte una llamada y ofrecerte un credito a tu medida :)',
-                style: TextStyle(
-                  color: pfAzul,
-                  fontSize: 20.0,
+      body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: SingleChildScrollView(
+          reverse: true,
+          child: Container(
+            padding: EdgeInsets.all(40.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Bienvenid@, envíanos tus datos para regresarte una llamada  en menos de 15 minutos y ofrecerte un credito a tu medida',
+                  style: TextStyle(
+                    color: pfAzul,
+                    fontSize: 20.0,
+                  ),
                 ),
-              ),
-              SizedBox(height: 10.0),
-              _builName(),
-              SizedBox(height: 10.0),
-              _buildLastName(),
-              SizedBox(height: 10.0),
-              _buildEmail(),
-              SizedBox(height: 10.0),
-              _buildCelular(),
-              SizedBox(height: 10.0),
-              _buildRegistrarseBtn(),
-            ],
+                SizedBox(height: 20.0),
+                _builName(),
+                SizedBox(height: 10.0),
+                _buildLastName(),
+                SizedBox(height: 10.0),
+                _buildEmail(),
+                SizedBox(height: 10.0),
+                _buildCelular(),
+                SizedBox(height: 10.0),
+                _buildRegistrarseBtn(),
+              ],
+            ),
           ),
         ),
       ),
@@ -105,8 +111,8 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.text,
-            // textCapitalization: TextCapitalization.characters,
             controller: _nombre,
             style: TextStyle(
               color: Colors.black,
@@ -118,6 +124,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
               hintText: 'Ingresa tu Nombre',
               hintStyle: kHintTextStyle,
             ),
+            
           ),
         ),
       ],
@@ -138,6 +145,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+              textInputAction: TextInputAction.next,
             keyboardType: TextInputType.text,
             controller: _apellidoPaterno,
             style: TextStyle(
@@ -170,6 +178,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+              textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             controller: _correo,
             style: TextStyle(
@@ -202,7 +211,8 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
-            keyboardType: TextInputType.phone,
+            textInputAction: TextInputAction.done,
+           keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
             controller: _celular,
             style: TextStyle(
               color: Colors.black,

@@ -165,7 +165,7 @@ class _NotificacionesPageState extends State<NotificacionesPage> {
            actions: [
           IconButton(
             icon: Icon(
-              Icons.account_circle,
+              Icons.view_headline,
               color: pfazul2,
             ),
             onPressed: () {

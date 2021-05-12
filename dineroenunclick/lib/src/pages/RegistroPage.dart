@@ -20,6 +20,7 @@ class _RegistroPageState extends State<RegistroPage> {
   TextEditingController _passConfirm = TextEditingController();
   String _launchUrl = 'https://dinero1click.prestamofeliz.com.mx/terminos.pdf';
   bool _value1 = false;
+  final focus = FocusNode();
 
   Widget _buildRFCTF() {
     return Column(
@@ -35,6 +36,7 @@ class _RegistroPageState extends State<RegistroPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.text,
             textCapitalization: TextCapitalization.characters,
             controller: _rfc,
@@ -72,6 +74,7 @@ class _RegistroPageState extends State<RegistroPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             controller: _correo,
             style: TextStyle(
@@ -108,6 +111,7 @@ class _RegistroPageState extends State<RegistroPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.phone,
             controller: _celular,
             style: TextStyle(
@@ -144,6 +148,7 @@ class _RegistroPageState extends State<RegistroPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            textInputAction: TextInputAction.next,
             obscureText: true,
             keyboardType: TextInputType.text,
             controller: _pass,
@@ -181,6 +186,7 @@ class _RegistroPageState extends State<RegistroPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            textInputAction: TextInputAction.done,
             obscureText: true,
             keyboardType: TextInputType.text,
             controller: _passConfirm,
