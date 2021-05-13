@@ -84,10 +84,10 @@ class _RegistroPageState extends State<RegistroPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.email,
-                color: Colors.white,
-              ),*/
+              // prefixIcon: Icon(
+              //   Icons.email,
+              //   color: Colors.white,
+              // ),
               hintText: 'Ingresa tu email',
               hintStyle: kHintTextStyle,
             ),
