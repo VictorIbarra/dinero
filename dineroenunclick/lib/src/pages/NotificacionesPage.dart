@@ -7,12 +7,12 @@ import 'package:dineroenunclick/src/models/NotificasionModel.dart';
 
 class NotificacionesPage extends StatefulWidget {
   NotificacionesPage({Key key}) : super(key: key);
-
   _NotificacionesPageState createState() => _NotificacionesPageState();
 }
 
 BoxDecoration myBoxDecoration(Color color) {
   return BoxDecoration(
+    color: Colors.grey[400],
     border: Border.all(width: 1.0, color: color),
     borderRadius:
         BorderRadius.all(Radius.circular(5.0) //         <--- border radius here
@@ -24,45 +24,44 @@ Widget _itemNotificacion(BuildContext context, Notificasion prom, Color color) {
   final _screenSize = MediaQuery.of(context).size;
   final marginTop = 5.0;
   final marginLeft = 10.0;
-  // final arg = ModalRoute.of(context).settings.arguments;
-
   List<Widget> textos = new List<Widget>();
 
-  textos.add(Container(
-    margin: EdgeInsets.only(left: marginLeft),
-    child: Text.rich(
-      TextSpan(
-        text: 'Tu disponible solicitado de ',
-        children: <TextSpan>[
-          TextSpan(
-              text: ' \$${prom.disponible.toString()},',
-              style: TextStyle(fontStyle: FontStyle.italic, color: pfazul2)),
-          TextSpan(
-              text:
-                  ' de tu crédito de \$${prom.monto.toString()}, está  ${prom.estatus.toString()}',
-              style:
-                  TextStyle(fontStyle: FontStyle.italic, color: Colors.black)),
-        ],
+  textos.add(Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Icon(
+        Icons.add_alert,
+        color: pfazul2,
+        size: 24.0,
       ),
-    ),
+      Container(
+        margin: EdgeInsets.only(left: 01.0),
+        child: Column(
+          children: [
+            Text(
+              'Tu préstamo a sido autorizado por la cantidad de',
+              style: TextStyle(fontSize: 12.5, color: Colors.white),
+            ),
+            Text(
+                '\$${prom.disponible.toString()}, de tu credito de \$${prom.monto.toString()} esta ${prom.estatus.toString()}',
+                style: TextStyle(fontSize: 12.0, color: Colors.white)),
+          ],
+        ),
+      ),
+    ],
   ));
   textos.add(SizedBox(
     height: 5.0,
   ));
-  //borrar gesture cuando se regrese servicio original
   return GestureDetector(
-      onTap: () {
-        // print('Seleccionaste ${prom.promocionId}');
-        // Promocion.selPROM = prom;
-        // Navigator.pushNamed(context, '/promocionDetalle', arguments: prom);
-        // //Navigator.pushNamed(context, '/promocionDetalle');
-      },
+      onTap: () {},
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(top: marginTop),
-            width: _screenSize.width * .95,
+            width: _screenSize.width * .99,
             height: _screenSize.height * .1,
             decoration: myBoxDecoration(color),
             child: Row(
@@ -75,15 +74,6 @@ Widget _itemNotificacion(BuildContext context, Notificasion prom, Color color) {
                     children: textos,
                   ),
                 ),
-                // Expanded(
-                //   flex: 1,
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: <Widget>[
-                //       Icon(Icons.keyboard_arrow_right, color: color,),
-                //     ],
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -120,10 +110,6 @@ Widget _loadCreditos(BuildContext context) {
             ),
           );
         return _drawVisitanteItems(snapshot.data, context);
-        //   return _drawVisitanteItems(snapshot.data, context);
-        // } else {
-        //   return Container(
-        //       height: 400.0, child: Center(child: CircularProgressIndicator()));
       } else {
         return Container(
             height: 400.0, child: Center(child: CircularProgressIndicator()));
@@ -149,44 +135,41 @@ class _NotificacionesPageState extends State<NotificacionesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-
-
             backgroundColor: Colors.white,
-          leading: GestureDetector(
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
+            leading: GestureDetector(
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          centerTitle: true,
-           actions: [
-          IconButton(
-            icon: Icon(
-              Icons.view_headline,
-              color: pfazul2,
-            ),
-            onPressed: () {
-              setState(() {
-                     Navigator.pushNamed(context, '/hola');
-              });
-            },
-          )
-        ],
-        title: Center(
-          child: Text(
-            'Notificaciones',
-            style: TextStyle(
-              color: pfazul2,
-              fontSize: 30.0,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Montserrat',
-            ),
-          ),
-        )
-        ),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.view_headline,
+                  color: pfazul2,
+                ),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pushNamed(context, '/hola');
+                  });
+                },
+              )
+            ],
+            title: Center(
+              child: Text(
+                'Notificaciones',
+                style: TextStyle(
+                  color: pfazul2,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Montserrat',
+                ),
+              ),
+            )),
         body: _loadCreditos(context));
   }
 }

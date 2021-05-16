@@ -29,6 +29,13 @@ class _LoginPageState extends State<LoginPage> {
   int _loginType = 1;
   String _projectVersion = '';
   bool _validate = false;
+  bool _obscureText = true;
+
+  void _togglePasswordStatus() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   initPlatformState() async {
     String projectVersion;
@@ -48,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    
+
     initPlatformState();
 
     try {
@@ -70,10 +77,15 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Si ya eres cliente pide tu codigo'),
+            title: Text(
+              'Si ya eres cliente pide tu código',
+              style: TextStyle(fontSize: 20.0, color: Colors.grey[600]),
+              textAlign: TextAlign.center,
+            ),
             content: Form(
               key: codigoKey,
               child: TextFormField(
+                textAlign: TextAlign.center,
                 textCapitalization: TextCapitalization.characters,
                 autofocus: true,
                 validator: (value) {
@@ -88,31 +100,39 @@ class _LoginPageState extends State<LoginPage> {
             ),
             actions: <Widget>[
               Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  FlatButton(
-                    color: Colors.green,
-                    child: Text(' ENVIAR'),
-                    onPressed: () {
-                      if (_codigo.length != 6) {
-                        codigoKey.currentState.validate();
-                      } else {
-                        wsUsuario.validaCodigoUsuario(_codigo).then((obj) {
-                          if (obj.idCliente != null) {
-                            Navigator.pop(context);
-                            Navigator.pushNamed(context, '/registro');
-                          } else {
+                  Row(
+                    children: [
+                      RaisedButton(
+                        color: Colors.green,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        onPressed: () {
+                          if (_codigo.length != 6) {
                             codigoKey.currentState.validate();
+                          } else {
+                            wsUsuario.validaCodigoUsuario(_codigo).then((obj) {
+                              if (obj.idCliente != null) {
+                                Navigator.pop(context);
+                                Navigator.pushNamed(context, '/registro');
+                              } else {
+                                codigoKey.currentState.validate();
+                              }
+                            });
                           }
-                        });
-                      }
-                    },
+                        },
+                        child: Text(
+                          "    Continuar  ",
+                          style: (TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                      Text('                       ')
+                    ],
                   ),
                   FlatButton(
                     child: Text(
-                      '   SI NO ERES CLIENTE DA CLICK AQUI            ',
-                      style: TextStyle(color: Colors.redAccent[700]),
+                      'No soy cliente                     ',
+                      style: TextStyle(color: Colors.grey[600]),
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -131,7 +151,8 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Restablece tu contraseña'),
+            title: Text('Restablece tu contraseña',
+                style: TextStyle(color: Colors.grey[600])),
             content: Form(
               key: codigoKey,
               child: TextFormField(
@@ -148,17 +169,32 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             actions: <Widget>[
-              new FlatButton(
-                child: new Text('Restablecer'),
-                onPressed: () async {
-                  UsuarioProvider.resetPassword(new Usuario(correo: _correoStr))
-                      .then((obj) {
-                    print(obj.mensaje);
-                  });
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('                '),
+                  RaisedButton(
+                    color: Colors.green,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    onPressed: () async {
+                      UsuarioProvider.resetPassword(
+                              new Usuario(correo: _correoStr))
+                          .then((obj) {
+                        print(obj.mensaje);
+                      });
 
-                  Navigator.pop(context);
-                },
-              )
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "       Restablecer     ",
+                      style: (TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                  Text('                ')
+                ],
+              ),
             ],
           );
         });
@@ -190,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             decoration: InputDecoration(
               border: InputBorder.none,
-              contentPadding: EdgeInsets.only(left: 20.0),
+              contentPadding: EdgeInsets.only(left: 20.0, top: 15.0),
               fillColor: Colors.white,
               filled: true,
               hintText: 'Correo electrónico',
@@ -220,7 +256,11 @@ class _LoginPageState extends State<LoginPage> {
                 return null;
               }
             },
-            obscureText: true,
+            obscureText: _obscureText,
+            onChanged: (val) {
+              setState(() {
+              });
+            },
             keyboardType: TextInputType.text,
             controller: _pass,
             style: TextStyle(
@@ -228,15 +268,49 @@ class _LoginPageState extends State<LoginPage> {
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
+              hintText: ' Ingresa tu Password',
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: _togglePasswordStatus,
+                color: Colors.green,
+              ),
               border: InputBorder.none,
-              contentPadding: EdgeInsets.only(left: 20.0),
+              contentPadding: EdgeInsets.only(left: 18.0, top: 22.0),
               fillColor: Colors.white,
               filled: true,
-              hintText: 'Ingresa  contraseña',
               hintStyle: kHintTextStyle,
             ),
           ),
         ),
+
+        //   Container(
+        //   padding: EdgeInsets.symmetric(vertical:20.0,horizontal:50.0),
+        //   child: Form(
+        //     child: Column(children: <Widget>[
+        //       TextFormField(
+        //         decoration: InputDecoration(
+        //           hintText: 'Password',
+        //           suffixIcon:  IconButton(
+        //             icon:Icon(_obscureText ? Icons.visibility:Icons.visibility_off,),
+        //              onPressed: _togglePasswordStatus,
+        //              color: Colors.green,
+        //              ),
+        //         ),
+        //         validator: (val){
+        //           return
+        //           val.length < 6 ? 'Enter A Password Longer Than 6 Charchters' :null;
+        //         },
+        //         obscureText: _obscureText,
+        //         onChanged: (val){
+        //           setState(() {
+        //             // password = val.trim();
+        //           });
+        //         },
+        //       ),
+        //   ],),),
+        // )
       ],
     );
   }
@@ -278,18 +352,24 @@ class _LoginPageState extends State<LoginPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: Color.fromRGBO(6, 6, 159, 1),
+          color: Colors.green,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'CONTINUAR',
+                ' Continuar ',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Montserrat',
                 ),
+              ),
+              Icon(
+                Icons.arrow_forward,
+                color: Colors.white,
+                size: 26.0,
+                semanticLabel: 'Text to announce in accessibility modes',
               ),
             ],
           )),
@@ -316,18 +396,18 @@ class _LoginPageState extends State<LoginPage> {
           _buildEmailTF(),
           SizedBox(height: 10.0),
           _buildPasswordTF(),
-          SizedBox(height: 05.0),
+          SizedBox(height: 10.0),
           InkWell(
             child: Text(
               'Olvidaste tu contraseña',
-              style: TextStyle(color: Colors.grey[900]),
+              style: TextStyle(color: Colors.grey[700], fontSize: 16.0),
             ),
             onTap: () {
               _modalResetUsuario((context));
             },
           ),
+          SizedBox(height: 50.0),
           Container(
-              //aqui darle un buen margen para que se quede
               margin: EdgeInsets.only(left: 70.0),
               child: _buildLoginBtn(Scaffold.of(context))),
         ],
@@ -343,16 +423,16 @@ class _LoginPageState extends State<LoginPage> {
           flex: 5,
           child: Column(
             children: <Widget>[
-              Text(
-                'Áun no tienes cuenta?',
-                style: TextStyle(
-                    color: pfAzul, fontSize: 15.0, fontWeight: FontWeight.bold),
-              ),
+              Text('¿Áun no tienes cuenta?',
+                  style: TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
               SizedBox(height: 10.0),
               InkWell(
                 child: Text(
                   'CREAR CUENTA',
-                  style: TextStyle(fontSize: 15.0),
+                  style: TextStyle(fontSize: 15.0, color: Colors.white),
                 ),
                 onTap: () {
                   _modalCodigoUsuario(context);
@@ -379,7 +459,13 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-            colors: [Color.fromRGBO(6, 6, 159, 1), Colors.white],
+            colors: [
+              Colors.white,
+              Colors.white,
+              Colors.white,
+              Color.fromRGBO(6, 6, 159, 1),
+              Color.fromRGBO(6, 6, 159, 1)
+            ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           )),
@@ -395,7 +481,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 40.0,
                       ),
                       Image.asset(
-                        'assets/dinero1click.png',
+                        'assets/nuevoLogo.png',
                         height: 250,
                         width: 250,
                       ),
@@ -411,7 +497,9 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         "v $_projectVersion",
                         style: new TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.0,
+                            color: Colors.white),
                       )
                     ],
                   ),

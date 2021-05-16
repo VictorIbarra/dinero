@@ -25,7 +25,7 @@ _cerrarSesion(BuildContext context) {
   return GestureDetector(
     onTap: () {
       CoolAlert.show(
-        backgroundColor: pfazul2,
+          backgroundColor: pfazul2,
           context: context,
           type: CoolAlertType.confirm,
           title: '',
@@ -48,7 +48,7 @@ _cerrarSesion(BuildContext context) {
           fontWeight: FontWeight.w800,
           fontFamily: 'Montserrat',
         ),
-      ),   
+      ),
     ),
   );
 }
@@ -58,7 +58,7 @@ class _PerfilPageState extends State<PerfilPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-           backgroundColor: Colors.white,
+          backgroundColor: Colors.white,
           leading: GestureDetector(
             child: Icon(
               Icons.arrow_back_ios,
@@ -69,7 +69,6 @@ class _PerfilPageState extends State<PerfilPage> {
             },
           ),
           centerTitle: true,
-         
           automaticallyImplyLeading: false,
           title: Text(
             'Perfil',
@@ -86,59 +85,86 @@ class _PerfilPageState extends State<PerfilPage> {
           child: Column(
             children: <Widget>[
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(
                     Icons.account_box,
-                    color: Colors.grey,
+                    color: pfazul2,
                     size: 30.0,
                   ),
-                  _itemOption(
-                      context, 'Información de mi cuenta', '/informacion'),
+                  _itemOption(context, 'Información de cuenta', '/informacion'),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: pfazul2,
+                    size: 20.0,
+                  ),
                 ],
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(
                     Icons.security,
-                    color: Colors.grey,
+                    color: pfazul2,
                     size: 30.0,
                   ),
                   _itemOption(context, 'Seguridad', '/seguridad'),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: pfazul2,
+                    size: 20.0,
+                  ),
                 ],
               ),
 
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(
                     Icons.phone_android,
-                    color: Colors.grey,
+                    color: pfazul2,
                     size: 30.0,
                   ),
                   _itemOption(context, 'Centro de ayuda', '/ayuda'),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: pfazul2,
+                    size: 20.0,
+                  ),
                 ],
               ),
-
-              // _itemOption(context, 'Mis créditos', '/misCreditos'),
-
-              Expanded(
-                child: SizedBox(),
+              // Expanded(
+              //   child: SizedBox(),
+              // ),
+              SizedBox(
+                height: 80.0,
               ),
-
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Visita nuestra',
+                    style: TextStyle(fontSize: 10.0),
+                  ),
+                  _botonPrestamoFeliz(),
+                ],
+              ),
               new Image.asset(
                 'assets/prestamo.png',
-                height: 60.0,
+                height: 45.0,
                 fit: BoxFit.cover,
               ),
 
               SizedBox(
-                height: 80.0,
+                height: 30.0,
               ),
 
-              _cerrarSesion(context),
-
-              SizedBox(
-                height: 20.0,
+              Text(
+                'Dinero en un Click es una marca registrada propiedad de Préstamo feliz',
+                style: TextStyle(fontSize: 10.0, color: Colors.grey[700]),
+                textAlign: TextAlign.center,
               ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -146,23 +172,10 @@ class _PerfilPageState extends State<PerfilPage> {
                   _botonPoliticaDePrivacidad(),
                 ],
               ),
-              // Text('Terminos y condiciones | Politicas de privacidad', style: kLabelTerminosCondiciones,),
-              SizedBox(
-                height: 01.0,
-              ),
-              _botonPrestamoFeliz(),
+              _cerrarSesion(context),
               SizedBox(
                 height: 15.0,
               ),
-              // Text(
-              //   'f',
-              //   style: TextStyle(
-              //     color: Color(0xFF1747AC),
-              //     fontSize: 25.0,
-              //     fontWeight: FontWeight.w900,
-              //     fontFamily: 'Montserrat',
-              //   ),
-              // ),
               SizedBox(
                 height: 15.0,
               ),
@@ -179,7 +192,7 @@ class _PerfilPageState extends State<PerfilPage> {
       padding: EdgeInsets.only(right: 0.0),
       child: Text(
         'Terminos Y Condiciones',
-        style: TextStyle(fontSize: 12.0, color: pfazul2),
+        style: TextStyle(fontSize: 12.0, color: Colors.grey[700]),
       ),
     );
   }
@@ -192,7 +205,7 @@ class _PerfilPageState extends State<PerfilPage> {
       padding: EdgeInsets.only(right: 0.0),
       child: Text(
         'Politica De Privacidad',
-        style: TextStyle(fontSize: 12.0, color: pfazul2),
+        style: TextStyle(fontSize: 12.0, color: Colors.grey[700]),
       ),
     );
   }
@@ -204,8 +217,8 @@ class _PerfilPageState extends State<PerfilPage> {
       },
       padding: EdgeInsets.only(right: 0.0),
       child: Text(
-        'PRESTAMO FELIZ',
-        style: TextStyle(fontSize: 15.0, color: pfazul2),
+        'pagina web',
+        style: TextStyle(fontSize: 15.0, color: Colors.grey[700]),
       ),
     );
   }

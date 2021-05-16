@@ -18,7 +18,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
   TextEditingController _correo = TextEditingController();
   TextEditingController _celular = TextEditingController();
   final focus = FocusNode();
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,22 +35,22 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
             },
           ),
           centerTitle: true,
-           actions: [
-          IconButton(
-            icon: Icon(
-              Icons.view_headline,
-              color: pfazul2,
-            ),
-            onPressed: () {
-              setState(() {
-                     Navigator.pushNamed(context, '/hola');
-              });
-            },
-          )
-        ],
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.view_headline,
+                color: pfazul2,
+              ),
+              onPressed: () {
+                setState(() {
+                  Navigator.pushNamed(context, '/hola');
+                });
+              },
+            )
+          ],
           title: Center(
             child: Text(
-              'Solicita tu Credito',
+              'Solicita tu Crédito',
               style: TextStyle(
                 color: pfazul2,
                 fontSize: 19.0,
@@ -58,14 +58,13 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
                 fontFamily: 'Montserrat',
               ),
             ),
-          )
-          ),
+          )),
       body: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
-          },
-          child: SingleChildScrollView(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: SingleChildScrollView(
           reverse: true,
           child: Container(
             padding: EdgeInsets.all(40.0),
@@ -73,7 +72,8 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Bienvenid@, envíanos tus datos para regresarte una llamada  en menos de 15 minutos y ofrecerte un credito a tu medida',
+                  'Te damos la Bienvenida a tu nueva aplicacion para obtener dinero en un click',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: pfAzul,
                     fontSize: 20.0,
@@ -87,7 +87,21 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
                 _buildEmail(),
                 SizedBox(height: 10.0),
                 _buildCelular(),
-                SizedBox(height: 10.0),
+                SizedBox(height: 30.0),
+                Text(
+                  'Conoce todos los beneficios que te ofrecemos',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: pfAzul,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Te brindamos un servicio totalmente personalizado en breve nos pondremos en contacto contigo',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: pfAzul, fontSize: 13.0),
+                ),
+                SizedBox(height: 20.0),
                 _buildRegistrarseBtn(),
               ],
             ),
@@ -101,11 +115,6 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Nombre',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 3.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
@@ -121,10 +130,9 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 10.0),
-              hintText: 'Ingresa tu Nombre',
+              hintText: 'Tu nombre',
               hintStyle: kHintTextStyle,
             ),
-            
           ),
         ),
       ],
@@ -135,17 +143,12 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Apellido Paterno',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
-              textInputAction: TextInputAction.next,
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.text,
             controller: _apellidoPaterno,
             style: TextStyle(
@@ -155,7 +158,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              hintText: 'Ingresa tu Apellido Paterno',
+              hintText: 'Tu apellido',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -168,17 +171,12 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Correo electronico',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
-              textInputAction: TextInputAction.next,
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             controller: _correo,
             style: TextStyle(
@@ -188,7 +186,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              hintText: 'Ingresa tu correo',
+              hintText: 'Correo electrónico',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -201,18 +199,14 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Celular',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
             textInputAction: TextInputAction.done,
-           keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
+            keyboardType:
+                TextInputType.numberWithOptions(signed: true, decimal: true),
             controller: _celular,
             style: TextStyle(
               color: Colors.black,
@@ -221,7 +215,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              hintText: 'Ingresa tu celular',
+              hintText: 'Número celular',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -243,12 +237,12 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: pfVerde,
+          color: Colors.green,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Enviar',
+                'Continuar',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16.0,
@@ -256,7 +250,6 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
                   fontFamily: 'Montserrat',
                 ),
               ),
-              Icon(Icons.keyboard_arrow_right, color: Colors.white)
             ],
           )),
     );

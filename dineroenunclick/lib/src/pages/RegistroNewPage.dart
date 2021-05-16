@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:dineroenunclick/src/models/UsuarioModel.dart';
 import 'package:dineroenunclick/src/providers/PromocionProvider.dart';
 import 'package:dineroenunclick/src/providers/RegistroProvisionalProvider.dart';
@@ -23,16 +24,18 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
   String _launchUrl = 'https://dinero1click.prestamofeliz.com.mx/terminos.pdf';
   bool _value1 = false;
   final focus = FocusNode();
+  bool _obscureText = true;
+
+  void _togglePasswordStatus() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   Widget _buildRFCTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'RFC',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
@@ -49,7 +52,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              hintText: 'Ingresa tu RFC',
+              hintText: 'Rfc',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -62,11 +65,6 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Correo electrónico',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
@@ -82,7 +80,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              hintText: 'Ingresa tu email',
+              hintText: 'Correo electrónico',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -95,11 +93,6 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Número Celular',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
@@ -116,7 +109,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              hintText: 'Ingresa tu TELEFONO',
+              hintText: 'Número celular',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -129,18 +122,16 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Contraseña',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
             textInputAction: TextInputAction.next,
-            obscureText: true,
+            obscureText: _obscureText,
+            onChanged: (val) {
+              setState(() {});
+            },
             keyboardType: TextInputType.text,
             controller: _pass,
             style: TextStyle(
@@ -150,7 +141,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              hintText: 'Ingresa tu nueva contraseña',
+              hintText: 'Contraseña',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -159,22 +150,28 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
     );
   }
 
+  Widget _vista() {
+    return Container(
+      color: pfazul2,
+      width: 500.0,
+      height: 200.0,
+    );
+  }
+
   Widget _buildPasswordConfirmTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Corfirmación',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
             textInputAction: TextInputAction.done,
-            obscureText: true,
+            obscureText: _obscureText,
+            onChanged: (val) {
+              setState(() {});
+            },
             keyboardType: TextInputType.text,
             controller: _passConfirm,
             style: TextStyle(
@@ -182,8 +179,15 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: _togglePasswordStatus,
+                color: Colors.green,
+              ),
               border: InputBorder.none,
-              contentPadding: EdgeInsets.only(left: 20.0),
+              contentPadding: EdgeInsets.only(left: 20.0, top: 10.0),
               hintText: 'Confirma tu contraseña',
               hintStyle: kHintTextStyle,
             ),
@@ -249,7 +253,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: pfVerde,
+          color: Colors.green,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -262,7 +266,6 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
                   fontFamily: 'Montserrat',
                 ),
               ),
-              Icon(Icons.keyboard_arrow_right, color: Colors.white)
             ],
           )),
     );
@@ -284,7 +287,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: pfVerde,
+          color: Colors.green,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -335,66 +338,93 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        title: Center(
-          child: Text(
-            ' Nuevo Registro',
-            style: TextStyle(
-              color: pfGris,
-              fontSize: 15.0,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Montserrat',
+      // appBar: AppBar(
+      //   backgroundColor: pfazul2,
+      //   automaticallyImplyLeading: false,
+      //   // title: Center(
+      //   //   child: Text(
+      //   //     ' Crear Cuenta',
+      //   //     style: TextStyle(
+      //   //       color: pfGris,
+      //   //       fontSize: 15.0,
+      //   //       fontWeight: FontWeight.w900,
+      //   //       fontFamily: 'Montserrat',
+      //   //     ),
+      //   //   ),
+      //   // ),
+      // ),
+      body: Column(
+        children: [
+          Stack(
+            alignment: AlignmentDirectional.bottomStart,
+            children: [
+              _vista(),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text('Crear Cuenta',style: TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold)),
+              ),
+            ],
             ),
-          ),
-        ),
-      ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: SingleChildScrollView(
-          reverse: true,
-          child: Container(
-            padding: EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                _buildRFCTF(),
-                SizedBox(height: 10.0),
-                _buildEmailTF(),
-                SizedBox(height: 10.0),
-                _buildCelTF(),
-                SizedBox(height: 10.0),
-                _buildPasswordTF(),
-                SizedBox(height: 10.0),
-                _buildPasswordConfirmTF(),
-                SizedBox(height: 10.0),
-                Row(
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              FocusScope.of(context).requestFocus(new FocusNode());
+            },
+            child: SingleChildScrollView(
+              reverse: true,
+              child: Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
                   children: [
-                    _createChecBox(),
-                    Column(
+                    Text(
+                      'Disfruta de los beneficios de tener dinero en un click',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: pfAzul, fontSize: 20.0),
+                    ),
+                    SizedBox(height: 30.0),
+                    _buildRFCTF(),
+                    SizedBox(height: 10.0),
+                    _buildEmailTF(),
+                    SizedBox(height: 10.0),
+                    _buildCelTF(),
+                    SizedBox(height: 10.0),
+                    _buildPasswordTF(),
+                    SizedBox(height: 10.0),
+                    _buildPasswordConfirmTF(),
+                    SizedBox(height: 10.0),
+                         Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Al Continuar, Aceptas Nuestros'),
-                        InkWell(
-                          child: Text(
-                              'Términos y Condiciones y Aviso de privacidad',
-                              style: TextStyle(color: Colors.redAccent[700])),
-                          onTap: () {
-                            _launchInBrowser(_launchUrl);
-                          },
-                        )
+                        _createChecBox(),
+                        Column(
+                          children: [
+                            Text(
+                              'Al continuar Acepto',
+                              style: TextStyle(
+                                  fontSize: 12.0, color: Colors.grey[700]),
+                            ),
+                            InkWell(
+                              child: Text(
+                                  'Términos y Condiciones y Aviso de privacidad',
+                                  style: TextStyle(
+                                      color: Colors.grey[700], fontSize: 12.0)),
+                              onTap: () {
+                                _launchInBrowser(_launchUrl);
+                              },
+                            )
+                          ],
+                        ),
                       ],
                     ),
+                    _buildRegistrarseBtn(),
+                    SizedBox(height: 20.0),
+                    _footer(context),
                   ],
                 ),
-                _buildRegistrarseBtn(),
-                _footer(context),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
