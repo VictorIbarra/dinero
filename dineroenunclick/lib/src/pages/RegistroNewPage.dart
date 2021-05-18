@@ -15,7 +15,8 @@ class RegistroNewPage extends StatefulWidget {
   _RegistroNewPageState createState() => _RegistroNewPageState();
 }
 
-class _RegistroNewPageState extends State<RegistroNewPage> {
+class _RegistroNewPageState extends State<RegistroNewPage>
+    with SingleTickerProviderStateMixin {
   TextEditingController _correo = TextEditingController();
   TextEditingController _rfc = TextEditingController();
   TextEditingController _celular = TextEditingController();
@@ -23,8 +24,30 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
   TextEditingController _passConfirm = TextEditingController();
   String _launchUrl = 'https://dinero1click.prestamofeliz.com.mx/terminos.pdf';
   bool _value1 = false;
-  final focus = FocusNode();
   bool _obscureText = true;
+
+  FocusScopeNode _focusNode;
+  AnimationController _controller;
+  Animation _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _animation = Tween(begin: 200.0, end: 100.0).animate(_controller)
+      ..addListener(() {
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
 
   void _togglePasswordStatus() {
     setState(() {
@@ -41,6 +64,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            onEditingComplete: () => _focusNode.nextFocus(),
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.text,
             textCapitalization: TextCapitalization.characters,
@@ -70,6 +94,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            onEditingComplete: () => _focusNode.nextFocus(),
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             controller: _correo,
@@ -98,7 +123,8 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
-            textInputAction: TextInputAction.done,
+            onEditingComplete: () => _focusNode.nextFocus(),
+            textInputAction: TextInputAction.next,
             keyboardType:
                 TextInputType.numberWithOptions(signed: true, decimal: true),
             controller: _celular,
@@ -127,6 +153,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            onEditingComplete: () => _focusNode.nextFocus(),
             textInputAction: TextInputAction.next,
             obscureText: _obscureText,
             onChanged: (val) {
@@ -150,14 +177,6 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
     );
   }
 
-  Widget _vista() {
-    return Container(
-      color: pfazul2,
-      width: 500.0,
-      height: 200.0,
-    );
-  }
-
   Widget _buildPasswordConfirmTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,6 +186,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            onEditingComplete: () => _focusNode.unfocus(),
             textInputAction: TextInputAction.done,
             obscureText: _obscureText,
             onChanged: (val) {
@@ -206,7 +226,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
       child: RaisedButton(
           elevation: 5.0,
           onPressed: () async {
-            FocusScope.of(context).requestFocus(new FocusNode());
+            _focusNode.unfocus();
             if (_value1) {
               print('boton rechazar oprimido ');
               if (_value1 == false) {
@@ -336,26 +356,42 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
 
   @override
   Widget build(BuildContext context) {
+    _focusNode = FocusScope.of(context);
+
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus)
+        _controller.forward();
+      else
+        _controller.reverse();
+    });
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          Stack(
-            alignment: AlignmentDirectional.bottomStart,
+        resizeToAvoidBottomPadding: false,
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            _focusNode.unfocus();
+          },
+          child: Column(
             children: [
-              _vista(),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text('Crear Cuenta',style: TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold)),
+              Stack(
+                alignment: AlignmentDirectional.bottomStart,
+                children: [
+                  Container(
+                    color: pfazul2,
+                    width: 500.0,
+                    height: _animation.value + .0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text('Crear Cuenta',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ],
               ),
-            ],
-            ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
-              child: Container(
+              Container(
                 padding: EdgeInsets.all(10.0),
                 child: Column(
                   children: [
@@ -375,7 +411,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
                     SizedBox(height: 10.0),
                     _buildPasswordConfirmTF(),
                     SizedBox(height: 10.0),
-                         Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         _createChecBox(),
@@ -405,11 +441,9 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
                   ],
                 ),
               ),
-            ),
-          // ),
-        ],
-      ),
-    );
+            ],
+          ),
+        ));
   }
 
   Widget _createChecBox() {
