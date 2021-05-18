@@ -64,46 +64,52 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        child: SingleChildScrollView(
-          reverse: true,
-          child: Container(
-            padding: EdgeInsets.all(40.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Te damos la Bienvenida a tu nueva aplicacion para obtener dinero en un click',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: pfAzul,
-                    fontSize: 20.0,
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                _builName(),
-                SizedBox(height: 10.0),
-                _buildLastName(),
-                SizedBox(height: 10.0),
-                _buildEmail(),
-                SizedBox(height: 10.0),
-                _buildCelular(),
-                SizedBox(height: 30.0),
-                Text(
-                  'Conoce todos los beneficios que te ofrecemos',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: SingleChildScrollView(
+            reverse: true,
+            child: Container(
+              padding: EdgeInsets.all(40.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Te damos la Bienvenida a tu nueva aplicacion para obtener dinero en un click',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
                       color: pfAzul,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'Te brindamos un servicio totalmente personalizado en breve nos pondremos en contacto contigo',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: pfAzul, fontSize: 13.0),
-                ),
-                SizedBox(height: 20.0),
-                _buildRegistrarseBtn(),
-              ],
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  _builName(),
+                  SizedBox(height: 10.0),
+                  _buildLastName(),
+                  SizedBox(height: 10.0),
+                  _buildEmail(),
+                  SizedBox(height: 10.0),
+                  _buildCelular(),
+                  SizedBox(height: 30.0),
+                  Text(
+                    'Conoce todos los beneficios que te ofrecemos',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: pfAzul,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'Te brindamos un servicio totalmente personalizado en breve nos pondremos en contacto contigo',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: pfAzul, fontSize: 13.0),
+                  ),
+                  SizedBox(height: 20.0),
+                  _buildRegistrarseBtn(),
+                ],
+              ),
             ),
           ),
         ),
@@ -237,7 +243,7 @@ class _FormNuevosCreditosState extends State<FormNuevosCreditos> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: Colors.green,
+          color: Colors.green[700],
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

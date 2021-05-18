@@ -253,7 +253,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: Colors.green,
+          color: Colors.green[700],
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -287,7 +287,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: Colors.green,
+          color: Colors.green[700],
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -338,21 +338,6 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      // appBar: AppBar(
-      //   backgroundColor: pfazul2,
-      //   automaticallyImplyLeading: false,
-      //   // title: Center(
-      //   //   child: Text(
-      //   //     ' Crear Cuenta',
-      //   //     style: TextStyle(
-      //   //       color: pfGris,
-      //   //       fontSize: 15.0,
-      //   //       fontWeight: FontWeight.w900,
-      //   //       fontFamily: 'Montserrat',
-      //   //     ),
-      //   //   ),
-      //   // ),
-      // ),
       body: Column(
         children: [
           Stack(
@@ -370,8 +355,6 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
             onTap: () {
               FocusScope.of(context).requestFocus(new FocusNode());
             },
-            child: SingleChildScrollView(
-              reverse: true,
               child: Container(
                 padding: EdgeInsets.all(10.0),
                 child: Column(
@@ -423,7 +406,7 @@ class _RegistroNewPageState extends State<RegistroNewPage> {
                 ),
               ),
             ),
-          ),
+          // ),
         ],
       ),
     );

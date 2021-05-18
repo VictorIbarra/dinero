@@ -21,16 +21,18 @@ class _RegistroPageState extends State<RegistroPage> {
   String _launchUrl = 'https://dinero1click.prestamofeliz.com.mx/terminos.pdf';
   bool _value1 = false;
   final focus = FocusNode();
+  bool _obscureText = true;
+
+  void _togglePasswordStatus() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   Widget _buildRFCTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'RFC',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
@@ -51,7 +53,7 @@ class _RegistroPageState extends State<RegistroPage> {
                 Icons.email,
                 color: Colors.white,
               ),*/
-              hintText: 'Ingresa tu RFC',
+              hintText: 'RFC',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -64,11 +66,6 @@ class _RegistroPageState extends State<RegistroPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Correo electrónico',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
@@ -88,7 +85,7 @@ class _RegistroPageState extends State<RegistroPage> {
               //   Icons.email,
               //   color: Colors.white,
               // ),
-              hintText: 'Ingresa tu email',
+              hintText: 'Correo electrónico',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -101,11 +98,6 @@ class _RegistroPageState extends State<RegistroPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Número celular',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
@@ -121,11 +113,7 @@ class _RegistroPageState extends State<RegistroPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.email,
-                color: Colors.white,
-              ),*/
-              hintText: Registro.obj.celular.toString(),
+              hintText: 'Número celular',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -138,18 +126,17 @@ class _RegistroPageState extends State<RegistroPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Contraseña',
-          style: kLabelStyle,
-        ),
         SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            obscureText: _obscureText,
+            onChanged: (val) {
+              setState(() {});
+            },
             textInputAction: TextInputAction.next,
-            obscureText: true,
             keyboardType: TextInputType.text,
             controller: _pass,
             style: TextStyle(
@@ -159,11 +146,7 @@ class _RegistroPageState extends State<RegistroPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.lock,
-                color: Colors.white,
-              ),*/
-              hintText: 'Ingresa tu nueva contraseña',
+              hintText: 'Contraseña',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -176,18 +159,16 @@ class _RegistroPageState extends State<RegistroPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Corfirmación',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
             textInputAction: TextInputAction.done,
-            obscureText: true,
+            obscureText: _obscureText,
+            onChanged: (val) {
+              setState(() {});
+            },
             keyboardType: TextInputType.text,
             controller: _passConfirm,
             style: TextStyle(
@@ -195,13 +176,16 @@ class _RegistroPageState extends State<RegistroPage> {
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: _togglePasswordStatus,
+                color: Colors.green,
+              ),
               border: InputBorder.none,
-              contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.lock,
-                color: Colors.white,
-              ),*/
-              hintText: 'Confirma tu contraseña',
+              contentPadding: EdgeInsets.only(left: 20.0, top: 10.0),
+              hintText: 'Confirma tu Contraseña',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -210,7 +194,7 @@ class _RegistroPageState extends State<RegistroPage> {
     );
   }
 
-  Widget _buildRegistrarseBtn(ScaffoldState contextScaffold) {
+  Widget _buildRegistrarseBtn() {
     final _screenSize = MediaQuery.of(context).size;
 
     return Container(
@@ -252,18 +236,11 @@ class _RegistroPageState extends State<RegistroPage> {
                       if (obj.mensaje == null) {
                         obj.mensaje = 'Ingrese la informacion';
                       }
-
-                      (contextScaffold).showSnackBar(SnackBar(
-                        backgroundColor: pfNaranja,
-                        content: Text(obj.mensaje),
-                      ));
+                      Dialogs.alert(context, description: 'Ingrese la informacion');
                     }
                   });
                 } else {
-                  (contextScaffold).showSnackBar(SnackBar(
-                    backgroundColor: pfNaranja,
-                    content: Text('Las Contraseñas no coinciden.'),
-                  ));
+                  Dialogs.alert(context, description: 'las contraseñas no coinciden');
                 }
               }
             } else {
@@ -271,50 +248,12 @@ class _RegistroPageState extends State<RegistroPage> {
               Dialogs.alert(context,
                   description: 'Nesesitas aceptar los términos y condiciones');
             }
-
-            // if ( _value1 = true && _pass.text == _passConfirm.text) {
-            //   UsuarioProvider wsUsuario = new UsuarioProvider();
-            //   wsUsuario
-            //       .registroUsuario(
-            //           Registro.obj.idCliente,
-            //           Registro.obj.idPromotor,
-            //           Registro.obj.cliente,
-            //           _passConfirm.text,
-            //           (_celular.text),
-            //           '-',
-            //           Registro.obj.capital,
-            //           _correo.text,
-            //           _rfc.text)
-            //       .then((obj) async {
-            //     if (obj.error == 0) {
-            //       await UsuarioProvider.login(new Usuario(
-            //           correo: _correo.text, pass: _passConfirm.text));
-            //       Navigator.pushReplacementNamed(context, '/cliente');
-            //     } else {
-            //       print(obj.mensaje);
-
-            //       if (obj.mensaje == null) {
-            //         obj.mensaje = 'Ingrese la informacion';
-            //       }
-
-            //       (contextScaffold).showSnackBar(SnackBar(
-            //         backgroundColor: pfNaranja,
-            //         content: Text(obj.mensaje),
-            //       ));
-            //     }
-            //   });
-            // } else {
-            //   (contextScaffold).showSnackBar(SnackBar(
-            //     backgroundColor: pfNaranja,
-            //     content: Text('Las Contraseñas no coinciden.'),
-            //   ));
-            // }
           },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: pfVerde,
+          color: Colors.green[700],
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -351,7 +290,7 @@ class _RegistroPageState extends State<RegistroPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: pfVerde,
+          color: Colors.green[700],
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -385,6 +324,14 @@ class _RegistroPageState extends State<RegistroPage> {
     );
   }
 
+  Widget _vista() {
+    return Container(
+      color: pfazul2,
+      width: 500.0,
+      height: 200.0,
+    );
+  }
+
   Future<void> _launchInBrowser(String url) async {
     if (await canLaunch(url)) {
       await launch(
@@ -402,70 +349,79 @@ class _RegistroPageState extends State<RegistroPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        title: Center(
-          child: Text(
-            'Registro',
-            style: TextStyle(
-              color: pfGris,
-              fontSize: 15.0,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'Montserrat',
-            ),
-          ),
-        ),
-      ),
-      body: Builder(
-        builder: (context) => Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                height: 20.0,
-              ),
-              _buildRFCTF(),
-              SizedBox(height: 10.0),
-              _buildEmailTF(),
-              SizedBox(height: 10.0),
-              _buildCelularTF(),
-              SizedBox(height: 10.0),
-              _buildPasswordTF(),
-              SizedBox(height: 10.0),
-              _buildPasswordConfirmTF(),
-              SizedBox(height: 10.0),
-              Row(
-                children: [
-                  _createChecBox(),
-                  Column(
-                    children: [
-                      Text('Al Continuar, Aceptas Nuestros'),
-                      InkWell(
-                        child: Text(
-                            'Términos y Condiciones y Aviso de privacidad',
-                            style: TextStyle(color: Colors.redAccent[700])),
-                        onTap: () {
-                          _launchInBrowser(_launchUrl);
-                          print('entro');
-                        },
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              _buildRegistrarseBtn(Scaffold.of(context)),
-              Expanded(
-                child: SizedBox(),
-              ),
-              _footer(context),
-              SizedBox(
-                height: 25.0,
+      body: Column(
+        children: [
+          Stack(
+            alignment: AlignmentDirectional.bottomStart,
+            children: [
+              _vista(),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text('Crear Cuenta',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold)),
               ),
             ],
           ),
-        ),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              FocusScope.of(context).requestFocus(new FocusNode());
+            },
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  _buildRFCTF(),
+                  SizedBox(height: 10.0),
+                  _buildEmailTF(),
+                  SizedBox(height: 10.0),
+                  _buildCelularTF(),
+                  SizedBox(height: 10.0),
+                  _buildPasswordTF(),
+                  SizedBox(height: 10.0),
+                  _buildPasswordConfirmTF(),
+                  SizedBox(height: 10.0),
+                  Row(
+                    children: [
+                      _createChecBox(),
+                      Column(
+                        children: [
+                          Text('Al Continuar, Aceptas Nuestros'),
+                          InkWell(
+                            child: Text(
+                                'Términos y Condiciones y Aviso de privacidad',
+                                style: TextStyle(color: Colors.redAccent[700])),
+                            onTap: () {
+                              _launchInBrowser(_launchUrl);
+                              print('entro');
+                            },
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  _buildRegistrarseBtn(),
+                  //  _buildRegistrarseBtn(Scaffold.of(context)),
+                  // Expanded(
+                  //   child: SizedBox(),
+                  // ),
+                  _footer(context),
+                  SizedBox(
+                    height: 25.0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // ),
+        ],
       ),
     );
   }

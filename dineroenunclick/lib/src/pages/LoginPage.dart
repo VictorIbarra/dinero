@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     children: [
                       RaisedButton(
-                        color: Colors.green,
+                        color: Colors.green[700],
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
                         onPressed: () {
@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         },
                         child: Text(
-                          "    Continuar  ",
+                          "      Continuar      ",
                           style: (TextStyle(color: Colors.white)),
                         ),
                       ),
@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
               child: TextFormField(
                 autofocus: true,
                 validator: (value) {
-                  return 'Codigo Invalido';
+                  return 'Ingresa tu correo';
                 },
                 controller: _correoController,
                 decoration: InputDecoration(hintText: "Ingresa tu correo"),
@@ -175,17 +175,22 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Text('                '),
                   RaisedButton(
-                    color: Colors.green,
+                    color: Colors.green[700],
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     onPressed: () async {
-                      UsuarioProvider.resetPassword(
-                              new Usuario(correo: _correoStr))
-                          .then((obj) {
-                        print(obj.mensaje);
-                      });
-
-                      Navigator.pop(context);
+                      
+                      if (_correoStr.length >= 6) {
+                         UsuarioProvider.resetPassword(
+                                new Usuario(correo: _correoStr))
+                            .then((obj) {
+                          print(obj.mensaje);
+                        }
+                        );
+                       Navigator.pop(context);
+                      } else {
+                           codigoKey.currentState.validate();
+                      }
                     },
                     child: Text(
                       "       Restablecer     ",
@@ -258,8 +263,7 @@ class _LoginPageState extends State<LoginPage> {
             },
             obscureText: _obscureText,
             onChanged: (val) {
-              setState(() {
-              });
+              setState(() {});
             },
             keyboardType: TextInputType.text,
             controller: _pass,
@@ -352,7 +356,7 @@ class _LoginPageState extends State<LoginPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: Colors.green,
+          color: Colors.green[700],
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

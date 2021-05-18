@@ -166,7 +166,7 @@ class _SolicitaItem extends State<SolicitaItem> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    color: pfVerde2,
+                    color: Colors.green[700],
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

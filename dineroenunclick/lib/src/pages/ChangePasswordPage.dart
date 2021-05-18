@@ -137,7 +137,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: pfVerde2,
+          color: Colors.green[700],
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

@@ -32,7 +32,7 @@ class _CreditosPageState extends State<CreditosPage> {
                 children: [
                   Text(
                     'Si cumples tus pagos, en 2 meses podrás contar con tu primera renovación',
-                    textScaleFactor: 1.3,
+                    textScaleFactor: 1.3,textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.grey[500]),
                   ),
                   SizedBox(

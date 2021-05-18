@@ -92,11 +92,11 @@ class Dialogs {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RaisedButton(
-                  color: Colors.green,
+                  color: Colors.green[700],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Text('          Aceptar         '),
+                  child: Text('            Aceptar         '),
                   onPressed: () {
                     if (_formKey.currentState.validate()) action();
                   },
