@@ -47,7 +47,7 @@ class Dialogs {
   }
 
   static Future<void> showConfirmationDialog(BuildContext context,
-      {String phone, Function action}) async {
+      {String nombre, String phone, Function action}) async {
     final _formKey = GlobalKey<FormState>();
 
     return showDialog(
@@ -57,7 +57,18 @@ class Dialogs {
           elevation: 0,
           title: Column(
             children: [
-              Text('Hola Alfonso', style: TextStyle(color: pfazul2)),
+              Text(
+                'Hola $nombre'
+                    .toLowerCase()
+                    .replaceAll(RegExp(' +'), ' ')
+                    .split(' ')
+                    .map((str) => str.length > 0
+                        ? '${str[0].toUpperCase()}${str.substring(1)}'
+                        : '')
+                    .join(' '),
+                style: TextStyle(color: pfazul2),
+                textAlign: TextAlign.center,
+              ),
               Text(
                 '¿Este sigue siendo tu número celular?',
                 style: TextStyle(color: Colors.grey[700], fontSize: 13.0),

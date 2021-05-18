@@ -200,6 +200,7 @@ class _SolicitaItem extends State<SolicitaItem> {
                     onPressed: () {
                       Dialogs.showConfirmationDialog(
                         context,
+                        nombre: Usuario.usr.nombreCompleto,
                         phone: Usuario.usr.telefono,
                         action: () => _handleSubmit(context),
                       );
