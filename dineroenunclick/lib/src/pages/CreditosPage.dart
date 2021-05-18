@@ -31,8 +31,8 @@ class _CreditosPageState extends State<CreditosPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'No cuentas con créditos a renovar',
-                    textScaleFactor: 1.3,
+                    'Si cumples tus pagos, en 2 meses podrás contar con tu primera renovación',
+                    textScaleFactor: 1.3,textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.grey[500]),
                   ),
                   SizedBox(
@@ -69,17 +69,41 @@ class _CreditosPageState extends State<CreditosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        title: Text(
-          'Solicita',
-          style: TextStyle(
-            color: pfazul2,
-            fontSize: 30.0,
-            fontWeight: FontWeight.w900,
-            fontFamily: 'Montserrat',
+          backgroundColor: Colors.white,
+          leading: GestureDetector(
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
           ),
-        ),
+          centerTitle: true,
+           actions: [
+          IconButton(
+            icon: Icon(
+              Icons.view_headline,
+              color: pfazul2,
+            ),
+            onPressed: () {
+              setState(() {
+                     Navigator.pushNamed(context, '/hola');
+              });
+            },
+          )
+        ],
+        title: Center(
+          child: Text(
+            'Solicita',
+            style: TextStyle(
+              color: pfazul2,
+              fontSize: 30.0,
+              fontWeight: FontWeight.w900,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+        )
       ),
       body: _loadCreditos(context),
     );

@@ -10,7 +10,6 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
-
   TextEditingController _pass = TextEditingController();
   TextEditingController _passConfirm = TextEditingController();
 
@@ -97,75 +96,67 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       width: _screenSize.width * .4,
       height: _screenSize.height * .09,
       child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () async{
-          FocusScope.of(context).requestFocus(new FocusNode());
+          elevation: 5.0,
+          onPressed: () async {
+            FocusScope.of(context).requestFocus(new FocusNode());
 
-          print(Usuario.usr.clienteId);
+            print(Usuario.usr.clienteId);
 
-          if(_pass.text == _passConfirm.text && _pass.text != ''){
-            UsuarioProvider.resetNIP(new Usuario(clienteId: Usuario.usr.clienteId, pass: _passConfirm.text)).then((obj){
-              print(obj.mensaje);
-              if(obj.error == 0){
-                (contextScaffold).showSnackBar(
-                  SnackBar(
+            if (_pass.text == _passConfirm.text && _pass.text != '') {
+              UsuarioProvider.resetNIP(new Usuario(
+                      clienteId: Usuario.usr.clienteId,
+                      pass: _passConfirm.text))
+                  .then((obj) {
+                print(obj.mensaje);
+                if (obj.error == 0) {
+                  (contextScaffold).showSnackBar(SnackBar(
                     backgroundColor: pfAzul,
                     content: Text(obj.mensaje),
-                ));
-                
-              }
-              else{
-                print(obj.mensaje);
+                  ));
+                } else {
+                  print(obj.mensaje);
 
-                if(obj.mensaje == null){
-                  obj.mensaje = 'Ingrese la informacion';
-                }
+                  if (obj.mensaje == null) {
+                    obj.mensaje = 'Ingrese la informacion';
+                  }
 
-                (contextScaffold).showSnackBar(
-                  SnackBar(
+                  (contextScaffold).showSnackBar(SnackBar(
                     backgroundColor: pfNaranja,
                     content: Text(obj.mensaje),
-                ));
-                
-              }        
-            });
-          }
-          else{
-            (contextScaffold).showSnackBar(
-                  SnackBar(
-                    backgroundColor: pfNaranja,
-                    content: Text('No coincide la contraseña'),
-                ));
-          }
-
-        },
-        padding: EdgeInsets.all(5.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: pfVerde2,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Cambiar',
-              style: TextStyle(
-                //color: Color(0xFFFF960A),
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Montserrat',
-              ),
-            )
-
-          ],
-        )
-        
-      ),
+                  ));
+                }
+              });
+            } else {
+              (contextScaffold).showSnackBar(SnackBar(
+                backgroundColor: pfNaranja,
+                content: Text('No coincide la contraseña'),
+              ));
+            }
+          },
+          padding: EdgeInsets.all(5.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          color: Colors.green[700],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Cambiar',
+                style: TextStyle(
+                  //color: Color(0xFFFF960A),
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Montserrat',
+                ),
+              )
+            ],
+          )),
     );
   }
 
-  Widget _footer(ScaffoldState contextScaffold){
+  Widget _footer(ScaffoldState contextScaffold) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -173,15 +164,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           flex: 5,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              _buildGuardarBtn(contextScaffold)
-            ],
+            children: <Widget>[_buildGuardarBtn(contextScaffold)],
           ),
         ),
       ],
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -190,52 +179,69 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         backgroundColor: Colors.white,
         //automaticallyImplyLeading: false,
         leading: GestureDetector(
-          child: Icon(Icons.arrow_back_ios, color: pfAzul,),
-          onTap: (){
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: pfAzul,
+          ),
+          onTap: () {
             Navigator.pop(context);
           },
         ),
         centerTitle: true,
         actions: <Widget>[
-          Icon(Icons.arrow_back_ios, ),
-          Icon(Icons.arrow_back_ios, ),
+          Icon(
+            Icons.arrow_back_ios,
+          ),
+          Icon(
+            Icons.arrow_back_ios,
+          ),
         ],
         title: Center(
-          child: Text('Cambio de Contraseña', style: TextStyle(
-          color: pfazul2,
-          fontSize: 19.0,
-          fontWeight: FontWeight.w900,
-          fontFamily: 'Montserrat',
-          ),
-        ),
-        ),
-      ),
-      body: Builder(
-        builder: (context) => Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(height: 30.0,),
-
-              _buildPasswordTF(),
-
-              SizedBox(height: 20.0),
-              
-              _buildPasswordConfirmTF(),
-
-              //Expanded(child: SizedBox(),),
-              SizedBox(height: 20.0),
-              
-              _footer(Scaffold.of(context)),
-              
-              SizedBox(height: 25.0,),
-
-            ],
+          child: Text(
+            'Cambio de Contraseña',
+            style: TextStyle(
+              color: pfazul2,
+              fontSize: 19.0,
+              fontWeight: FontWeight.w900,
+              fontFamily: 'Montserrat',
+            ),
           ),
         ),
       ),
-      
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Builder(
+          builder: (context) => Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 30.0,
+                ),
+
+                _buildPasswordTF(),
+
+                SizedBox(height: 20.0),
+
+                _buildPasswordConfirmTF(),
+
+                //Expanded(child: SizedBox(),),
+                SizedBox(height: 20.0),
+
+                _footer(Scaffold.of(context)),
+
+                SizedBox(
+                  height: 25.0,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

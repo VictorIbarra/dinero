@@ -77,6 +77,7 @@ Future<T> modalLoading<T>(BuildContext context, String titulo, bool linearLoader
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Center(
             child:  Text(titulo)
           ),

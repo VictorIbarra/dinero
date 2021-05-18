@@ -1,3 +1,4 @@
+import 'package:dineroenunclick/src/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -54,29 +55,54 @@ class Dialogs {
       builder: (context) {
         return AlertDialog(
           elevation: 0,
-          title: Text('Nos contactaremos al siguiente número'),
+          title: Column(
+            children: [
+              Text('Hola Alfonso', style: TextStyle(color: pfazul2)),
+              Text(
+                '¿Este sigue siendo tu número celular?',
+                style: TextStyle(color: Colors.grey[700], fontSize: 13.0),
+              ),
+            ],
+          ),
           content: Form(
             key: _formKey,
             child: TextFormField(
+              style: TextStyle(fontSize: 18, color: pfazul2),
+              decoration: const InputDecoration(
+                contentPadding: const EdgeInsets.only(
+                    left: 15, top: 8, right: 15, bottom: 0),
+                hintText: '10 digitos',
+              ),
+              autofocus: true,
+              textAlign: TextAlign.center,
               textCapitalization: TextCapitalization.characters,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              autofocus: true,
               validator: (value) {
                 if (value.isEmpty || value.length != 10) return '10 digitos';
                 return null;
               },
-              decoration: InputDecoration(hintText: '10 digitos'),
               onChanged: (value) => phone = value,
               initialValue: phone,
             ),
           ),
           actions: [
-            FlatButton(
-              child: Text('ACEPTAR'),
-              onPressed: () {
-                if (_formKey.currentState.validate()) action();
-              },
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RaisedButton(
+                  color: Colors.green[700],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text('            Aceptar         '),
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) action();
+                  },
+                ),
+                Text('               ')
+              ],
             ),
           ],
         );

@@ -67,55 +67,74 @@ class _SolicitaItem extends State<SolicitaItem> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         margin: EdgeInsets.all(15),
         child: Container(
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.all(1),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  Stack(
                     children: [
-                      Icon(
-                        Icons.attach_money,
-                        color: pfVerde2,
-                        size: 50.0,
-                        semanticLabel:
-                            'Text to announce in accessibility modes',
-                      ),
-                      Text(
-                        'Disponible',
-                        style: TextStyle(
-                            color: pfVerde,
-                            fontSize: 35.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        credito.index.toString(),
-                        style: TextStyle(
-                            color: pfVerde,
-                            fontSize: 35.0,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 120.0),
+                        width: double.infinity,
+                        height: 45.0,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: pfazul2,
+                          border: Border.all(
+                              color: pfazul2, width: 3.0), // Set border width
+                          borderRadius: BorderRadius.all(Radius.circular(
+                              10.0)), // Set rounded corner radius
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Disponible',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text('  '),
+                            Text(
+                              credito.index.toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
+                  SizedBox(height: 05.0),
+                  Text(
+                    '\$ ${comma(_slider.toStringAsFixed(0))}',
+                    style: TextStyle(
+                        color: pfazul2,
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 05),
                   Text(
                     'Monto a solicitar',
                     style: TextStyle(
-                        color: pfVerde,
-                        fontSize: 15.0,
+                        color: Colors.grey[700],
+                        fontSize: 11.0,
                         fontWeight: FontWeight.bold),
                   )
                 ],
               ),
-              SizedBox(height: 60),
+              SizedBox(height: 10),
               SliderTheme(
                 data: SliderTheme.of(context).copyWith(
                   thumbShape: _ThumbShape(
                     min: _min,
                     max: credito.disponible,
-                    thumbHeight: 25,
+                    thumbHeight: 22,
                     thumbRadius: 15,
                   ),
                   showValueIndicator: ShowValueIndicator.never,
@@ -137,25 +156,46 @@ class _SolicitaItem extends State<SolicitaItem> {
                   divisions: _divisions,
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 01),
               Container(
                 width: MediaQuery.of(context).size.width * .6,
                 padding: EdgeInsets.symmetric(vertical: 15),
                 child: RaisedButton(
                     elevation: 5,
-                    padding: EdgeInsets.all(15),
+                    padding: EdgeInsets.all(12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    color: pfVerde2,
-                    child: Text(
-                      'en 1 Click',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
-                      ),
+                    color: Colors.green[700],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'en 1 Click',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                          ),
+                        ),
+                        Text(
+                          ' ',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                          size: 22.0,
+                          semanticLabel:
+                              'Text to announce in accessibility modes',
+                        ),
+                      ],
                     ),
                     onPressed: () {
                       Dialogs.showConfirmationDialog(
@@ -166,7 +206,18 @@ class _SolicitaItem extends State<SolicitaItem> {
                     }),
               ),
               Container(
-                padding: EdgeInsets.all(4),
+                padding: EdgeInsets.only(top: 05.0),
+                width: double.infinity,
+                height: 28.0,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                      color: Colors.grey[900], width: 1.0), // Set border width
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(10.0)), // Set rounded corner radius
+                ),
+                // padding: EdgeInsets.all(4),
                 margin: EdgeInsets.symmetric(
                   vertical: 10,
                   horizontal: 10,
@@ -177,55 +228,46 @@ class _SolicitaItem extends State<SolicitaItem> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Column(
-                        //   children: [
-                        //     Text(
-                        //       'MONTO DISPONIBLE',
-                        //       style: TextStyle(fontSize: 10, color: pffgris2),
-                        //     ),
-                        //     Text(
-                        //       '\$ ${comma(_slider.toStringAsFixed(0))}',
-                        //       style: TextStyle(
-                        //         color: pfazul2,
-                        //         fontSize: 18,
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
                         Column(
                           children: [
-                            Text(
-                              '${credito.plazo} ${credito.frecuencia == 'M' ? 'Meses' : 'Quincenas'}',
-                              style: TextStyle(
-                                color: pfazul2,
-                                fontSize: 18,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Plazo ',
+                                  style: TextStyle(
+                                      color: Colors.grey[900], fontSize: 15.0),
+                                ),
+                                Text(
+                                  '${credito.plazo} ${credito.frecuencia == 'M' ? 'Meses' : 'Quincenas'}',
+                                  style: TextStyle(
+                                    color: Colors.grey[900],
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              'PLAZO',
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  color: pfVerde2,
-                                  fontWeight: FontWeight.bold),
-                            )
                           ],
                         ),
                         Column(
                           children: [
-                            Text(
-                              '\$ $_pago',
-                              style: TextStyle(
-                                color: pfazul2,
-                                fontSize: 18,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  'PAGO ${credito.frecuencia == 'M' ? 'MENSUAL' : 'QUINCENAL'}',
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.grey[900],
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  comma('\$ $_pago'),
+                                  style: TextStyle(
+                                    color: pfazul2,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              'PAGO ${credito.frecuencia == 'M' ? 'MENSUAL' : 'QUINCENAL'}',
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  color: pfVerde2,
-                                  fontWeight: FontWeight.bold),
-                            )
                           ],
                         ),
                       ],
@@ -323,7 +365,7 @@ class _SolicitaItem extends State<SolicitaItem> {
 
     if (res.error != 0)
       setState(() {
-        _pago = "--";
+        _pago = "0.00";
       });
     else
       setState(() {
@@ -372,7 +414,7 @@ class _ThumbShape extends RoundSliderThumbShape {
 
   String getValue(double value) {
     final val = (min + (max - min) * value);
-    return '\$ ' + comma(val.round().toString());
+    return '\$' + comma(val.round().toString());
   }
 
   @override
