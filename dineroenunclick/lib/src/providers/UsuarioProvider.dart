@@ -77,6 +77,7 @@ class UsuarioProvider {
     final resp = await http.post(url,
         headers: headers, body: usuarioModelToJson(usr, 'login'));
     final decodedData = json.decode(resp.body);
+    if (decodedData['Data'] == null) return Usuario();
     usr = Usuario.fromJson(decodedData['Data'][0]);
 
     await DBProvider.db.insertUsuario(usr);
