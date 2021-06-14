@@ -12,6 +12,7 @@ class CreditoProvider {
     final decodedData = json.decode(resp.body);
     final result = Credito.fromJsonList(decodedData['Data']);
     print(decodedData);
+    print(result);
     return result;
   }
 }

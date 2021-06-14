@@ -17,6 +17,7 @@ class UsuarioProvider {
     final result = Registro.fromJsonList(decodedData['Data']);
 
     print(decodedData);
+    print(result);
 
     if (result.length > 0) {
       reg = result[0];

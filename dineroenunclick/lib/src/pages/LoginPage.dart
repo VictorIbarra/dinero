@@ -102,31 +102,40 @@ class _LoginPageState extends State<LoginPage> {
               Column(
                 children: [
                   Row(
+                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      RaisedButton(
-                        color: Colors.green[700],
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        onPressed: () {
-                          if (_codigo.length != 6) {
-                            codigoKey.currentState.validate();
-                          } else {
-                            wsUsuario.validaCodigoUsuario(_codigo).then((obj) {
-                              if (obj.idCliente != null) {
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context, '/registro');
-                              } else {
-                                codigoKey.currentState.validate();
-                              }
-                            });
-                          }
-                        },
-                        child: Text(
-                          "      Continuar      ",
-                          style: (TextStyle(color: Colors.white)),
+                      Container(
+                         width: MediaQuery.of(context).size.width * 0.30,
+                        child: RaisedButton(
+                          color: Colors.green[700],
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          onPressed: () {
+                            if (_codigo.length != 6) {
+                              codigoKey.currentState.validate();
+                            } else {
+                              wsUsuario.validaCodigoUsuario(_codigo).then((obj) {
+                                if (obj.idCliente != null) {
+                                  Navigator.pop(context);
+                                  Navigator.pushNamed(context, '/registro');
+                                } else {
+                                  codigoKey.currentState.validate();
+                                }
+                              });
+                            }
+                          },
+                          child: Text(
+                            "Continuar",
+                            style: (TextStyle(color: Colors.white)),
+                          ),
                         ),
                       ),
-                      Text('                       ')
+                      SizedBox(
+                width: MediaQuery.of(context).size.width * 0.01,
+              ),
+                  Container(
+                width: MediaQuery.of(context).size.width * 0.22,
+              ),
                     ],
                   ),
                   FlatButton(
@@ -156,6 +165,7 @@ class _LoginPageState extends State<LoginPage> {
             content: Form(
               key: codigoKey,
               child: TextFormField(
+                textAlign: TextAlign.center,
                 autofocus: true,
                 validator: (value) {
                   return 'Ingresa tu correo';
@@ -323,7 +333,7 @@ class _LoginPageState extends State<LoginPage> {
     final _screenSize = MediaQuery.of(context).size;
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15.0),
+      padding: EdgeInsets.symmetric(vertical: 10.0),
       width: _screenSize.width * .6,
       child: RaisedButton(
           elevation: 5.0,
@@ -486,16 +496,17 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Image.asset(
                         'assets/nuevoLogo.png',
-                        height: 250,
-                        width: 250,
+                        height: 180,
+                        width: 180,
                       ),
                       _fragmentLogin(context),
                       SizedBox(
-                        height: 60.0,
+                        //probar estaba en 60 y 25
+                        height: 20.0,
                       ),
                       _footer(context, Scaffold.of(context)),
                       SizedBox(
-                        height: 25.0,
+                        height: 10.0,
                       ),
                       //versionamiento
                       Text(

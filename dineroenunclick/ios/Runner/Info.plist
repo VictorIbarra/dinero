@@ -30,9 +30,9 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
+	<string>Nesesitamos permiso de tu ubicación para ofrecerte grandiosas ofertas con pin.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
+	<string>Nesesitamos permiso de tu ubicación para ofrecerte grandiosas ofertas con pin</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

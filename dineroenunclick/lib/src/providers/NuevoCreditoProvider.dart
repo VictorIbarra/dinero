@@ -15,6 +15,7 @@ class NuevoCreditoProvider {
     final res = await http.post(url);
     print(res);
     final decoded = json.decode(res.body);
+    print(decoded);
     return decoded['Error'] != null && decoded['Error'] == 0;
   }
 }

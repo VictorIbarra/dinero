@@ -4,11 +4,11 @@ import 'package:dineroenunclick/src/providers/PreferenciasUsuario.dart';
 final prefs = new PreferenciasUsuario();
 final developMode = true;
 // produccion
-// final ip_default = 'https://wsdinero1click.prestamofeliz.com.mx:9026';
+final ip_default = 'https://wsdinero1click.prestamofeliz.com.mx:9026';
 // desarrollo
 // final ip_default = 'http://172.25.111.102:9004';
 // testing
-final ip_default = 'http://saga.prestamofeliz.com.mx:9253';
+// final ip_default = 'http://saga.prestamofeliz.com.mx:9253';
 
 final ip = prefs.ip;
 String api_url = ip + '/api/UsuarioCliente';

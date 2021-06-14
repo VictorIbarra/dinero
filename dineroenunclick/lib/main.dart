@@ -42,8 +42,6 @@ class _MyAppState extends State<MyApp> {
     final pushProvider = new PushNotificationProvider();
     pushProvider.initNotification();
     pushProvider.mensajesStream.listen((data) {
-      // print('argumento desde main: $argumento');
-      // navigatorKey.currentState.pushNamed('nombre page',arguments: data);
     });
   }
 

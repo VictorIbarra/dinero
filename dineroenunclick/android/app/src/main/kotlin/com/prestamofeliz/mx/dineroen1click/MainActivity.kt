@@ -1,4 +1,4 @@
-package com.prestamofeliz.dineroen1click
+package com.prestamofeliz.mx.dineroen1click
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

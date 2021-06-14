@@ -14,7 +14,6 @@ class RegistroNewPage extends StatefulWidget {
   RegistroNewPage({Key key}) : super(key: key);
   _RegistroNewPageState createState() => _RegistroNewPageState();
 }
-
 class _RegistroNewPageState extends State<RegistroNewPage>
     with SingleTickerProviderStateMixin {
   TextEditingController _correo = TextEditingController();
@@ -253,10 +252,10 @@ class _RegistroNewPageState extends State<RegistroNewPage>
                                     context, '/cliente')
                               });
                     } else {
-                      Dialogs.alert(context, description: 'Datos incorrectos');
+                      Dialogs.alert(context, description: 'Datos incorrectos o correo no válido');
                     }
                   } else {
-                    Dialogs.alert(context, description: 'Datos incorrectos');
+                    Dialogs.alert(context, description: 'Datos incorrectos o correo no válido');
                   }
                 } else {
                   Dialogs.alert(context,
@@ -365,7 +364,7 @@ class _RegistroNewPageState extends State<RegistroNewPage>
         _controller.reverse();
     });
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
+       resizeToAvoidBottomInset: true,
         body: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {

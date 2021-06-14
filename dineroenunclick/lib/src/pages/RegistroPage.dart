@@ -12,7 +12,8 @@ class RegistroPage extends StatefulWidget {
   _RegistroPageState createState() => _RegistroPageState();
 }
 
-class _RegistroPageState extends State<RegistroPage> {
+class _RegistroPageState extends State<RegistroPage>
+       with SingleTickerProviderStateMixin{
   TextEditingController _correo = TextEditingController();
   TextEditingController _rfc = TextEditingController();
   TextEditingController _celular = TextEditingController();
@@ -20,8 +21,30 @@ class _RegistroPageState extends State<RegistroPage> {
   TextEditingController _passConfirm = TextEditingController();
   String _launchUrl = 'https://dinero1click.prestamofeliz.com.mx/terminos.pdf';
   bool _value1 = false;
-  final focus = FocusNode();
   bool _obscureText = true;
+
+  FocusScopeNode _focusNode;
+  AnimationController _controller;
+  Animation _animation;
+
+   @override
+  void initState() {
+    super.initState();
+
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _animation = Tween(begin: 200.0, end: 100.0).animate(_controller)
+      ..addListener(() {
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
 
   void _togglePasswordStatus() {
     setState(() {
@@ -38,6 +61,7 @@ class _RegistroPageState extends State<RegistroPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            onEditingComplete: () => _focusNode.nextFocus(),
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.text,
             textCapitalization: TextCapitalization.characters,
@@ -49,10 +73,6 @@ class _RegistroPageState extends State<RegistroPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              /*prefixIcon: Icon(
-                Icons.email,
-                color: Colors.white,
-              ),*/
               hintText: 'RFC',
               hintStyle: kHintTextStyle,
             ),
@@ -71,6 +91,7 @@ class _RegistroPageState extends State<RegistroPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            onEditingComplete: () => _focusNode.nextFocus(),
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             controller: _correo,
@@ -81,10 +102,6 @@ class _RegistroPageState extends State<RegistroPage> {
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 20.0),
-              // prefixIcon: Icon(
-              //   Icons.email,
-              //   color: Colors.white,
-              // ),
               hintText: 'Correo electrónico',
               hintStyle: kHintTextStyle,
             ),
@@ -103,8 +120,10 @@ class _RegistroPageState extends State<RegistroPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            onEditingComplete: () => _focusNode.nextFocus(),
             textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.phone,
+             keyboardType:
+            TextInputType.numberWithOptions(signed: true, decimal: true),
             controller: _celular,
             style: TextStyle(
               color: Colors.black,
@@ -132,11 +151,11 @@ class _RegistroPageState extends State<RegistroPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+             onEditingComplete: () => _focusNode.nextFocus(),
             obscureText: _obscureText,
             onChanged: (val) {
               setState(() {});
             },
-            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.text,
             controller: _pass,
             style: TextStyle(
@@ -164,6 +183,7 @@ class _RegistroPageState extends State<RegistroPage> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            onEditingComplete: () => _focusNode.unfocus(),
             textInputAction: TextInputAction.done,
             obscureText: _obscureText,
             onChanged: (val) {
@@ -203,8 +223,7 @@ class _RegistroPageState extends State<RegistroPage> {
       child: RaisedButton(
           elevation: 5.0,
           onPressed: () async {
-            FocusScope.of(context).requestFocus(new FocusNode());
-
+            _focusNode.unfocus();
             if (_value1) {
               print('boton rechazar oprimido ');
               if (_value1 == false) {
@@ -236,7 +255,7 @@ class _RegistroPageState extends State<RegistroPage> {
                       if (obj.mensaje == null) {
                         obj.mensaje = 'Ingrese la informacion';
                       }
-                      Dialogs.alert(context, description: 'Ingrese la informacion');
+                      Dialogs.alert(context, description: obj.mensaje);
                     }
                   });
                 } else {
@@ -277,7 +296,6 @@ class _RegistroPageState extends State<RegistroPage> {
     final _screenSize = MediaQuery.of(context).size;
 
     return Container(
-      //margin: EdgeInsets.only(top: 0),
       padding: EdgeInsets.symmetric(vertical: 5.0),
       width: _screenSize.width * .3,
       height: _screenSize.height * .07,
@@ -347,81 +365,93 @@ class _RegistroPageState extends State<RegistroPage> {
 
   @override
   Widget build(BuildContext context) {
+      _focusNode = FocusScope.of(context);
+
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus)
+        _controller.forward();
+      else
+        _controller.reverse();
+    });
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          Stack(
-            alignment: AlignmentDirectional.bottomStart,
+      resizeToAvoidBottomInset: true,
+      body: GestureDetector(
+         behavior: HitTestBehavior.opaque,
+          onTap: () {
+            _focusNode.unfocus();
+          },
+          child: Column(
             children: [
-              _vista(),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text('Crear Cuenta',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.bold)),
-              ),
-            ],
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
-            child: Container(
-              padding: EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+              Stack(
+                 alignment: AlignmentDirectional.bottomStart,
                 children: [
-                  SizedBox(
-                    height: 20.0,
+                  Container(
+                    color: pfazul2,
+                    width: 500.0,
+                    height: _animation.value + .0,
                   ),
-                  _buildRFCTF(),
-                  SizedBox(height: 10.0),
-                  _buildEmailTF(),
-                  SizedBox(height: 10.0),
-                  _buildCelularTF(),
-                  SizedBox(height: 10.0),
-                  _buildPasswordTF(),
-                  SizedBox(height: 10.0),
-                  _buildPasswordConfirmTF(),
-                  SizedBox(height: 10.0),
-                  Row(
-                    children: [
-                      _createChecBox(),
-                      Column(
-                        children: [
-                          Text('Al Continuar, Aceptas Nuestros'),
-                          InkWell(
-                            child: Text(
-                                'Términos y Condiciones y Aviso de privacidad',
-                                style: TextStyle(color: Colors.redAccent[700])),
-                            onTap: () {
-                              _launchInBrowser(_launchUrl);
-                              print('entro');
-                            },
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  _buildRegistrarseBtn(),
-                  //  _buildRegistrarseBtn(Scaffold.of(context)),
-                  // Expanded(
-                  //   child: SizedBox(),
-                  // ),
-                  _footer(context),
-                  SizedBox(
-                    height: 25.0,
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text('Crear Cuenta',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
-            ),
+               Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    Text(
+                      'Disfruta de los beneficios de tener dinero en un click',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: pfAzul, fontSize: 20.0),
+                    ),
+                    SizedBox(height: 30.0),
+                    _buildRFCTF(),
+                    SizedBox(height: 10.0),
+                    _buildEmailTF(),
+                    SizedBox(height: 10.0),
+                    _buildCelularTF(),
+                    SizedBox(height: 10.0),
+                    _buildPasswordTF(),
+                    SizedBox(height: 10.0),
+                    _buildPasswordConfirmTF(),
+                    SizedBox(height: 10.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _createChecBox(),
+                        Column(
+                          children: [
+                            Text(
+                              'Al continuar Acepto',
+                              style: TextStyle(
+                                  fontSize: 12.0, color: Colors.grey[700]),
+                            ),
+                            InkWell(
+                              child: Text(
+                                  'Términos y Condiciones y Aviso de privacidad',
+                                  style: TextStyle(
+                                      color: Colors.grey[700], fontSize: 12.0)),
+                              onTap: () {
+                                _launchInBrowser(_launchUrl);
+                              },
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    _buildRegistrarseBtn(),
+                    SizedBox(height: 20.0),
+                    _footer(context),
+                  ],
+                ),
+              ),
+            ],
           ),
-          // ),
-        ],
       ),
     );
   }
